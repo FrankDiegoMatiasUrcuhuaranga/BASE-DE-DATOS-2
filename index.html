@@ -10,19 +10,59 @@
 </head>
 <body>
 
-  <!-- GRAIN OVERLAY -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-modal">
+      <button class="login-close" onclick="closeLogin()">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="login-header">
+        <div class="login-vinyl"></div>
+        <div class="login-kw-tag">ACCESO</div>
+        <h2 class="login-title">INICIAR<br><em>SESIÓN</em></h2>
+        <p class="login-subtitle">BASE DE DATOS II — 2026</p>
+      </div>
+
+      <form class="login-form" onsubmit="handleLogin(event)">
+        <div class="login-field">
+          <label class="login-label">USUARIO</label>
+          <div class="login-input-wrap">
+            <i class="fas fa-user login-input-icon"></i>
+            <input type="text" class="login-input" placeholder="tu usuario" id="loginUser" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="login-field">
+          <label class="login-label">CONTRASEÑA</label>
+          <div class="login-input-wrap">
+            <i class="fas fa-lock login-input-icon"></i>
+            <input type="password" class="login-input" placeholder="••••••••" id="loginPass">
+            <button type="button" class="login-eye" onclick="togglePass()">
+              <i class="fas fa-eye" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
+
+        <button type="submit" class="login-btn">
+          <span>ENTRAR</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <p class="login-quote">"I'm living in the future so the present is my past."</p>
+      </form>
+    </div>
+  </div>
+
   <div class="grain"></div>
 
-  <!-- SCANLINES -->
   <div class="scanlines"></div>
 
-  <!-- VINYL RECORD BG -->
   <div class="vinyl-bg"></div>
 
-  <!-- FLOATING LYRICS -->
   <div class="floating-lyrics" id="floatingLyrics"></div>
 
-  <!-- HEADER -->
   <header>
     <div class="header-inner">
       <div class="album-counter">
@@ -42,6 +82,14 @@
       </div>
 
       <nav class="header-nav">
+        <a href="#" class="nav-link nav-link--login" id="loginBtn" onclick="openLogin(event)">
+          <span class="nav-link-inner">
+            <i class="fas fa-user"></i>
+            <span>INICIAR SESIÓN</span>
+          </span>
+          <span class="nav-link-bg"></span>
+        </a>
+
         <a href="tareas_por_semanas.html" class="nav-link">
           <span class="nav-link-inner">
             <i class="fas fa-tasks"></i>
@@ -52,7 +100,6 @@
       </nav>
     </div>
 
-    <!-- ALBUM TICKER -->
     <div class="ticker-wrap">
       <div class="ticker">
         <span>THE COLLEGE DROPOUT</span>
@@ -75,7 +122,6 @@
         <span class="sep">◆</span>
         <span>DONDA</span>
         <span class="sep">◆</span>
-        <!-- repeat -->
         <span>THE COLLEGE DROPOUT</span>
         <span class="sep">◆</span>
         <span>LATE REGISTRATION</span>
@@ -100,7 +146,6 @@
     </div>
   </header>
 
-  <!-- HERO SECTION -->
   <section class="hero">
     <div class="hero-text">
       <p class="hero-lyric">"I could have me a bad bitch,<br>but I'm still lookin' for the one."</p>
@@ -111,9 +156,7 @@
     </div>
   </section>
 
-  <!-- MAIN CONTENT -->
   <main>
-    <!-- CARD 1: Introducción -->
     <article class="card card--intro" data-album="MBDTF">
       <div class="card-eyebrow">
         <span class="eyebrow-num">01</span>
@@ -131,14 +174,11 @@
           <p class="card-body">
             Bases de Datos se centra en el estudio de los sistemas diseñados para almacenar, organizar y recuperar grandes volúmenes de información de manera eficiente y segura. Durante el aprendizaje, explorarás el diseño lógico mediante el modelo entidad-relación, la normalización para evitar redundancias y el dominio del lenguaje SQL para realizar consultas complejas, actualizaciones y administración de permisos. Además, el curso suele cubrir la diferencia entre tecnologías relacionales (SQL) y no relacionales (NoSQL), garantizando la integridad de los datos mediante el cumplimiento de las propiedades ACID y optimizando el rendimiento a través de índices y transacciones, habilidades fundamentales para el desarrollo de cualquier aplicación moderna.
           </p>
-          <p class="card-body">
-          </p>
           <div class="card-quote">"No one man should have all that power."</div>
         </div>
       </div>
     </article>
 
-    <!-- CARD 2: GitHub -->
     <article class="card card--github" data-album="GRADUATION">
       <div class="card-eyebrow">
         <span class="eyebrow-num">02</span>
@@ -180,7 +220,6 @@
       <div class="card-quote card-quote--right">"I wonder if you know what it means to find your dreams."</div>
     </article>
 
-    <!-- CARD 3: Yo -->
     <article class="card card--profile" data-album="808s">
       <div class="card-eyebrow">
         <span class="eyebrow-num">03</span>
@@ -215,7 +254,6 @@
     </article>
   </main>
 
-  <!-- FLOATING BUTTONS -->
   <div class="fab-cluster">
     <button class="fab-btn" title="Volver arriba" onclick="scrollToTop()">
       <i class="fas fa-arrow-up"></i>
@@ -225,11 +263,10 @@
     </button>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
       <div class="footer-left">
-        <div class="footer-big">6</div>
+        <div class="footer-big">2026</div>
         <div class="footer-sub">BASE DE DATOS II</div>
       </div>
       <div class="footer-center">
@@ -245,11 +282,60 @@
       <span>◆</span>
       <span>BASE DE DATOS II</span>
       <span>◆</span>
-      <span>ERA 2025</span>
+      <span>ERA 2026</span>
     </div>
   </footer>
 
   <script>
+    // --- LÓGICA DEL LOGIN MODAL ---
+    function openLogin(e) {
+      e.preventDefault();
+      document.getElementById('loginOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLogin() {
+      document.getElementById('loginOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('loginError').classList.remove('visible');
+      document.getElementById('loginUser').value = '';
+      document.getElementById('loginPass').value = '';
+    }
+
+    function togglePass() {
+      const input = document.getElementById('loginPass');
+      const icon  = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value.trim();
+      const pass = document.getElementById('loginPass').value;
+      const err  = document.getElementById('loginError');
+
+      // Credenciales de ejemplo
+      if (user === 'matias' && pass === '1234') {
+        err.classList.remove('visible');
+        closeLogin();
+        alert('¡Bienvenido, ' + user + '!');
+      } else {
+        err.classList.add('visible');
+      }
+    }
+
+    // Cerrar modal al hacer clic afuera
+    document.getElementById('loginOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeLogin();
+    });
+
+    // --- EFECTOS DE LA PÁGINA ---
     // FLOATING LYRICS
     const lyrics = [
       "RUNAWAY", "I WONDER", "POWER", "STRONGER",
