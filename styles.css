@@ -35,6 +35,20 @@ body {
   cursor: crosshair;
 }
 
+/* ── PARTICLES BACKGROUND (ACTUALIZADO CON RESPLANDOR) ── */
+#particles-js {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 0; /* Capa de fondo */
+  pointer-events: none; /* No interfiere con clics */
+  
+  /* NUEVO EFECTO DE BRILLO: Crea un aura dorada alrededor de partículas y líneas */
+  filter: drop-shadow(0 0 8px rgba(232, 212, 154, 0.8));
+}
+
 /* ── GRAIN OVERLAY ── */
 .grain {
   position: fixed;

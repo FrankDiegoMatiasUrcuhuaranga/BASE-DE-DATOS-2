@@ -10,6 +10,8 @@
 </head>
 <body>
 
+  <div id="particles-js"></div>
+
   <div class="login-overlay" id="loginOverlay">
     <div class="login-modal">
       <button class="login-close" onclick="closeLogin()">
@@ -286,6 +288,8 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
   <script>
     // --- LÓGICA DEL LOGIN MODAL ---
     function openLogin(e) {
@@ -324,6 +328,10 @@
       if (user === 'matias' && pass === '1234') {
         err.classList.remove('visible');
         closeLogin();
+    
+        // NUEVO: Guardamos la sesión en el navegador
+        localStorage.setItem('isLoggedIn', 'true');
+    
         alert('¡Bienvenido, ' + user + '!');
       } else {
         err.classList.add('visible');
@@ -376,6 +384,62 @@
       const x = (e.clientX / window.innerWidth - 0.5) * 30;
       const y = (e.clientY / window.innerHeight - 0.5) * 30;
       cross.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // --- EFECTO PARTICLES.JS (ACTUALIZADO PARA MÁS BRILLO) ---
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 70, // Ligeramente más partículas
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#e8d49a" // CAMBIO: Usamos el dorado pálido, brilla más contra el negro
+        },
+        "shape": {
+          "type": "circle"
+        },
+        "opacity": {
+          "value": 0.8, // CAMBIO: Opacidad mucho más alta (antes 0.4)
+          "random": false
+        },
+        "size": {
+          "value": 4, // CAMBIO: Partículas ligeramente más grandes (antes 3)
+          "random": true
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#e8d49a", // CAMBIO: Color dorado pálido para las líneas
+          "opacity": 0.4, // CAMBIO: Líneas mucho más visibles (antes 0.2)
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 1.5,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": false
+          },
+          "onclick": {
+            "enable": false
+          },
+          "resize": true
+        }
+      },
+      "retina_detect": true
     });
   </script>
 </body>
