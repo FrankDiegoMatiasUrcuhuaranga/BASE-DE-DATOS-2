@@ -3,115 +3,294 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DESARROLLO DE APLICACIONES I - Era Jurásica del Código</title>
+  <title>BASE DE DATOS 2 — Matias Urcuhuaranga</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="prehistoric-particles" id="particles"></div>
-  <div class="dino-silhouettes" id="dinos"></div>
 
+  <!-- GRAIN OVERLAY -->
+  <div class="grain"></div>
+
+  <!-- SCANLINES -->
+  <div class="scanlines"></div>
+
+  <!-- VINYL RECORD BG -->
+  <div class="vinyl-bg"></div>
+
+  <!-- FLOATING LYRICS -->
+  <div class="floating-lyrics" id="floatingLyrics"></div>
+
+  <!-- HEADER -->
   <header>
-    <div class="header-content">
-      <div class="logo-section">
-        <img src="FOTO2.png" alt="Logo" class="logo-icon">
-        <h1 class="main-title">
-          <i class="fas fa-code"></i> DESARROLLO DE APLICACIONES I
-        </h1>
-        <div class="student-name">Matias Urcuhuaranga Frank Diego</div>
+    <div class="header-inner">
+      <div class="album-counter">
+        <span class="counter-label">DISCOGRAFÍA</span>
+        <span class="counter-num">10</span>
+        <span class="counter-label">ÁLBUMES</span>
       </div>
-      <nav>
-        <a href="tareas_por_semanas.html" class="nav-btn">
-          <i class="fas fa-tasks"></i> Tareas por semanas
+
+      <div class="title-block">
+        <div class="kw-tag">CICLO V </div>
+        <h1 class="main-title">BASE DE<br><em>DATOS</em> II</h1>
+        <div class="student-tag">
+          <span class="dot"></span>
+          MATIAS URCUHUARANGA FRANK DIEGO
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <nav class="header-nav">
+        <a href="tareas_por_semanas.html" class="nav-link">
+          <span class="nav-link-inner">
+            <i class="fas fa-tasks"></i>
+            <span>TAREAS</span>
+          </span>
+          <span class="nav-link-bg"></span>
         </a>
       </nav>
     </div>
+
+    <!-- ALBUM TICKER -->
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>THE COLLEGE DROPOUT</span>
+        <span class="sep">◆</span>
+        <span>LATE REGISTRATION</span>
+        <span class="sep">◆</span>
+        <span>GRADUATION</span>
+        <span class="sep">◆</span>
+        <span>808s & HEARTBREAK</span>
+        <span class="sep">◆</span>
+        <span>MY BEAUTIFUL DARK TWISTED FANTASY</span>
+        <span class="sep">◆</span>
+        <span>WATCH THE THRONE</span>
+        <span class="sep">◆</span>
+        <span>YEEZUS</span>
+        <span class="sep">◆</span>
+        <span>THE LIFE OF PABLO</span>
+        <span class="sep">◆</span>
+        <span>ye</span>
+        <span class="sep">◆</span>
+        <span>DONDA</span>
+        <span class="sep">◆</span>
+        <!-- repeat -->
+        <span>THE COLLEGE DROPOUT</span>
+        <span class="sep">◆</span>
+        <span>LATE REGISTRATION</span>
+        <span class="sep">◆</span>
+        <span>GRADUATION</span>
+        <span class="sep">◆</span>
+        <span>808s & HEARTBREAK</span>
+        <span class="sep">◆</span>
+        <span>MY BEAUTIFUL DARK TWISTED FANTASY</span>
+        <span class="sep">◆</span>
+        <span>WATCH THE THRONE</span>
+        <span class="sep">◆</span>
+        <span>YEEZUS</span>
+        <span class="sep">◆</span>
+        <span>THE LIFE OF PABLO</span>
+        <span class="sep">◆</span>
+        <span>ye</span>
+        <span class="sep">◆</span>
+        <span>DONDA</span>
+        <span class="sep">◆</span>
+      </div>
+    </div>
   </header>
 
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-lyric">"I could have me a bad bitch,<br>but I'm still lookin' for the one."</p>
+      <p class="hero-credit">— I Wonder, Graduation (2007)</p>
+    </div>
+    <div class="hero-visual">
+      <div class="runaway-cross">+</div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
   <main>
-    <div class="cards-container">
-      <article class="prehistoric-card">
-        <div class="card-header">
-          <div class="fossil-icon">
+    <!-- CARD 1: Introducción -->
+    <article class="card card--intro" data-album="MBDTF">
+      <div class="card-eyebrow">
+        <span class="eyebrow-num">01</span>
+        <span class="eyebrow-label">MY BEAUTIFUL DARK TWISTED FANTASY</span>
+      </div>
+      <div class="card-content">
+        <div class="card-icon-area">
+          <div class="icon-circle">
             <i class="fas fa-rocket"></i>
           </div>
-          <h2 class="card-title">Introducción</h2>
+          <div class="vinyl-mini"></div>
         </div>
-        <p class="card-text">
-          El curso de Desarrollo de Aplicaciones I introduce a los estudiantes en el mundo de la programación y la creación de software. Su objetivo es brindar las bases necesarias para comprender cómo se diseñan, estructuran y desarrollan aplicaciones, fomentando la lógica, la resolución de problemas y el uso de buenas prácticas de programación.
-        </p>
-        <p class="card-text">
-          Este curso representa el inicio del camino en el área del desarrollo de software, preparando al estudiante para enfrentar proyectos más complejos y aplicando sus conocimientos en situaciones prácticas y reales.
-        </p>
-      </article>
-
-      <article class="prehistoric-card">
-        <h2 class="card-title">¿Qué es GitHub?</h2>
-        <ul class="info-list">
-          <li class="info-item">GitHub es una plataforma en línea que permite almacenar, compartir y colaborar en proyectos de software. Funciona como un espacio en la nube donde los programadores pueden guardar su código y trabajar en equipo de manera organizada.</li>
-        </ul>
-        
-        <div class="card-header">
-          <div class="fossil-icon">
-            <i class="fas fa-user-plus"></i>
-          </div>
-          <h2 class="card-title">¿Cómo me registré en GitHub?</h2>
+        <div class="card-text-area">
+          <h2 class="card-title">INTRODUCCIÓN</h2>
+          <p class="card-body">
+            Bases de Datos se centra en el estudio de los sistemas diseñados para almacenar, organizar y recuperar grandes volúmenes de información de manera eficiente y segura. Durante el aprendizaje, explorarás el diseño lógico mediante el modelo entidad-relación, la normalización para evitar redundancias y el dominio del lenguaje SQL para realizar consultas complejas, actualizaciones y administración de permisos. Además, el curso suele cubrir la diferencia entre tecnologías relacionales (SQL) y no relacionales (NoSQL), garantizando la integridad de los datos mediante el cumplimiento de las propiedades ACID y optimizando el rendimiento a través de índices y transacciones, habilidades fundamentales para el desarrollo de cualquier aplicación moderna.
+          </p>
+          <p class="card-body">
+          </p>
+          <div class="card-quote">"No one man should have all that power."</div>
         </div>
-        <ul class="info-list">
-          <li class="info-item">Entré a github.com y hice clic en Sign up</li>
-          <li class="info-item">Ingresé mi correo, usuario y contraseña</li>
-          <li class="info-item">Completé la verificación de seguridad</li>
-          <li class="info-item">Confirmé mi cuenta desde mi correo electrónico</li>
-          <li class="info-item">Elegí el plan gratuito y ajusté las configuraciones</li>
-        </ul>
-      </article>
+      </div>
+    </article>
 
-      <article class="prehistoric-card profile-card">
-        <div class="card-header">
-          <div class="fossil-icon">
-            <i class="fas fa-user"></i>
-          </div>
+    <!-- CARD 2: GitHub -->
+    <article class="card card--github" data-album="GRADUATION">
+      <div class="card-eyebrow">
+        <span class="eyebrow-num">02</span>
+        <span class="eyebrow-label">GRADUATION (2007)</span>
+      </div>
+      <div class="card-content card-content--split">
+        <div class="github-block">
+          <h2 class="card-title">¿QUÉ ES<br><em>GITHUB?</em></h2>
+          <p class="card-body">
+            GitHub es una plataforma en línea que permite almacenar, compartir y colaborar en proyectos de software. Funciona como un espacio en la nube donde los programadores pueden guardar su código y trabajar en equipo de manera organizada.
+          </p>
+        </div>
+        <div class="steps-block">
+          <h3 class="steps-title">¿CÓMO ME REGISTRÉ?</h3>
+          <ul class="steps-list">
+            <li class="step-item">
+              <span class="step-num">I</span>
+              <span>Entré a <strong>github.com</strong> y hice clic en Sign up</span>
+            </li>
+            <li class="step-item">
+              <span class="step-num">II</span>
+              <span>Ingresé mi correo, usuario y contraseña</span>
+            </li>
+            <li class="step-item">
+              <span class="step-num">III</span>
+              <span>Completé la verificación de seguridad</span>
+            </li>
+            <li class="step-item">
+              <span class="step-num">IV</span>
+              <span>Confirmé mi cuenta desde mi correo electrónico</span>
+            </li>
+            <li class="step-item">
+              <span class="step-num">V</span>
+              <span>Elegí el plan gratuito y ajusté las configuraciones</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card-quote card-quote--right">"I wonder if you know what it means to find your dreams."</div>
+    </article>
+
+    <!-- CARD 3: Yo -->
+    <article class="card card--profile" data-album="808s">
+      <div class="card-eyebrow">
+        <span class="eyebrow-num">03</span>
+        <span class="eyebrow-label">808s & HEARTBREAK</span>
+      </div>
+      <div class="card-content card-content--profile">
+        <div class="profile-text-area">
           <h2 class="card-title">YO</h2>
-        </div>
-        <ul class="info-list">
-          <li class="info-item">Soy una persona perseverante, curiosa y con muchas ganas de seguir aprendiendo. Me gusta asumir nuevos retos y no rendirme fácilmente, ya que cada experiencia me ayuda a crecer. Me considero responsable, organizado y con una actitud positiva, lo que me permite adaptarme a distintas situaciones y trabajar bien tanto de manera individual como en equipo.</li>
-        </ul>
-        <div class="profile-img-container">
-          <div class="amber-frame">
-            <img src="FOTO1.jpeg" alt="Matias Urcuhuaranga Frank Diego" class="profile-img">
+          <p class="card-body">
+            Soy una persona perseverante, curiosa y con muchas ganas de seguir aprendiendo. Me gusta asumir nuevos retos y no rendirme fácilmente, ya que cada experiencia me ayuda a crecer. Me considero responsable, organizado y con una actitud positiva, lo que me permite adaptarme a distintas situaciones y trabajar bien tanto de manera individual como en equipo.
+          </p>
+          <div class="traits-grid">
+            <div class="trait">PERSEVERANTE</div>
+            <div class="trait">CURIOSO</div>
+            <div class="trait">ORGANIZADO</div>
+            <div class="trait">CREATIVO</div>
           </div>
+          <div class="card-quote">"Runaway fast as you can."</div>
         </div>
-      </article>
-    </div>
+        <div class="profile-img-area">
+          <div class="photo-frame">
+            <img src="FOTO1.jpeg" alt="Matias Urcuhuaranga" class="profile-photo">
+            <div class="photo-overlay"></div>
+            <div class="photo-corner tl"></div>
+            <div class="photo-corner tr"></div>
+            <div class="photo-corner bl"></div>
+            <div class="photo-corner br"></div>
+          </div>
+          <div class="photo-label">FRANK DIEGO</div>
+        </div>
+      </div>
+    </article>
   </main>
 
-  <div class="fab-container">
-    <button class="fab" title="Volver al período superior" onclick="scrollToTop()">
+  <!-- FLOATING BUTTONS -->
+  <div class="fab-cluster">
+    <button class="fab-btn" title="Volver arriba" onclick="scrollToTop()">
       <i class="fas fa-arrow-up"></i>
     </button>
-    <button class="fab" title="Repositorio Jurásico" onclick="window.open('https://github.com/FrankDiegoMatiasUrcuhuaranga', '_blank')">
+    <button class="fab-btn fab-btn--gold" title="GitHub" onclick="window.open('https://github.com/FrankDiegoMatiasUrcuhuaranga','_blank')">
       <i class="fab fa-github"></i>
-    </button>
-    <button class="fab" title="Laboratorio de fósiles" onclick="showEasterEgg()">
-      <i class="fas fa-flask"></i>
     </button>
   </div>
 
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-content">
-      <div class="footer-title">
-        <span class="footer-year">Era 2025</span> - DESARROLLO DE APLICACIONES I
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-big">6</div>
+        <div class="footer-sub">BASE DE DATOS II</div>
       </div>
-      <p class="footer-subtitle">
-        "Preservando el código para las futuras generaciones digitales"
-      </p>
-      <p style="color: rgba(210, 180, 140, 0.7); font-size: 0.9rem; margin-top: 1rem;">
-        Forjado en el laboratorio jurásico del desarrollo con tecnologías ancestrales y modernas
-      </p>
+      <div class="footer-center">
+        <div class="vinyl-footer"></div>
+      </div>
+      <div class="footer-right">
+        <p class="footer-quote">"I'm living in the future so the present is my past."</p>
+        <p class="footer-credit">— Gone, Late Registration</p>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span>MATIAS URCUHUARANGA FRANK DIEGO</span>
+      <span>◆</span>
+      <span>BASE DE DATOS II</span>
+      <span>◆</span>
+      <span>ERA 2025</span>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // FLOATING LYRICS
+    const lyrics = [
+      "RUNAWAY", "I WONDER", "POWER", "STRONGER",
+      "GHOST TOWN", "FLASHING LIGHTS", "ALL FALLS DOWN",
+      "HEARTLESS", "GONE", "DEVIL IN A NEW DRESS",
+      "LOST IN THE WORLD", "BOUND 2", "WOLVES", "FADE"
+    ];
+    const container = document.getElementById('floatingLyrics');
+    lyrics.forEach((lyric, i) => {
+      const el = document.createElement('div');
+      el.className = 'lyric-float';
+      el.textContent = lyric;
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDelay = (i * 2.5) + 's';
+      el.style.animationDuration = (18 + Math.random() * 12) + 's';
+      el.style.fontSize = (0.6 + Math.random() * 1.2) + 'rem';
+      el.style.opacity = (0.04 + Math.random() * 0.08);
+      container.appendChild(el);
+    });
+
+    // SCROLL TO TOP
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // CARD REVEAL ON SCROLL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.card').forEach(c => observer.observe(c));
+
+    // RUNAWAY CROSS PARALLAX
+    document.addEventListener('mousemove', (e) => {
+      const cross = document.querySelector('.runaway-cross');
+      if (!cross) return;
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      cross.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  </script>
 </body>
 </html>
