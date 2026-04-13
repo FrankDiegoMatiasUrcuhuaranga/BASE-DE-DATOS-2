@@ -7,9 +7,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-/* Se ha respetado y expandido la complejidad del CSS original. 
-   Se ajustaron las proporciones del pie de página para maximizar el espacio central. */
-
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -29,8 +26,9 @@
 
 * { cursor: none !important; }
 
-/* ── CUSTOM SCROLLBARS ── */
-::-webkit-scrollbar { width: 6px; }
+/* ── CUSTOM SCROLLBARS CORREGIDOS ── */
+/* Quitamos el height: 6px para evitar el scroll horizontal molesto */
+::-webkit-scrollbar { width: 6px; } 
 ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; transition: background 0.3s; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
@@ -63,8 +61,8 @@ body {
   font-family: var(--font-mono);
   background: var(--black);
   color: var(--white);
-  height: 100vh; /* NO SCROLL: Fijado al 100% de la ventana */
-  overflow: hidden; /* Corta cualquier desbordamiento global */
+  height: 100vh; 
+  overflow: hidden; 
   display: flex;
   flex-direction: column;
 }
@@ -149,14 +147,20 @@ body {
 .np-waveform span:nth-child(5) { animation-delay: .15s; height: 55%; }
 @keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.3); } }
 
+/* Pausar la animación de las onditas si la música no suena */
+.np-waveform.paused span {
+  animation-play-state: paused;
+  transform: scaleY(0.1);
+}
+
 /* ════════════════════════════════════════
-   CAROUSEL LAYOUT: NO SCROLL AJUSTADO
+   CAROUSEL LAYOUT
 ════════════════════════════════════════ */
 main {
-  flex: 1; /* Absorbe el espacio restante */
+  flex: 1; 
   display: flex;
   flex-direction: column;
-  padding: 1vh 0; /* Reducido para dar más espacio */
+  padding: 1.5vh 0; 
   position: relative;
   overflow: hidden;
 }
@@ -175,15 +179,28 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1vh; 
+  gap: 1.5vh; 
   position: relative;
   z-index: 10;
   overflow-y: auto; 
-  padding-right: 5px;
+  overflow-x: hidden;
 }
 
-.cards-col--left { padding-right: 120px; }
-.cards-col--right { padding-left: 120px; }
+/* 👇 TRUCO PARA EL SCROLL A LA IZQUIERDA 👇 */
+.cards-col--left { 
+  padding-right: 120px; 
+  padding-left: 5px;
+  direction: rtl; 
+}
+.cards-col--left > * {
+  direction: ltr; 
+}
+/* --------------------------------------- */
+
+.cards-col--right { 
+  padding-left: 120px; 
+  padding-right: 5px; 
+}
 
 .center-zone {
   width: 320px; 
@@ -200,6 +217,7 @@ main {
 .center-meta { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
 .center-nav { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1rem; }
 
+/* ── VINILO CENTRAL AHORA ES UN BOTÓN ── */
 .center-vinyl {
   width: clamp(140px, 18vh, 180px); height: clamp(140px, 18vh, 180px);
   border-radius: 50%;
@@ -209,6 +227,17 @@ main {
   margin: 0 auto;
   animation: vinylSpin 8s linear infinite;
   box-shadow: 0 0 40px rgba(201,168,76,0.15);
+  cursor: pointer !important; /* Lo hace clickeable */
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.center-vinyl:hover {
+  box-shadow: 0 0 50px rgba(201,168,76,0.4);
+  transform: scale(1.02);
+}
+
+.center-vinyl.paused {
+  animation-play-state: paused;
 }
 
 @keyframes vinylSpin { to { transform: rotate(360deg); } }
@@ -234,18 +263,17 @@ main {
   line-height: 0.9;
   color: var(--white);
 }
-
 .center-main-title em {
   font-family: var(--font-ser); font-style: italic;
   -webkit-text-stroke: 1px var(--gold); color: transparent; 
-  display: inline-block; /* Cambiamos a inline-block para respetar los <br> sin añadir espacio extra */
-  transform: translateY(-5px); /* Opcional: Esto lo sube un poquito más para pegarlo a "TAREAS" */
+  display: inline-block; 
+  transform: translateY(-5px); 
 }
 
 /* TRACK CARD */
 .track-card {
-  flex: 1; 
-  min-height: 0; 
+  flex: 1 0 auto; 
+  min-height: 18vh; 
   display: grid;
   grid-template-columns: 48px 80px 1fr; 
   background: var(--ink); border: 1px solid rgba(201,168,76,0.12);
@@ -281,7 +309,7 @@ main {
 @keyframes playPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
 .track-year { position: absolute; bottom: 0.4rem; left: 0.4rem; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); background: rgba(0,0,0,0.7); padding: 0.2rem 0.4rem; }
 
-.track-body { padding: 0.8vh 1.2rem; display: flex; flex-direction: column; gap: 0.5vh; border-left: 1px solid rgba(201,168,76,0.08); overflow: hidden; }
+.track-body { padding: 1.2vh 1.2rem; display: flex; flex-direction: column; gap: 0.8vh; border-left: 1px solid rgba(201,168,76,0.08); overflow: hidden; }
 .track-album-tag { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--gold-dim); text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .track-title { font-family: var(--font-disp); font-size: clamp(1.2rem, 3vh, 1.6rem); line-height: 1; letter-spacing: 0.04em; color: var(--white); }
 .track-title em { font-family: var(--font-ser); font-style: italic; color: var(--gold); }
@@ -292,9 +320,11 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.4vh 0; 
+  padding: 0.6vh 0; 
   border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15);
   cursor: pointer; user-select: none; transition: background .2s;
+  flex-wrap: wrap; 
+  gap: 0.4rem;
 }
 .tasks-header:hover { background: rgba(201,168,76,0.04); }
 
@@ -363,94 +393,6 @@ main {
 .c-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold-dim); transition: background .3s, transform .3s, box-shadow .3s; }
 .c-dot.active { background: var(--gold); transform: scale(1.5); box-shadow: 0 0 10px rgba(201,168,76,0.8); }
 
-/* ── MODAL UPLOAD CON GLASSMORPHISM ── */
-.upload-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 9000;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  backdrop-filter: blur(12px); 
-  -webkit-backdrop-filter: blur(12px);
-}
-.upload-overlay.active { opacity: 1; pointer-events: auto; }
-.upload-modal {
-  background: rgba(15, 15, 15, 0.9);
-  border: 1px solid var(--gold);
-  width: 90%; max-width: 650px;
-  padding: 3rem 2rem; position: relative; text-align: center;
-  box-shadow: 0 0 60px rgba(201,168,76,0.25);
-  border-radius: 8px;
-}
-.upload-close {
-  position: absolute; top: 1rem; right: 1rem;
-  background: transparent; border: none;
-  color: var(--gold-dim); font-size: 1.8rem;
-  transition: color 0.3s; cursor: none;
-}
-.upload-close:hover { color: var(--gold); }
-.upload-title {
-  font-family: var(--font-disp); font-size: 3rem;
-  color: var(--gold); margin-bottom: 0.2rem; line-height: 1;
-}
-.upload-subtitle {
-  font-size: 0.9rem; letter-spacing: 0.2em; color: var(--cream);
-  margin-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.2);
-  padding-bottom: 1rem;
-}
-.upload-dropzone {
-  border: 2px dashed var(--gold-dim);
-  padding: 4rem 1rem; margin: 1.5rem 0;
-  background: rgba(255,255,255,0.02);
-  transition: all 0.3s ease;
-  cursor: none;
-  border-radius: 6px;
-}
-.upload-dropzone:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
-.upload-icon { font-size: 3.5rem; color: var(--gold-dim); margin-bottom: 1rem; }
-.upload-dropzone p { font-size: 1rem; color: var(--cream); line-height: 1.5; }
-.upload-dropzone span { color: var(--gold); text-decoration: underline; }
-
-.file-list { text-align: left; margin-bottom: 1.5rem; max-height: 150px; overflow-y: auto; }
-.file-item { display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem; color: var(--white); padding: 0.8rem; background: rgba(255,255,255,0.05); margin-bottom: 0.4rem; border-left: 2px solid var(--gold); }
-.file-item i { color: var(--gold); font-size: 1.2rem; }
-
-.upload-submit-btn {
-  background: var(--gold); color: var(--black);
-  border: none; padding: 1rem 2.5rem;
-  font-family: var(--font-disp); font-size: 1.4rem;
-  letter-spacing: 0.1em; transition: transform 0.2s, box-shadow 0.2s;
-  cursor: none; border-radius: 4px;
-}
-.upload-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(201,168,76,0.4); }
-
-/* ── FOOTER AJUSTADO (MÁS COMPACTO) ── */
-footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background: var(--ink); margin-top: 0; }
-.footer-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2rem; padding: 0.8vh clamp(2rem, 6vw, 5rem); }
-.footer-logo { display: flex; align-items: baseline; gap: 0.5rem; }
-.footer-big { font-family: var(--font-disp); font-size: clamp(2rem, 4vh, 3.5rem); color: var(--gold); line-height: 1; }
-.footer-slash { font-family: var(--font-disp); font-size: 2rem; color: var(--gold-dim); }
-.footer-center { text-align: center; }
-.footer-quote { font-family: var(--font-ser); font-style: italic; font-size: clamp(0.9rem, 1.8vh, 1.2rem); color: var(--cream); line-height: 1.4; }
-.footer-credit { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); margin-top: 0.4rem; }
-.footer-right { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
-.rpm-badge { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
-.rpm-circle { width: clamp(45px, 6vh, 60px); height: clamp(45px, 6vh, 60px); border-radius: 50%; border: 2px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: var(--font-disp); font-size: 0.8rem; color: var(--gold); animation: rpmSpin 4s linear infinite; background: repeating-radial-gradient(circle at center, #111 0px, #111 5px, #0f0f0f 6px, #0f0f0f 10px); }
-@keyframes rpmSpin { to { transform: rotate(360deg); } }
-.rpm-label { font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold-dim); }
-.footer-bar { background: var(--gold); color: var(--black); text-align: center; padding: 0.4rem; font-size: 0.7rem; letter-spacing: 0.3em; font-family: var(--font-disp); }
-
-::selection { background: var(--gold); color: var(--black); }
-
-@media (max-width: 900px) {
-  body { overflow: auto; height: auto; }
-  .carousel-scene { flex-direction: column; }
-  .cards-col--left, .cards-col--right { padding: 0; overflow: visible; }
-  .center-zone { width: 100%; margin-bottom: 3rem; }
-  .footer-inner { grid-template-columns: 1fr; text-align: center; }
-  .footer-logo, .footer-right { justify-content: center; }
-}
-
 /* BOTÓN AGREGAR TAREA */
 .btn-add-task {
   background: transparent;
@@ -471,7 +413,7 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
   box-shadow: 0 0 10px rgba(201,168,76,0.4);
 }
 
-/* ── MODAL UPLOAD (NUEVO) ── */
+/* ── MODAL UPLOAD ── */
 .upload-overlay {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.85);
@@ -541,6 +483,33 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(201,168,76,0.3);
 }
+
+/* ── FOOTER AJUSTADO ── */
+footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background: var(--ink); margin-top: 0; }
+.footer-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2rem; padding: 0.8vh clamp(2rem, 6vw, 5rem); }
+.footer-logo { display: flex; align-items: baseline; gap: 0.5rem; }
+.footer-big { font-family: var(--font-disp); font-size: clamp(2rem, 4vh, 3.5rem); color: var(--gold); line-height: 1; }
+.footer-slash { font-family: var(--font-disp); font-size: 2rem; color: var(--gold-dim); }
+.footer-center { text-align: center; }
+.footer-quote { font-family: var(--font-ser); font-style: italic; font-size: clamp(0.9rem, 1.8vh, 1.2rem); color: var(--cream); line-height: 1.4; }
+.footer-credit { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); margin-top: 0.4rem; }
+.footer-right { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.rpm-badge { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.rpm-circle { width: clamp(45px, 6vh, 60px); height: clamp(45px, 6vh, 60px); border-radius: 50%; border: 2px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: var(--font-disp); font-size: 0.8rem; color: var(--gold); animation: rpmSpin 4s linear infinite; background: repeating-radial-gradient(circle at center, #111 0px, #111 5px, #0f0f0f 6px, #0f0f0f 10px); }
+@keyframes rpmSpin { to { transform: rotate(360deg); } }
+.rpm-label { font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold-dim); }
+.footer-bar { background: var(--gold); color: var(--black); text-align: center; padding: 0.4rem; font-size: 0.7rem; letter-spacing: 0.3em; font-family: var(--font-disp); }
+
+::selection { background: var(--gold); color: var(--black); }
+
+@media (max-width: 900px) {
+  body { overflow: auto; height: auto; }
+  .carousel-scene { flex-direction: column; }
+  .cards-col--left, .cards-col--right { padding: 0; overflow: visible; }
+  .center-zone { width: 100%; margin-bottom: 3rem; }
+  .footer-inner { grid-template-columns: 1fr; text-align: center; }
+  .footer-logo, .footer-right { justify-content: center; }
+}
 </style>
 </head>
 <body>
@@ -596,7 +565,7 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
       <div class="center-meta">
         <div class="meta-line">BASE DE DATOS II</div>
         <div class="meta-line meta-line--gold">MATIAS URCUHUARANGA FRANK DIEGO</div>
-        <div class="meta-line">2025 · LADO B · SEMANAS 9–16</div>
+        <div class="meta-line">2026 · LADO B · SEMANAS 9–16</div>
       </div>
 
       <nav class="center-nav">
@@ -610,7 +579,7 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
         </a>
       </nav>
 
-      <div class="center-vinyl">
+      <div class="center-vinyl paused" id="vinylToggle" title="Haz clic para reproducir/pausar la música">
         <div class="vinyl-label">
           <span class="vinyl-label-text">LADO</span>
           <span class="vinyl-label-text" style="font-size:1.2rem">B</span>
@@ -657,8 +626,12 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
       </div>
     </div>
   </div>
-  <div class="footer-bar">© 2025 · BASE DE DATOS II · MATIAS URCUHUARANGA</div>
+  <div class="footer-bar">© 2026 · BASE DE DATOS II · MATIAS URCUHUARANGA</div>
 </footer>
+
+<audio id="bg-music" loop>
+  <source src="ZZ.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 const tareasData = [
@@ -941,12 +914,39 @@ let mx=0, my=0, cx=0, cy=0;
 document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.cssText=`left:${mx}px;top:${my}px`; });
 function animCursor() { cx+=(mx-cx)*0.12; cy+=(my-cy)*0.12; cursor.style.cssText=`left:${cx}px;top:${cy}px`; requestAnimationFrame(animCursor); }
 animCursor();
+
+/* Añadimos .center-vinyl para que el cursor cambie al pasar sobre él */
 document.addEventListener('mouseover', e => {
-  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header, .upload-dropzone, .upload-close')) cursor.classList.add('big');
+  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header, .upload-dropzone, .upload-close, .center-vinyl')) cursor.classList.add('big');
   else cursor.classList.remove('big');
 });
 
 renderColumns(1);
+
+// --- LÓGICA DEL REPRODUCTOR DE MÚSICA EN EL VINILO ---
+const bgMusic = document.getElementById('bg-music');
+const vinylToggle = document.getElementById('vinylToggle');
+const waveform = document.querySelector('.np-waveform');
+let isMusicPlaying = false;
+
+// Iniciamos con la animación de las onditas pausada
+// (El vinilo ya trae la clase 'paused' desde el HTML)
+waveform.classList.add('paused');
+
+vinylToggle.addEventListener('click', () => {
+  if (isMusicPlaying) {
+    bgMusic.pause();
+    waveform.classList.add('paused');
+    vinylToggle.classList.add('paused'); // Pausa el giro del disco
+    isMusicPlaying = false;
+  } else {
+    bgMusic.volume = 0.3; 
+    bgMusic.play();
+    waveform.classList.remove('paused');
+    vinylToggle.classList.remove('paused'); // Reactiva el giro del disco
+    isMusicPlaying = true;
+  }
+});
 </script>
 </body>
 </html>
