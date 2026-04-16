@@ -514,6 +514,9 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
   .footer-logo, .footer-right { justify-content: center; }
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 <body>
 
@@ -638,6 +641,15 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
 </audio>
 
 <script>
+// ----------------------------------------------------
+// 1. INICIALIZAR SUPABASE
+// ----------------------------------------------------
+const supabaseUrl = 'https://fdlxvfjeuehsmdxxofgj.supabase.co';
+const supabaseKey = 'sb_publishable_kEsIxIpMNs4sdEHHsg7dzQ_07M86PEj'; // <--- REEMPLAZA CON TU KEY
+const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+
+// Mantenemos la data visual por ahora para que no se rompa el diseño (las carátulas)
 const tareasData = [
   {
     semana: 1, imagen: 'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg',
@@ -857,7 +869,7 @@ function checkTask(cb, semana) {
   if (pctEl) pctEl.textContent = pct + '%';
 }
 
-/* ── LÓGICA DE SUBIDA DE ARCHIVOS ── */
+/* ── LÓGICA DE SUBIDA DE ARCHIVOS CON SUPABASE ── */
 function checkLoginAndAdd(event, semana) {
   event.stopPropagation(); 
   
@@ -896,14 +908,66 @@ function handleFileSelect(event) {
   }
 }
 
-function submitUpload() {
-  const files = document.getElementById('fileInput').files;
+// ESTA ES LA MAGIA NUEVA: SUBIDA REAL A SUPABASE
+async function submitUpload() {
+  const fileInput = document.getElementById('fileInput');
+  const files = fileInput.files;
+
+  // 1. Validamos que haya un archivo
   if (files.length === 0) {
     alert('Por favor, selecciona al menos un archivo primero.');
     return;
   }
-  alert(`¡Éxito! ${files.length} archivo(s) listos para subir a la SEMANA ${currentUploadWeek}.\n\n(Nota: Visualmente funciona, pero requiere un backend para guardarse permanentemente).`);
-  closeUpload();
+
+  // Tomamos el primer archivo seleccionado
+  const file = files[0]; 
+  // Creamos un nombre único para evitar sobreescrituras
+  const fileName = `semana_${currentUploadWeek}_${Date.now()}_${file.name}`; 
+
+  // Cambiamos el texto del botón para feedback visual
+  const btnSpan = document.querySelector('.upload-submit-btn span');
+  const originalText = btnSpan.textContent;
+  btnSpan.textContent = 'SUBIENDO A LA NUBE...';
+
+  try {
+    // 2. Subimos el archivo al "Storage" (Bucket: entregables)
+    const { data: uploadData, error: uploadError } = await _supabase.storage
+      .from('entregables')
+      .upload(fileName, file);
+
+    if (uploadError) throw uploadError;
+
+    // 3. Obtenemos el link público para descarga
+    const { data: publicUrlData } = _supabase.storage
+      .from('entregables')
+      .getPublicUrl(fileName);
+
+    const archivoUrl = publicUrlData.publicUrl;
+
+    // 4. Guardamos el registro en la base de datos (Tabla: tareas)
+    const { error: dbError } = await _supabase
+      .from('tareas')
+      .insert([
+        { 
+          semana: currentUploadWeek, 
+          descripcion: file.name, 
+          archivo_url: archivoUrl 
+        }
+      ]);
+
+    if (dbError) throw dbError;
+
+    // 5. ¡Éxito real!
+    alert(`¡Éxito! El archivo se guardó permanentemente en la nube de Supabase.`);
+    closeUpload();
+
+  } catch (error) {
+    console.error("Error en la subida:", error);
+    alert("Hubo un problema al subir el archivo: " + error.message);
+  } finally {
+    // Restauramos el botón
+    btnSpan.textContent = originalText;
+  }
 }
 
 let needleTimeout;
@@ -936,7 +1000,6 @@ const waveform = document.querySelector('.np-waveform');
 let isMusicPlaying = false;
 
 // Iniciamos con la animación de las onditas pausada
-// (El vinilo ya trae la clase 'paused' desde el HTML)
 waveform.classList.add('paused');
 
 vinylToggle.addEventListener('click', () => {
