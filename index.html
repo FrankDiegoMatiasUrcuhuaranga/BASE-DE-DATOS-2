@@ -6,7 +6,109 @@
   <title>BASE DE DATOS 2 — Matias Urcuhuaranga</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Logo UPLA */
+    .upla-logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 130px;
+      text-align: center;
+    }
+    .upla-logo-img {
+      max-width: 90px;
+      height: auto;
+      margin-bottom: 8px;
+      border: 2px solid var(--gold, #e8d49a);
+      padding: 5px;
+    }
+    .upla-logo-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold, #e8d49a);
+      line-height: 1.2;
+    }
+
+    /* Hero Ajustado: Frase izquierda, Info derecha */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 100px 10%;
+      position: relative;
+      min-height: 70vh;
+    }
+    
+    .hero-quote-side {
+      flex: 1;
+      text-align: left;
+    }
+
+    .hero-info-side {
+      flex: 1;
+      display: flex;
+      flex-direction: row; /* CAMBIO: Ahora los elementos se alinean en fila */
+      align-items: flex-start; /* Alineados arriba */
+      justify-content: flex-end; /* Empujados a la derecha */
+      gap: 30px; /* Espacio entre el texto y la foto */
+    }
+
+    .hero-text-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .photo-frame-hero {
+      width: 150px;
+      height: 250px;
+      border: 3px solid var(--gold, #e8d49a);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0; /* Evita que la foto se aplaste */
+    }
+    .profile-photo-hero {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-traits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 25px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .hero-trait {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      border: 1px solid rgba(232, 212, 154, 0.4);
+      padding: 8px;
+      text-align: center;
+      color: var(--gold, #e8d49a);
+    }
+
+    /* Tarjeta combinada */
+    .card--combined .card-content--split {
+      display: flex;
+      gap: 40px;
+    }
+    .intro-block {
+      flex: 1;
+      border-right: 1px solid rgba(232, 212, 154, 0.2);
+      padding-right: 40px;
+    }
+    .github-block-combined {
+      flex: 1;
+    }
+  </style>
 </head>
 <body>
 
@@ -17,14 +119,12 @@
       <button class="login-close" onclick="closeLogin()">
         <i class="fas fa-times"></i>
       </button>
-
       <div class="login-header">
         <div class="login-vinyl"></div>
         <div class="login-kw-tag">ACCESO</div>
         <h2 class="login-title">INICIAR<br><em>SESIÓN</em></h2>
         <p class="login-subtitle">BASE DE DATOS II — 2026</p>
       </div>
-
       <form class="login-form" onsubmit="handleLogin(event)">
         <div class="login-field">
           <label class="login-label">CORREO</label>
@@ -33,7 +133,6 @@
             <input type="email" class="login-input" placeholder="tu@correo.com" id="loginUser" autocomplete="off" required>
           </div>
         </div>
-
         <div class="login-field">
           <label class="login-label">CONTRASEÑA</label>
           <div class="login-input-wrap">
@@ -44,33 +143,26 @@
             </button>
           </div>
         </div>
-
         <div class="login-error" id="loginError">Correo o contraseña incorrectos.</div>
-
         <button type="submit" class="login-btn" id="submitBtn">
           <span>ENTRAR</span>
           <i class="fas fa-arrow-right"></i>
         </button>
-
         <p class="login-quote">"I'm living in the future so the present is my past."</p>
       </form>
     </div>
   </div>
 
   <div class="grain"></div>
-
   <div class="scanlines"></div>
-
   <div class="vinyl-bg"></div>
-
   <div class="floating-lyrics" id="floatingLyrics"></div>
 
   <header>
     <div class="header-inner">
-      <div class="album-counter">
-        <span class="counter-label">DISCOGRAFÍA</span>
-        <span class="counter-num">10</span>
-        <span class="counter-label">ÁLBUMES</span>
+      <div class="upla-logo-container">
+        <img src="FOTO2.png" alt="Logo UPLA" class="upla-logo-img">
+        <div class="upla-logo-text">UNIVERSIDAD PERUANA<br>LOS ANDES</div>
       </div>
 
       <div class="title-block">
@@ -85,18 +177,11 @@
 
       <nav class="header-nav">
         <a href="#" class="nav-link nav-link--login" id="loginBtn" onclick="openLogin(event)">
-          <span class="nav-link-inner">
-            <i class="fas fa-user"></i>
-            <span>INICIAR SESIÓN</span>
-          </span>
+          <span class="nav-link-inner"><i class="fas fa-user"></i><span>INICIAR SESIÓN</span></span>
           <span class="nav-link-bg"></span>
         </a>
-
         <a href="tareas_por_semanas.html" class="nav-link">
-          <span class="nav-link-inner">
-            <i class="fas fa-tasks"></i>
-            <span>TAREAS</span>
-          </span>
+          <span class="nav-link-inner"><i class="fas fa-tasks"></i><span>TAREAS</span></span>
           <span class="nav-link-bg"></span>
         </a>
       </nav>
@@ -104,150 +189,84 @@
 
     <div class="ticker-wrap">
       <div class="ticker">
-        <span>THE COLLEGE DROPOUT</span>
-        <span class="sep">◆</span>
-        <span>LATE REGISTRATION</span>
-        <span class="sep">◆</span>
-        <span>GRADUATION</span>
-        <span class="sep">◆</span>
-        <span>808s & HEARTBREAK</span>
-        <span class="sep">◆</span>
-        <span>MY BEAUTIFUL DARK TWISTED FANTASY</span>
-        <span class="sep">◆</span>
-        <span>WATCH THE THRONE</span>
-        <span class="sep">◆</span>
-        <span>YEEZUS</span>
-        <span class="sep">◆</span>
-        <span>THE LIFE OF PABLO</span>
-        <span class="sep">◆</span>
-        <span>ye</span>
-        <span class="sep">◆</span>
-        <span>DONDA</span>
-        <span class="sep">◆</span>
-        <span>THE COLLEGE DROPOUT</span>
-        <span class="sep">◆</span>
-        <span>LATE REGISTRATION</span>
-        <span class="sep">◆</span>
-        <span>GRADUATION</span>
-        <span class="sep">◆</span>
-        <span>808s & HEARTBREAK</span>
-        <span class="sep">◆</span>
-        <span>MY BEAUTIFUL DARK TWISTED FANTASY</span>
-        <span class="sep">◆</span>
-        <span>WATCH THE THRONE</span>
-        <span class="sep">◆</span>
-        <span>YEEZUS</span>
-        <span class="sep">◆</span>
-        <span>THE LIFE OF PABLO</span>
-        <span class="sep">◆</span>
-        <span>ye</span>
-        <span class="sep">◆</span>
-        <span>DONDA</span>
-        <span class="sep">◆</span>
+        <span>THE COLLEGE DROPOUT</span><span class="sep">◆</span><span>LATE REGISTRATION</span><span class="sep">◆</span><span>GRADUATION</span><span class="sep">◆</span><span>808s & HEARTBREAK</span><span class="sep">◆</span><span>MY BEAUTIFUL DARK TWISTED FANTASY</span><span class="sep">◆</span><span>WATCH THE THRONE</span><span class="sep">◆</span><span>YEEZUS</span><span class="sep">◆</span><span>THE LIFE OF PABLO</span><span class="sep">◆</span><span>ye</span><span class="sep">◆</span><span>DONDA</span><span class="sep">◆</span><span>THE COLLEGE DROPOUT</span><span class="sep">◆</span><span>LATE REGISTRATION</span><span class="sep">◆</span><span>GRADUATION</span><span class="sep">◆</span><span>808s & HEARTBREAK</span><span class="sep">◆</span><span>MY BEAUTIFUL DARK TWISTED FANTASY</span><span class="sep">◆</span><span>WATCH THE THRONE</span><span class="sep">◆</span><span>YEEZUS</span><span class="sep">◆</span><span>THE LIFE OF PABLO</span><span class="sep">◆</span><span>ye</span><span class="sep">◆</span><span>DONDA</span><span class="sep">◆</span>
       </div>
     </div>
   </header>
 
   <section class="hero">
-    <div class="hero-text">
+    <div class="hero-quote-side">
       <p class="hero-lyric">"I smile, 'cause I've got a lot to smile about."</p>
       <p class="hero-credit">— I Wonder, Graduation (2007)</p>
     </div>
-    <div class="hero-visual">
-      <div class="runaway-cross">+</div>
+
+    <div class="hero-info-side">
+      
+      <div class="hero-text-wrapper">
+        <div class="kw-tag">ESTUDIANTE</div>
+        <h2 class="main-title" style="font-size: 3.5rem;">YO / <em>FRANK DIEGO</em></h2>
+        <p class="card-body" style="max-width: 500px; margin-top: 20px;">
+          Soy una persona perseverante, curiosa y con muchas ganas de seguir aprendiendo. Me gusta asumir nuevos retos y no rendirme fácilmente, ya que cada experiencia me ayuda a crecer personal y profesionalmente.
+        </p>
+        <div class="hero-traits-grid">
+          <div class="hero-trait">PERSEVERANTE</div>
+          <div class="hero-trait">CURIOSO</div>
+          <div class="hero-trait">ORGANIZADO</div>
+          <div class="hero-trait">CREATIVO</div>
+        </div>
+        <div class="card-quote" style="margin-top: 20px;">"Runaway fast as you can."</div>
+      </div>
+
+      <div class="photo-frame-hero">
+        <img src="FOTO1.jpeg" alt="Matias Urcuhuaranga" class="profile-photo-hero">
+        <div class="photo-overlay"></div>
+        <div class="photo-corner tr"></div>
+        <div class="photo-corner br"></div>
+      </div>
+
     </div>
   </section>
 
   <main>
-    <article class="card card--intro" data-album="MBDTF">
+    <article class="card card--combined card--github" data-album="GRADUATION">
       <div class="card-eyebrow">
-        <span class="eyebrow-num">01</span>
-        <span class="eyebrow-label">MY BEAUTIFUL DARK TWISTED FANTASY</span>
-      </div>
-      <div class="card-content">
-        <div class="card-icon-area">
-          <div class="icon-circle">
-            <i class="fas fa-rocket"></i>
-          </div>
-          <div class="vinyl-mini"></div>
-        </div>
-        <div class="card-text-area">
-          <h2 class="card-title">INTRODUCCIÓN</h2>
-          <p class="card-body">
-            Bases de Datos se centra en el estudio de los sistemas diseñados para almacenar, organizar y recuperar grandes volúmenes de información de manera eficiente y segura...
-          </p>
-          <div class="card-quote">"No one man should have all that power."</div>
-        </div>
-      </div>
-    </article>
-
-    <article class="card card--github" data-album="GRADUATION">
-      <div class="card-eyebrow">
-        <span class="eyebrow-num">02</span>
-        <span class="eyebrow-label">GRADUATION (2007)</span>
+        <span class="eyebrow-num">01 & 02</span>
+        <span class="eyebrow-label">INTRODUCCIÓN & GRADUATION (2007)</span>
       </div>
       <div class="card-content card-content--split">
-        <div class="github-block">
-          <h2 class="card-title">¿QUÉ ES<br><em>GITHUB?</em></h2>
-          <p class="card-body">
-            GitHub es una plataforma en línea que permite almacenar, compartir y colaborar en proyectos de software. Funciona como un espacio en la nube donde los programadores pueden guardar su código y trabajar en equipo de manera organizada.
-          </p>
+        <div class="intro-block">
+            <div class="card-title-area" style="display:flex; align-items:center; gap:15px; margin-bottom: 20px;">
+                <div class="icon-circle" style="width:50px; height:50px; flex-shrink:0;"><i class="fas fa-rocket"></i></div>
+                <h2 class="card-title" style="margin:0;">INTRODUCCIÓN</h2>
+            </div>
+            <p class="card-body">
+              Bases de Datos se centra en el estudio de los sistemas diseñados para almacenar, organizar y recuperar grandes volúmenes de información de manera eficiente y segura...
+            </p>
+            <div class="card-quote" style="margin-top: 20px;">"No one man should have all that power."</div>
         </div>
-        <div class="steps-block">
-          <h3 class="steps-title">¿CÓMO ME REGISTRÉ?</h3>
-          <ul class="steps-list">
-            <li class="step-item"><span class="step-num">I</span><span>Entré a <strong>github.com</strong> y hice clic en Sign up</span></li>
-            <li class="step-item"><span class="step-num">II</span><span>Ingresé mi correo, usuario y contraseña</span></li>
-            <li class="step-item"><span class="step-num">III</span><span>Completé la verificación de seguridad</span></li>
-            <li class="step-item"><span class="step-num">IV</span><span>Confirmé mi cuenta desde mi correo electrónico</span></li>
-            <li class="step-item"><span class="step-num">V</span><span>Elegí el plan gratuito y ajusté las configuraciones</span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="card-quote card-quote--right">"I wonder if you know what it means to find your dreams."</div>
-    </article>
 
-    <article class="card card--profile" data-album="808s">
-      <div class="card-eyebrow">
-        <span class="eyebrow-num">03</span>
-        <span class="eyebrow-label">808s & HEARTBREAK</span>
-      </div>
-      <div class="card-content card-content--profile">
-        <div class="profile-text-area">
-          <h2 class="card-title">YO</h2>
-          <p class="card-body">
-            Soy una persona perseverante, curiosa y con muchas ganas de seguir aprendiendo. Me gusta asumir nuevos retos y no rendirme fácilmente, ya que cada experiencia me ayuda a crecer...
+        <div class="github-block-combined">
+          <h2 class="card-title">¿QUÉ ES<br><em>GITHUB?</em></h2>
+          <p class="card-body" style="margin-bottom: 25px;">
+            GitHub es una plataforma en línea que permite almacenar, compartir y colaborar en proyectos de software.
           </p>
-          <div class="traits-grid">
-            <div class="trait">PERSEVERANTE</div>
-            <div class="trait">CURIOSO</div>
-            <div class="trait">ORGANIZADO</div>
-            <div class="trait">CREATIVO</div>
+          <div class="steps-block-combined">
+            <h3 class="steps-title">¿CÓMO ME REGISTRÉ?</h3>
+            <ul class="steps-list">
+              <li class="step-item"><span class="step-num">I</span><span>Sign up en <strong>github.com</strong></span></li>
+              <li class="step-item"><span class="step-num">II</span><span>Correo y contraseña</span></li>
+              <li class="step-item"><span class="step-num">V</span><span>Plan gratuito</span></li>
+            </ul>
           </div>
-          <div class="card-quote">"Runaway fast as you can."</div>
-        </div>
-        <div class="profile-img-area">
-          <div class="photo-frame">
-            <img src="FOTO1.jpeg" alt="Matias Urcuhuaranga" class="profile-photo">
-            <div class="photo-overlay"></div>
-            <div class="photo-corner tl"></div>
-            <div class="photo-corner tr"></div>
-            <div class="photo-corner bl"></div>
-            <div class="photo-corner br"></div>
-          </div>
-          <div class="photo-label">FRANK DIEGO</div>
+          <div class="card-quote card-quote--right" style="margin-top: 20px;">"I wonder if you know what it means to find your dreams."</div>
         </div>
       </div>
     </article>
   </main>
 
   <div class="fab-cluster">
-    <button class="fab-btn" title="Volver arriba" onclick="scrollToTop()">
-      <i class="fas fa-arrow-up"></i>
-    </button>
-    <button class="fab-btn fab-btn--gold" title="GitHub" onclick="window.open('https://github.com/FrankDiegoMatiasUrcuhuaranga','_blank')">
-      <i class="fab fa-github"></i>
-    </button>
+    <button class="fab-btn" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+    <button class="fab-btn fab-btn--gold" onclick="window.open('https://github.com/FrankDiegoMatiasUrcuhuaranga','_blank')"><i class="fab fa-github"></i></button>
   </div>
 
   <footer>
@@ -256,156 +275,59 @@
         <div class="footer-big">2026</div>
         <div class="footer-sub">BASE DE DATOS II</div>
       </div>
-      <div class="footer-center">
-        <div class="vinyl-footer"></div>
-      </div>
+      <div class="footer-center"><div class="vinyl-footer"></div></div>
       <div class="footer-right">
         <p class="footer-quote">"I'm living in the future so the present is my past."</p>
         <p class="footer-credit">— Gone, Late Registration</p>
       </div>
     </div>
     <div class="footer-bar">
-      <span>MATIAS URCUHUARANGA FRANK DIEGO</span>
-      <span>◆</span>
-      <span>BASE DE DATOS II</span>
-      <span>◆</span>
-      <span>ERA 2026</span>
+      <span>MATIAS URCUHUARANGA FRANK DIEGO</span><span>◆</span><span>BASE DE DATOS II</span><span>◆</span><span>ERA 2026</span>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
-    // ----------------------------------------------------
-    // 1. INICIALIZAR SUPABASE
-    // ----------------------------------------------------
     const supabaseUrl = 'https://fdlxvfjeuehsmdxxofgj.supabase.co';
-    // IMPORTANTE: ¡Asegúrate de pegar tu Publishable Key completa aquí!
     const supabaseKey = 'sb_publishable_kEsIxIpMNs4sdEHHsg7dzQ_07M86PEj';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // ----------------------------------------------------
-    // 2. LÓGICA DEL LOGIN MODAL
-    // ----------------------------------------------------
-    function openLogin(e) {
-      e.preventDefault();
-      document.getElementById('loginOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+    function openLogin(e) { e.preventDefault(); document.getElementById('loginOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeLogin() { document.getElementById('loginOverlay').classList.remove('active'); document.body.style.overflow = ''; }
+    function togglePass() { const input = document.getElementById('loginPass'); const icon = document.getElementById('eyeIcon'); if (input.type === 'password') { input.type = 'text'; icon.classList.replace('fa-eye', 'fa-eye-slash'); } else { input.type = 'password'; icon.classList.replace('fa-eye-slash', 'fa-eye'); } }
 
-    function closeLogin() {
-      document.getElementById('loginOverlay').classList.remove('active');
-      document.body.style.overflow = '';
-      document.getElementById('loginError').classList.remove('visible');
-      document.getElementById('loginUser').value = '';
-      document.getElementById('loginPass').value = '';
-    }
-
-    function togglePass() {
-      const input = document.getElementById('loginPass');
-      const icon  = document.getElementById('eyeIcon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.replace('fa-eye', 'fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.replace('fa-eye-slash', 'fa-eye');
-      }
-    }
-
-    // NUEVO LOGIN CON SUPABASE AUTH
     async function handleLogin(e) {
       e.preventDefault();
       const email = document.getElementById('loginUser').value.trim();
       const pass = document.getElementById('loginPass').value;
-      const err  = document.getElementById('loginError');
       const btnSpan = document.querySelector('#submitBtn span');
-      
-      // Feedback visual mientras carga
       btnSpan.textContent = 'CARGANDO...';
-
-      // Petición a Supabase
-      const { data, error } = await _supabase.auth.signInWithPassword({
-        email: email,
-        password: pass,
-      });
-
-      // Restaurar botón
+      const { data, error } = await _supabase.auth.signInWithPassword({ email, password: pass });
       btnSpan.textContent = 'ENTRAR';
-
-      if (error) {
-        err.textContent = 'Correo o contraseña incorrectos.';
-        err.classList.add('visible');
-      } else {
-        err.classList.remove('visible');
-        closeLogin();
-    
-        // Mantenemos esta variable para que tus botones de "+ AGREGAR" en las otras páginas sigan funcionando
-        localStorage.setItem('isLoggedIn', 'true');
-    
-        alert('¡Acceso concedido! Bienvenido, ' + data.user.email);
-      }
+      if (error) { document.getElementById('loginError').classList.add('visible'); } 
+      else { localStorage.setItem('isLoggedIn', 'true'); closeLogin(); alert('¡Acceso concedido!'); }
     }
 
-    document.getElementById('loginOverlay').addEventListener('click', function(e) {
-      if (e.target === this) closeLogin();
-    });
-
-    // ----------------------------------------------------
-    // 3. EFECTOS DE LA PÁGINA (Lyrics, Parallax, Partículas)
-    // ----------------------------------------------------
-    const lyrics = [
-      "RUNAWAY", "I WONDER", "POWER", "STRONGER",
-      "GHOST TOWN", "FLASHING LIGHTS", "ALL FALLS DOWN",
-      "HEARTLESS", "GONE", "DEVIL IN A NEW DRESS",
-      "LOST IN THE WORLD", "BOUND 2", "WOLVES", "FADE"
-    ];
+    const lyrics = ["RUNAWAY", "I WONDER", "POWER", "STRONGER", "GHOST TOWN", "FLASHING LIGHTS", "ALL FALLS DOWN", "HEARTLESS", "GONE", "DEVIL IN A NEW DRESS", "LOST IN THE WORLD", "BOUND 2", "WOLVES", "FADE"];
     const container = document.getElementById('floatingLyrics');
-    lyrics.forEach((lyric, i) => {
-      const el = document.createElement('div');
-      el.className = 'lyric-float';
-      el.textContent = lyric;
-      el.style.left = Math.random() * 100 + 'vw';
-      el.style.animationDelay = (i * 2.5) + 's';
-      el.style.animationDuration = (18 + Math.random() * 12) + 's';
-      el.style.fontSize = (0.6 + Math.random() * 1.2) + 'rem';
-      el.style.opacity = (0.04 + Math.random() * 0.08);
-      container.appendChild(el);
-    });
+    lyrics.forEach((lyric, i) => { const el = document.createElement('div'); el.className = 'lyric-float'; el.textContent = lyric; el.style.left = Math.random() * 100 + 'vw'; el.style.animationDelay = (i * 2.5) + 's'; container.appendChild(el); });
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 });
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
     document.querySelectorAll('.card').forEach(c => observer.observe(c));
 
-    document.addEventListener('mousemove', (e) => {
-      const cross = document.querySelector('.runaway-cross');
-      if (!cross) return;
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      cross.style.transform = `translate(${x}px, ${y}px)`;
-    });
+    // El evento 'mousemove' del elemento + cruz fue eliminado
 
     particlesJS("particles-js", {
       "particles": {
         "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
         "color": { "value": "#e8d49a" },
         "shape": { "type": "circle" },
-        "opacity": { "value": 0.8, "random": false },
+        "opacity": { "value": 0.8 },
         "size": { "value": 4, "random": true },
         "line_linked": { "enable": true, "distance": 150, "color": "#e8d49a", "opacity": 0.4, "width": 1 },
-        "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true }
+        "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "out_mode": "out" }
       },
       "retina_detect": true
     });

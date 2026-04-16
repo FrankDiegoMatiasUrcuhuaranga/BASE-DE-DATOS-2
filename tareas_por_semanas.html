@@ -7,9 +7,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-/* Se ha respetado y expandido la complejidad del CSS original. 
-   Se ajustaron las proporciones del pie de página para maximizar el espacio central. */
-
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -29,31 +26,23 @@
 
 * { cursor: none !important; }
 
-/* ── CUSTOM SCROLLBARS CORREGIDOS ── */
-::-webkit-scrollbar { width: 6px; } 
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
-::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; transition: background 0.3s; }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
 .cursor {
-  position: fixed;
-  width: 36px; height: 36px;
-  border: 1.5px solid var(--gold);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
+  position: fixed; width: 36px; height: 36px;
+  border: 1.5px solid var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
   transform: translate(-50%, -50%);
   transition: width .3s, height .3s, border-color .3s;
 }
 .cursor.big { width: 64px; height: 64px; border-color: var(--gold-pale); box-shadow: 0 0 15px rgba(201,168,76,0.3); }
-
 .cursor-dot {
-  position: fixed;
-  width: 5px; height: 5px;
-  background: var(--gold);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
+  position: fixed; width: 5px; height: 5px;
+  background: var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
   transform: translate(-50%, -50%);
 }
 
@@ -63,20 +52,27 @@ body {
   font-family: var(--font-mono);
   background: var(--black);
   color: var(--white);
-  height: 100vh; /* NO SCROLL: Fijado al 100% de la ventana */
-  overflow: hidden; /* Corta cualquier desbordamiento global */
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+/* ── CANVAS DE PARTÍCULAS ── */
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .noise {
   position: fixed; inset: -200%;
   width: 400%; height: 400%;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.028; pointer-events: none; z-index: 9997;
+  opacity: 0.028; pointer-events: none; z-index: 1;
   animation: noiseShift .4s steps(2) infinite;
 }
-
 @keyframes noiseShift {
   0%  { transform: translate(0,0); }
   25% { transform: translate(-3%,-2%); }
@@ -84,7 +80,6 @@ body {
   75% { transform: translate(-1%,1%); }
 }
 
-/* ── NEEDLE ── */
 .needle {
   position: fixed; top: 6rem; right: 2.5rem;
   width: 4px; height: 120px; z-index: 300;
@@ -98,17 +93,13 @@ body {
 .needle-tip { width: 8px; height: 8px; background: var(--gold-pale); border-radius: 50%; margin: 0 auto; box-shadow: 0 0 10px rgba(201,168,76,0.8); animation: tipGlow 1.5s ease-in-out infinite; }
 @keyframes tipGlow { 0%,100% { box-shadow: 0 0 6px rgba(201,168,76,0.6); } 50% { box-shadow: 0 0 18px rgba(201,168,76,1); } }
 
-/* ── STRIPE TOP ── */
 .header-stripe {
-  flex-shrink: 0;
-  width: 100%;
-  height: 5px;
+  flex-shrink: 0; width: 100%; height: 5px; position: relative; z-index: 10;
   background: repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 30px, var(--black) 30px, var(--black) 36px);
   animation: stripeScroll 8s linear infinite;
 }
 @keyframes stripeScroll { to { background-position: 72px 0; } }
 
-/* ── META & NAV ── */
 .meta-line { font-size: 0.8rem; letter-spacing: 0.3em; color: var(--cream); text-transform: uppercase; opacity: 0.6; }
 .meta-line--gold { color: var(--gold); opacity: 1; }
 
@@ -117,24 +108,22 @@ body {
   padding: 0.8rem 1.4rem; border: 1px solid var(--gold-dim);
   text-decoration: none; color: var(--cream);
   font-size: 0.85rem; letter-spacing: 0.25em;
-  position: relative; overflow: hidden; transition: color .3s;
+  position: relative; overflow: hidden; transition: color .3s; z-index: 1;
 }
 .nav-pill::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.77,0,.175,1); }
 .nav-pill:hover::before { transform: scaleX(1); }
 .nav-pill:hover { color: var(--black); }
 .nav-pill span, .nav-pill i { position: relative; z-index: 1; }
-.nav-pill--accent, .nav-pill--back { border-color: var(--gold); color: var(--gold); }
+.nav-pill--accent { border-color: var(--gold); color: var(--gold); }
 .pill-sub { font-size: 0.65rem; opacity: 0.6; letter-spacing: 0.2em; }
 
-/* ── NOW PLAYING ── */
 .now-playing {
-  flex-shrink: 0;
-  display: flex; align-items: center; gap: 1rem;
+  flex-shrink: 0; display: flex; align-items: center; gap: 1rem;
   padding: 0.6rem clamp(2rem, 6vw, 5rem);
   background: var(--charcoal);
   border-bottom: 1px solid rgba(201,168,76,0.15);
   font-size: 0.8rem; letter-spacing: 0.2em;
-  position: relative; z-index: 500;
+  position: relative; z-index: 10;
 }
 .np-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; flex-shrink: 0; animation: dotBlink 1s ease-in-out infinite; }
 @keyframes dotBlink { 0%,100%{opacity:1} 50%{opacity:0.3} }
@@ -148,163 +137,92 @@ body {
 .np-waveform span:nth-child(4) { animation-delay: .3s; height: 80%; }
 .np-waveform span:nth-child(5) { animation-delay: .15s; height: 55%; }
 @keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.3); } }
+.np-waveform.paused span { animation-play-state: paused; transform: scaleY(0.1); }
 
-/* Pausar la animación de las onditas si la música no suena */
-.np-waveform.paused span {
-  animation-play-state: paused;
-  transform: scaleY(0.1);
-}
+/* ── MUSIC TRACK INFO en now-playing ── */
+.np-music-info { display: flex; align-items: center; gap: 0.5rem; color: var(--gold-dim); font-size: 0.75rem; letter-spacing: 0.1em; margin-left: auto; }
+.np-music-info i { color: var(--gold); }
 
-/* ════════════════════════════════════════
-   CAROUSEL LAYOUT Y UNIDADES
-════════════════════════════════════════ */
 main {
-  flex: 1; /* Absorbe el espacio restante */
-  display: flex;
-  flex-direction: column;
-  padding: 1.5vh 0; /* Reducido para dar más espacio */
-  position: relative;
+  flex: 1; display: flex; flex-direction: column;
+  padding: 1.5vh 0; position: relative; z-index: 2;
   overflow: hidden;
 }
 
 .carousel-scene {
-  flex: 1;
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  min-height: 0; 
-  padding: 0 clamp(1rem, 3vw, 2rem);
-  position: relative;
+  flex: 1; display: flex; align-items: stretch; gap: 0; min-height: 0;
+  padding: 0 clamp(1rem, 3vw, 2rem); position: relative;
 }
 
-/* NUEVAS CLASES PARA LOS TÍTULOS DE UNIDAD Y COLUMNAS */
-.col-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 10;
-}
-.col-wrapper--left {
-  padding-right: 120px;
-  padding-left: 5px;
-}
-.col-wrapper--right {
-  padding-left: 120px;
-  padding-right: 5px;
-}
+.col-wrapper { flex: 1; display: flex; flex-direction: column; position: relative; z-index: 10; }
+.col-wrapper--left { padding-right: 120px; padding-left: 5px; }
+.col-wrapper--right { padding-left: 120px; padding-right: 5px; }
+
 .unidad-title {
   font-family: var(--font-disp);
   font-size: clamp(1.8rem, 4vh, 2.5rem);
-  color: var(--gold);
-  text-align: center;
-  letter-spacing: 0.15em;
-  margin-bottom: 1.5vh;
-  border-bottom: 1px solid rgba(201,168,76,0.3);
-  padding-bottom: 0.5vh;
-  flex-shrink: 0;
+  color: var(--gold); text-align: center; letter-spacing: 0.15em;
+  margin-bottom: 1.5vh; border-bottom: 1px solid rgba(201,168,76,0.3);
+  padding-bottom: 0.5vh; flex-shrink: 0;
   text-shadow: 0 0 10px rgba(201,168,76,0.2);
 }
 
 .cards-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5vh; 
-  overflow-y: auto; 
-  overflow-x: hidden;
+  flex: 1; display: flex; flex-direction: column; gap: 1.5vh;
+  overflow-y: auto; overflow-x: hidden;
 }
-
-/* 👇 TRUCO PARA EL SCROLL A LA IZQUIERDA 👇 */
-.cards-col--left { 
-  direction: rtl; /* Pasa el scrollbar a la izquierda */
-}
-.cards-col--left > * {
-  direction: ltr; /* Restaura el texto de las tarjetas a la normalidad */
-}
-/* --------------------------------------- */
+.cards-col--left { direction: rtl; }
+.cards-col--left > * { direction: ltr; }
 
 .center-zone {
-  width: 320px; 
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2vh;
-  position: relative;
-  z-index: 100;
+  width: 320px; flex-shrink: 0; display: flex; flex-direction: column;
+  align-items: center; gap: 2vh; position: relative; z-index: 100;
   justify-content: center;
 }
-
 .center-meta { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; }
 .center-nav { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1rem; }
 
-/* ── VINILO CENTRAL AHORA ES UN BOTÓN ── */
 .center-vinyl {
   width: clamp(140px, 18vh, 180px); height: clamp(140px, 18vh, 180px);
   border-radius: 50%;
   background: repeating-conic-gradient(#111 0deg 2deg, #0a0a0a 2deg 4deg);
   border: 1px solid var(--gold-dim);
   display: flex; align-items: center; justify-content: center;
-  margin: 0 auto;
-  animation: vinylSpin 8s linear infinite;
+  margin: 0 auto; animation: vinylSpin 8s linear infinite;
   box-shadow: 0 0 40px rgba(201,168,76,0.15);
-  cursor: pointer !important; /* Lo hace clickeable */
-  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer !important; transition: box-shadow 0.3s, transform 0.3s;
 }
-
-.center-vinyl:hover {
-  box-shadow: 0 0 50px rgba(201,168,76,0.4);
-  transform: scale(1.02);
-}
-
-.center-vinyl.paused {
-  animation-play-state: paused;
-}
-
+.center-vinyl:hover { box-shadow: 0 0 50px rgba(201,168,76,0.4); transform: scale(1.02); }
+.center-vinyl.paused { animation-play-state: paused; }
 @keyframes vinylSpin { to { transform: rotate(360deg); } }
 
 .vinyl-label {
-  width: 38%; height: 38%;
-  border-radius: 50%;
-  background: var(--gold);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 2px;
+  width: 38%; height: 38%; border-radius: 50%; background: var(--gold);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
 }
-
 .vinyl-label-text {
-  font-family: var(--font-disp);
-  font-size: clamp(0.5rem, 1vh, 0.7rem);
+  font-family: var(--font-disp); font-size: clamp(0.5rem, 1vh, 0.7rem);
   letter-spacing: 0.15em; color: var(--black); line-height: 1;
 }
 
 .center-main-title {
-  text-align: center;
-  font-family: var(--font-disp);
-  font-size: clamp(2.5rem, 6vh, 4.5rem); 
-  line-height: 0.9;
-  color: var(--white);
+  text-align: center; font-family: var(--font-disp);
+  font-size: clamp(2.5rem, 6vh, 4.5rem); line-height: 0.9; color: var(--white);
 }
-
 .center-main-title em {
   font-family: var(--font-ser); font-style: italic;
-  -webkit-text-stroke: 1px var(--gold); color: transparent; 
-  display: inline-block; 
-  transform: translateY(-5px); 
+  -webkit-text-stroke: 1px var(--gold); color: transparent;
+  display: inline-block; transform: translateY(-5px);
 }
 
-/* TRACK CARD */
 .track-card {
-  flex: 1 0 auto; 
-  min-height: 18vh; 
-  display: grid;
-  grid-template-columns: 48px 80px 1fr; 
+  flex: 1 0 auto; min-height: 18vh;
+  display: grid; grid-template-columns: 48px 80px 1fr;
   background: var(--ink); border: 1px solid rgba(201,168,76,0.12);
   position: relative; opacity: 0; transform: translateX(0) scale(0.95);
   transition: opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s;
   overflow: hidden;
 }
-
 .track-card.from-left { transform: translateX(-30px) scale(0.95); }
 .track-card.from-right { transform: translateX(30px) scale(0.95); }
 .track-card.visible { opacity: 1; transform: translateX(0) scale(1); }
@@ -337,33 +255,25 @@ main {
 .track-title { font-family: var(--font-disp); font-size: clamp(1.2rem, 3vh, 1.6rem); line-height: 1; letter-spacing: 0.04em; color: var(--white); }
 .track-title em { font-family: var(--font-ser); font-style: italic; color: var(--gold); }
 
-/* Tasks */
 .track-tasks { flex: 1; display: flex; flex-direction: column; gap: 0.5vh; }
 .tasks-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.6vh 0; 
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.6vh 0;
   border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15);
   cursor: pointer; user-select: none; transition: background .2s;
-  flex-wrap: wrap; 
-  gap: 0.4rem;
+  flex-wrap: wrap; gap: 0.4rem;
 }
 .tasks-header:hover { background: rgba(201,168,76,0.04); }
-
-.tasks-count, .tasks-toggle {
-  font-size: 0.7rem; letter-spacing: 0.1em; white-space: nowrap;
-}
+.tasks-count, .tasks-toggle { font-size: 0.7rem; letter-spacing: 0.1em; white-space: nowrap; }
 .tasks-count { color: var(--cream); }
 .tasks-toggle { color: var(--gold); }
 
 .btn-add-task {
-  background: transparent;
-  border: 1px solid var(--gold-dim); color: var(--gold);
+  background: transparent; border: 1px solid var(--gold-dim); color: var(--gold);
   font-family: var(--font-disp); font-size: 0.75rem; letter-spacing: 0.1em;
   padding: 0.15rem 0.6rem; margin: 0 5px; cursor: pointer;
   transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-  z-index: 10; flex-shrink: 0; 
+  z-index: 10; flex-shrink: 0;
 }
 .btn-add-task:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 10px rgba(201,168,76,0.4); }
 
@@ -390,20 +300,36 @@ main {
 .github-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold-dim); text-decoration: none; border-top: 1px solid rgba(201,168,76,0.1); padding-top: 0.5vh; margin-top: auto; transition: color .2s; }
 .github-link:hover { color: var(--gold); }
 
-.track-card.carousel-exit { opacity: 0; transform: translateY(-20px) scale(0.95); }
-.track-card.carousel-enter { opacity: 0; transform: translateY(20px) scale(0.95); }
-
 /* CAROUSEL CONTROLS */
-.carousel-controls { flex-shrink: 0; display: flex; justify-content: center; align-items: center; gap: 2rem; padding: 1vh 0; }
-.carousel-btn { display: flex; align-items: center; gap: 0.6rem; padding: 0.8vh 2.5rem; border: 1px solid var(--gold); background: transparent; color: var(--gold); font-family: var(--font-disp); font-size: clamp(1rem, 2vh, 1.2rem); letter-spacing: 0.2em; position: relative; overflow: hidden; transition: color .3s; }
-.carousel-btn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.77,0,.175,1); }
-.carousel-btn:hover::before { transform: scaleX(1); }
-.carousel-btn:hover { color: var(--black); }
-.carousel-btn span { position: relative; z-index: 1; }
-.carousel-btn.active { background: var(--gold); color: var(--black); }
-.carousel-btn.active::before { transform: scaleX(1); }
+.carousel-controls { flex-shrink: 0; display: flex; justify-content: center; align-items: center; gap: 2rem; padding: 1vh 0; position: relative; z-index: 10; }
 
-.carousel-btn-pulse { display: flex; align-items: center; gap: 0.6rem; padding: 0.8vh 3rem; border: 1px solid var(--gold-bright); background: transparent; color: var(--gold-bright); font-family: var(--font-disp); font-size: clamp(1.1rem, 2.5vh, 1.3rem); letter-spacing: 0.3em; position: relative; overflow: hidden; transition: color .3s; animation: btnPulse 2s ease-in-out infinite; }
+/* Botones de música (ANTERIOR y SIGUIENTE) */
+.music-btn {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.8vh 2rem; border: 1px solid var(--gold);
+  background: transparent; color: var(--gold);
+  font-family: var(--font-disp); font-size: clamp(1rem, 2vh, 1.2rem);
+  letter-spacing: 0.2em; position: relative; overflow: hidden; transition: color .3s;
+  cursor: pointer;
+}
+.music-btn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.77,0,.175,1); }
+.music-btn:hover::before { transform: scaleX(1); }
+.music-btn:hover { color: var(--black); }
+.music-btn span { position: relative; z-index: 1; }
+.music-btn:active { transform: scale(0.96); }
+
+/* Flash effect al cambiar canción */
+.music-btn.flash { animation: btnFlash 0.3s ease; }
+@keyframes btnFlash { 0%{box-shadow:0 0 0 rgba(201,168,76,0)} 50%{box-shadow:0 0 20px rgba(201,168,76,0.8)} 100%{box-shadow:0 0 0 rgba(201,168,76,0)} }
+
+.carousel-btn-pulse {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.8vh 3rem; border: 1px solid var(--gold-bright);
+  background: transparent; color: var(--gold-bright);
+  font-family: var(--font-disp); font-size: clamp(1.1rem, 2.5vh, 1.3rem);
+  letter-spacing: 0.3em; position: relative; overflow: hidden; transition: color .3s;
+  animation: btnPulse 2s ease-in-out infinite; cursor: pointer;
+}
 @keyframes btnPulse { 0%,100%{box-shadow:0 0 8px rgba(201,168,76,0.3)} 50%{box-shadow:0 0 24px rgba(201,168,76,0.7)} }
 .carousel-btn-pulse::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.77,0,.175,1); }
 .carousel-btn-pulse:hover::before { transform: scaleX(1); }
@@ -416,78 +342,45 @@ main {
 .c-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold-dim); transition: background .3s, transform .3s, box-shadow .3s; }
 .c-dot.active { background: var(--gold); transform: scale(1.5); box-shadow: 0 0 10px rgba(201,168,76,0.8); }
 
-/* BOTÓN CERRAR SESIÓN */
 .btn-logout {
-  background: transparent;
-  border: 1px solid var(--gold-dim);
-  color: var(--gold);
-  font-family: var(--font-disp);
-  font-size: clamp(0.9rem, 1.5vh, 1.1rem);
-  letter-spacing: 0.1em;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  background: transparent; border: 1px solid var(--gold-dim); color: var(--gold);
+  font-family: var(--font-disp); font-size: clamp(0.9rem, 1.5vh, 1.1rem);
+  letter-spacing: 0.1em; padding: 0.5rem 1rem; cursor: pointer;
+  transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;
 }
-.btn-logout:hover {
-  background: var(--gold);
-  color: var(--black);
-  box-shadow: 0 0 15px rgba(201,168,76,0.5);
-}
+.btn-logout:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 15px rgba(201,168,76,0.5); }
 
 /* ── MODAL UPLOAD ── */
 .upload-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 9000;
-  display: flex; align-items: center; justify-content: center;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+  z-index: 9000; display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transition: opacity 0.3s;
   backdrop-filter: blur(5px);
 }
 .upload-overlay.active { opacity: 1; pointer-events: auto; }
 .upload-modal {
-  background: var(--ink);
-  border: 1px solid var(--gold);
-  width: 90%; max-width: 650px;
-  padding: 3rem 2rem; position: relative; text-align: center;
+  background: var(--ink); border: 1px solid var(--gold);
+  width: 90%; max-width: 650px; padding: 3rem 2rem;
+  position: relative; text-align: center;
   box-shadow: 0 0 40px rgba(201,168,76,0.15);
 }
 .upload-close {
   position: absolute; top: 1rem; right: 1rem;
   background: transparent; border: none;
-  color: var(--gold-dim); font-size: 1.8rem;
-  transition: color 0.3s; cursor: none;
+  color: var(--gold-dim); font-size: 1.8rem; transition: color 0.3s;
 }
 .upload-close:hover { color: var(--gold); }
-.upload-title {
-  font-family: var(--font-disp); font-size: 3rem;
-  color: var(--gold); margin-bottom: 0.2rem; line-height: 1;
-}
-.upload-subtitle {
-  font-size: 0.9rem; letter-spacing: 0.2em; color: var(--cream);
-  margin-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.2);
-  padding-bottom: 1rem;
-}
+.upload-title { font-family: var(--font-disp); font-size: 3rem; color: var(--gold); margin-bottom: 0.2rem; line-height: 1; }
+.upload-subtitle { font-size: 0.9rem; letter-spacing: 0.2em; color: var(--cream); margin-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.2); padding-bottom: 1rem; }
 .upload-dropzone {
-  border: 2px dashed var(--gold-dim);
-  padding: 4rem 1rem; margin: 1.5rem 0;
-  background: rgba(255,255,255,0.01);
-  transition: all 0.3s ease;
-  cursor: pointer;
+  border: 2px dashed var(--gold-dim); padding: 4rem 1rem; margin: 1.5rem 0;
+  background: rgba(255,255,255,0.01); transition: all 0.3s ease; cursor: pointer;
 }
-.upload-dropzone:hover {
-  border-color: var(--gold);
-  background: rgba(201,168,76,0.05);
-}
+.upload-dropzone:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
 .upload-icon { font-size: 3.5rem; color: var(--gold-dim); margin-bottom: 1rem; }
 .upload-dropzone p { font-size: 1rem; color: var(--cream); line-height: 1.5; }
 .upload-dropzone span { color: var(--gold); text-decoration: underline; }
-
-.file-list {
-  text-align: left; margin-bottom: 1.5rem; max-height: 150px; overflow-y: auto;
-}
+.file-list { text-align: left; margin-bottom: 1.5rem; max-height: 150px; overflow-y: auto; }
 .file-item {
   display: flex; align-items: center; gap: 0.8rem;
   font-size: 0.85rem; color: var(--white);
@@ -495,31 +388,53 @@ main {
   margin-bottom: 0.4rem; border-left: 2px solid var(--gold);
 }
 .file-item i { color: var(--gold); font-size: 1.2rem; }
-
 .upload-submit-btn {
-  background: var(--gold); color: var(--black);
-  border: none; padding: 1rem 2.5rem;
-  font-family: var(--font-disp); font-size: 1.4rem;
-  letter-spacing: 0.1em; transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
+  background: var(--gold); color: var(--black); border: none; padding: 1rem 2.5rem;
+  font-family: var(--font-disp); font-size: 1.4rem; letter-spacing: 0.1em;
+  transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
 }
-.upload-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(201,168,76,0.3);
-}
+.upload-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(201,168,76,0.3); }
 
-/* ── FOOTER AJUSTADO ── */
-footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background: var(--ink); margin-top: 0; }
-.footer-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 2rem; padding: 0.8vh clamp(2rem, 6vw, 5rem); }
+/* ── FOOTER CORREGIDO - texto centrado ── */
+footer {
+  flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2);
+  background: var(--ink); margin-top: 0; position: relative; z-index: 10;
+}
+.footer-inner {
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 2rem;
+  padding: 0.8vh clamp(2rem, 6vw, 5rem);
+}
 .footer-logo { display: flex; align-items: baseline; gap: 0.5rem; }
 .footer-big { font-family: var(--font-disp); font-size: clamp(2rem, 4vh, 3.5rem); color: var(--gold); line-height: 1; }
 .footer-slash { font-family: var(--font-disp); font-size: 2rem; color: var(--gold-dim); }
-.footer-center { text-align: center; }
-.footer-quote { font-family: var(--font-ser); font-style: italic; font-size: clamp(0.9rem, 1.8vh, 1.2rem); color: var(--cream); line-height: 1.4; }
-.footer-credit { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); margin-top: 0.4rem; }
-.footer-right { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 2rem; } /* Flex row para CERRAR SESION */
+
+/* CENTRO DEL FOOTER: perfectamente centrado */
+.footer-center {
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%;
+}
+.footer-quote {
+  font-family: var(--font-ser); font-style: italic;
+  font-size: clamp(0.9rem, 1.8vh, 1.2rem); color: var(--cream); line-height: 1.4;
+  text-align: center; width: 100%;
+}
+.footer-credit {
+  font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold);
+  margin-top: 0.4rem; text-align: center; width: 100%;
+}
+
+.footer-right { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 2rem; }
 .rpm-badge { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
-.rpm-circle { width: clamp(45px, 6vh, 60px); height: clamp(45px, 6vh, 60px); border-radius: 50%; border: 2px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: var(--font-disp); font-size: 0.8rem; color: var(--gold); animation: rpmSpin 4s linear infinite; background: repeating-radial-gradient(circle at center, #111 0px, #111 5px, #0f0f0f 6px, #0f0f0f 10px); }
+.rpm-circle {
+  width: clamp(45px, 6vh, 60px); height: clamp(45px, 6vh, 60px);
+  border-radius: 50%; border: 2px solid var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-disp); font-size: 0.8rem; color: var(--gold);
+  animation: rpmSpin 4s linear infinite;
+  background: repeating-radial-gradient(circle at center, #111 0px, #111 5px, #0f0f0f 6px, #0f0f0f 10px);
+}
 @keyframes rpmSpin { to { transform: rotate(360deg); } }
 .rpm-label { font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold-dim); }
 .footer-bar { background: var(--gold); color: var(--black); text-align: center; padding: 0.4rem; font-size: 0.7rem; letter-spacing: 0.3em; font-family: var(--font-disp); }
@@ -529,37 +444,31 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
 @media (max-width: 900px) {
   body { overflow: auto; height: auto; }
   .carousel-scene { flex-direction: column; }
-  .col-wrapper--left, .col-wrapper--right { padding: 0; overflow: visible; margin-bottom: 2rem; } /* Update de padding responsivo */
+  .col-wrapper--left, .col-wrapper--right { padding: 0; overflow: visible; margin-bottom: 2rem; }
   .center-zone { width: 100%; margin-bottom: 3rem; }
   .footer-inner { grid-template-columns: 1fr; text-align: center; }
   .footer-logo, .footer-right { justify-content: center; flex-direction: column; gap: 1rem; }
 }
 </style>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 <body>
 
+<!-- CANVAS PARTÍCULAS -->
+<canvas id="particles-canvas"></canvas>
+
 <div class="upload-overlay" id="uploadOverlay">
   <div class="upload-modal">
-    <button class="upload-close" onclick="closeUpload()">
-      <i class="fas fa-times"></i>
-    </button>
+    <button class="upload-close" onclick="closeUpload()"><i class="fas fa-times"></i></button>
     <h2 class="upload-title">SUBIR ARCHIVO</h2>
     <p class="upload-subtitle" id="uploadSubtitle">SEMANA X</p>
-    
     <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
       <i class="fas fa-cloud-upload-alt upload-icon"></i>
       <p>Seleccione y arrastre aquí los archivos o<br><span>haga click para seleccionar</span></p>
       <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
     </div>
-    
     <div class="file-list" id="fileList"></div>
-    
-    <button class="upload-submit-btn" onclick="submitUpload()">
-      <span>CONFIRMAR SUBIDA</span>
-    </button>
+    <button class="upload-submit-btn" onclick="submitUpload()"><span>CONFIRMAR SUBIDA</span></button>
   </div>
 </div>
 
@@ -578,38 +487,37 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
   <div class="np-dot"></div>
   <span class="np-label">REPRODUCIENDO</span>
   <span class="np-track" id="npTrack">—</span>
-  <div class="np-waveform">
+  <div class="np-waveform" id="npWaveform">
     <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="np-music-info" id="npMusicInfo" style="display:none;">
+    <i class="fas fa-music"></i>
+    <span id="npMusicTitle">—</span>
   </div>
 </div>
 
 <main>
   <div class="carousel-scene">
-    
     <div class="col-wrapper col-wrapper--left">
       <h3 class="unidad-title">UNIDAD 1</h3>
       <div class="cards-col cards-col--left" id="colLeft"></div>
     </div>
 
     <div class="center-zone">
-      
       <div class="center-meta">
         <div class="meta-line">BASE DE DATOS II</div>
         <div class="meta-line meta-line--gold">MATIAS URCUHUARANGA FRANK DIEGO</div>
         <div class="meta-line">2026 · LADO A · SEMANAS 1–8</div>
       </div>
-
       <nav class="center-nav">
         <a href="index.html" class="nav-pill">
-          <i class="fas fa-home"></i>
-          <span>INICIO</span>
+          <i class="fas fa-home"></i><span>INICIO</span>
         </a>
         <a href="tareas_por_semanas2.html" class="nav-pill nav-pill--accent">
           <span>LADO B →</span>
           <span class="pill-sub">SEMANAS 9–16</span>
         </a>
       </nav>
-
       <div class="center-vinyl paused" id="vinylToggle" title="Haz clic para reproducir/pausar la música">
         <div class="vinyl-label">
           <span class="vinyl-label-text">LADO</span>
@@ -617,10 +525,7 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
           <span class="vinyl-label-text">33⅓</span>
         </div>
       </div>
-      
-      <div class="center-main-title">
-        TAREAS<br><em>POR</em><br>SEMANAS
-      </div>
+      <div class="center-main-title">TAREAS<br><em>POR</em><br>SEMANAS</div>
       <div class="carousel-dots" id="carouselDots"></div>
     </div>
 
@@ -628,18 +533,20 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
       <h3 class="unidad-title">UNIDAD 2</h3>
       <div class="cards-col" id="colRight"></div>
     </div>
-
   </div>
 
   <div class="carousel-controls">
-    <button class="carousel-btn" id="btnPrev" onclick="carouselPrev()">
-      <span>◀ ANTERIOR</span>
+    <!-- BOTÓN MÚSICA ANTERIOR -->
+    <button class="music-btn" id="btnPrev" onclick="musicPrev()">
+      <span>⏮ ANTERIOR</span>
     </button>
+    <!-- BOTÓN GIRAR CARRUSEL (sin cambios) -->
     <button class="carousel-btn-pulse" id="btnSpin" onclick="toggleCarousel()">
       <span id="btnSpinText">▶ GIRAR CARRUSEL</span>
     </button>
-    <button class="carousel-btn" id="btnNext" onclick="carouselNext()">
-      <span>SIGUIENTE ▶</span>
+    <!-- BOTÓN MÚSICA SIGUIENTE -->
+    <button class="music-btn" id="btnNext" onclick="musicNext()">
+      <span>SIGUIENTE ⏭</span>
     </button>
   </div>
 </main>
@@ -668,25 +575,221 @@ footer { flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2); background:
   <div class="footer-bar">© 2026 · BASE DE DATOS II · MATIAS URCUHUARANGA</div>
 </footer>
 
-<audio id="bg-music" loop>
-  <source src="ZZ.mp3" type="audio/mpeg">
-</audio>
+<!-- LISTA DE CANCIONES - agrega tus archivos MP3 aquí -->
+<audio id="bg-music" loop></audio>
 
 <script>
-// ----------------------------------------------------
-// 1. INICIALIZAR SUPABASE
-// ----------------------------------------------------
+// ══════════════════════════════════════════
+// PARTÍCULAS TIPO CONSTELACIÓN
+// ══════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles, mouse = {x: -9999, y: -9999};
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function createParticles() {
+    const count = Math.floor((W * H) / 18000);
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 2 + 1,
+        alpha: Math.random() * 0.6 + 0.3,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.02 + 0.005
+      });
+    }
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, W, H);
+    const maxDist = 140;
+    const mouseRadius = 180;
+
+    // Actualizar posiciones
+    for (let p of particles) {
+      p.pulse += p.pulseSpeed;
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+    }
+
+    // Dibujar líneas entre partículas cercanas
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < maxDist) {
+          const opacity = (1 - dist / maxDist) * 0.35;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(201, 168, 76, ${opacity})`;
+          ctx.lineWidth = 0.6;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Líneas hacia el mouse
+    for (let p of particles) {
+      const dx = p.x - mouse.x;
+      const dy = p.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < mouseRadius) {
+        const opacity = (1 - dist / mouseRadius) * 0.6;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(240, 192, 96, ${opacity})`;
+        ctx.lineWidth = 0.8;
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+    }
+
+    // Dibujar partículas (puntos brillantes)
+    for (let p of particles) {
+      const glow = Math.sin(p.pulse) * 0.3 + 0.7;
+      const r = p.r * glow;
+      const alpha = p.alpha * glow;
+
+      // Resplandor exterior
+      const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3);
+      grad.addColorStop(0, `rgba(232, 212, 154, ${alpha})`);
+      grad.addColorStop(0.5, `rgba(201, 168, 76, ${alpha * 0.5})`);
+      grad.addColorStop(1, `rgba(201, 168, 76, 0)`);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r * 3, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Núcleo sólido
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(240, 212, 160, ${alpha})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(drawParticles);
+  }
+
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('resize', () => { resize(); createParticles(); });
+  resize();
+  createParticles();
+  drawParticles();
+})();
+
+// ══════════════════════════════════════════
+// SUPABASE
+// ══════════════════════════════════════════
 const supabaseUrl = 'https://fdlxvfjeuehsmdxxofgj.supabase.co';
-const supabaseKey = 'sb_publishable_kEsIxIpMNs4sdEHHsg7dzQ_07M86PEj'; // <--- REEMPLAZA CON TU KEY
+const supabaseKey = 'sb_publishable_kEsIxIpMNs4sdEHHsg7dzQ_07M86PEj';
 const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+// ══════════════════════════════════════════
+// LISTA DE MÚSICAS
+// Agrega aquí tus canciones. Formato: { title: 'NOMBRE', src: 'archivo.mp3' }
+// ══════════════════════════════════════════
+const playlist = [
+  { title: 'ZZ — LADO A', src: 'ZZ.mp3' },
+  // Agrega más canciones aquí:
+  // { title: 'GOLD DIGGER', src: 'gold_digger.mp3' },
+  // { title: 'STRONGER', src: 'stronger.mp3' },
+];
+let currentTrackIndex = 0;
+let isMusicPlaying = false;
 
-// Mantenemos la data visual por ahora para que no se rompa el diseño (las carátulas)
+const bgMusic = document.getElementById('bg-music');
+const vinylToggle = document.getElementById('vinylToggle');
+const waveform = document.getElementById('npWaveform');
+const npMusicInfo = document.getElementById('npMusicInfo');
+const npMusicTitle = document.getElementById('npMusicTitle');
+
+function loadTrack(index) {
+  if (playlist.length === 0) return;
+  currentTrackIndex = (index + playlist.length) % playlist.length;
+  const track = playlist[currentTrackIndex];
+  bgMusic.src = track.src;
+  npMusicTitle.textContent = track.title;
+  npMusicInfo.style.display = 'flex';
+  if (isMusicPlaying) {
+    bgMusic.play().catch(() => {});
+  }
+}
+
+function musicPrev() {
+  const btn = document.getElementById('btnPrev');
+  btn.classList.add('flash');
+  setTimeout(() => btn.classList.remove('flash'), 300);
+  if (!isMusicPlaying) {
+    // Si no está reproduciendo, solo cambia el track
+    loadTrack(currentTrackIndex - 1);
+    return;
+  }
+  loadTrack(currentTrackIndex - 1);
+  bgMusic.play().catch(() => {});
+}
+
+function musicNext() {
+  const btn = document.getElementById('btnNext');
+  btn.classList.add('flash');
+  setTimeout(() => btn.classList.remove('flash'), 300);
+  if (!isMusicPlaying) {
+    loadTrack(currentTrackIndex + 1);
+    return;
+  }
+  loadTrack(currentTrackIndex + 1);
+  bgMusic.play().catch(() => {});
+}
+
+// Cuando termina una canción, pasa a la siguiente
+bgMusic.addEventListener('ended', () => {
+  if (playlist.length > 1) musicNext();
+});
+
+// Iniciar con las ondas pausadas
+waveform.classList.add('paused');
+
+vinylToggle.addEventListener('click', () => {
+  if (isMusicPlaying) {
+    bgMusic.pause();
+    waveform.classList.add('paused');
+    vinylToggle.classList.add('paused');
+    isMusicPlaying = false;
+  } else {
+    if (!bgMusic.src || bgMusic.src === window.location.href) {
+      loadTrack(0);
+    }
+    bgMusic.volume = 0.3;
+    bgMusic.play().then(() => {
+      waveform.classList.remove('paused');
+      vinylToggle.classList.remove('paused');
+      isMusicPlaying = true;
+    }).catch(err => console.log('Audio error:', err));
+  }
+});
+
+// ══════════════════════════════════════════
+// DATA DE TAREAS
+// ══════════════════════════════════════════
 const tareasData = [
   {
     semana: 1, imagen: 'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg',
     album: 'THE COLLEGE DROPOUT', year: '2004',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%201',
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/BASE-DE-DATOS-2/tree/main/CODIGOS',
     tareas: [
       { id: 1, descripcion: 'TAREA 1:INFORME', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/BASE-DE-DATOS-2/blob/main/INFORME.pdf', archivo: 'INFORME.pdf' },
       { id: 2, descripcion: 'TAREA 2: EJERCICIO 1', githubUrl: '', archivo: 'TRABAJO1.pdf' },
@@ -811,39 +914,26 @@ function renderColumns(dir) {
   const { left, right } = getPage(offset);
   const colL = document.getElementById('colLeft');
   const colR = document.getElementById('colRight');
-
-  [...colL.children, ...colR.children].forEach(c => {
-    c.classList.add(dir === 1 ? 'carousel-exit' : 'carousel-enter');
-  });
-
+  [...colL.children, ...colR.children].forEach(c => { c.classList.add(dir === 1 ? 'carousel-exit' : 'carousel-enter'); });
   setTimeout(() => {
     colL.innerHTML = '';
     colR.innerHTML = '';
-
     left.forEach((s, i) => {
       const card = document.createElement('div');
       card.className = 'track-card from-left';
       card.innerHTML = buildCardHTML(s);
-      card.addEventListener('mouseenter', () => {
-        document.getElementById('npTrack').textContent = `SEMANA ${s.semana} — ${s.album}`;
-        activateNeedle();
-      });
+      card.addEventListener('mouseenter', () => { document.getElementById('npTrack').textContent = `SEMANA ${s.semana} — ${s.album}`; activateNeedle(); });
       colL.appendChild(card);
       setTimeout(() => card.classList.add('visible'), i * 60);
     });
-
     right.forEach((s, i) => {
       const card = document.createElement('div');
       card.className = 'track-card from-right';
       card.innerHTML = buildCardHTML(s);
-      card.addEventListener('mouseenter', () => {
-        document.getElementById('npTrack').textContent = `SEMANA ${s.semana} — ${s.album}`;
-        activateNeedle();
-      });
+      card.addEventListener('mouseenter', () => { document.getElementById('npTrack').textContent = `SEMANA ${s.semana} — ${s.album}`; activateNeedle(); });
       colR.appendChild(card);
       setTimeout(() => card.classList.add('visible'), i * 60);
     });
-
     updateDots();
   }, 200);
 }
@@ -858,25 +948,15 @@ function updateDots() {
   }
 }
 
-function carouselNext() { offset = (offset + 1) % tareasData.length; renderColumns(1); }
-function carouselPrev() { offset = (offset - 1 + tareasData.length) % tareasData.length; renderColumns(-1); }
-
 function toggleCarousel() {
   const btn = document.getElementById('btnSpin');
   const txt = document.getElementById('btnSpinText');
   if (isSpinning) {
-    isSpinning = false;
-    clearInterval(spinInterval);
-    btn.classList.remove('spinning');
-    txt.textContent = '▶ GIRAR CARRUSEL';
+    isSpinning = false; clearInterval(spinInterval);
+    btn.classList.remove('spinning'); txt.textContent = '▶ GIRAR CARRUSEL';
   } else {
-    isSpinning = true;
-    btn.classList.add('spinning');
-    txt.textContent = '⏹ DETENER';
-    spinInterval = setInterval(() => {
-      offset = (offset + 1) % tareasData.length;
-      renderColumns(1);
-    }, 1800);
+    isSpinning = true; btn.classList.add('spinning'); txt.textContent = '⏹ DETENER';
+    spinInterval = setInterval(() => { offset = (offset + 1) % tareasData.length; renderColumns(1); }, 1800);
   }
 }
 
@@ -901,110 +981,61 @@ function checkTask(cb, semana) {
   if (pctEl) pctEl.textContent = pct + '%';
 }
 
-/* ── LÓGICA DE SUBIDA DE ARCHIVOS CON SUPABASE (ASEGURADA) ── */
 function checkLoginAndAdd(event, semana) {
-  event.stopPropagation(); 
-  
+  event.stopPropagation();
   const isLoggedIn = localStorage.getItem('isLoggedIn');
-  
-  // VERIFICACION ESTRICTA: Nadie sube archivo sin estar logueado
   if (isLoggedIn === 'true') {
     currentUploadWeek = semana;
     document.getElementById('uploadSubtitle').textContent = 'SEMANA ' + semana;
     document.getElementById('uploadOverlay').classList.add('active');
   } else {
     alert('Acceso denegado. Serás redirigido para iniciar sesión primero.');
-    window.location.href = 'index.html'; 
+    window.location.href = 'index.html';
   }
 }
 
-/* ── FUNCIÓN DE CERRAR SESIÓN ── */
 function cerrarSesion() {
-  localStorage.removeItem('isLoggedIn'); // Elimina la sesión
-  window.location.href = 'index.html';   // Redirige al inicio
+  localStorage.removeItem('isLoggedIn');
+  window.location.href = 'index.html';
 }
 
 function closeUpload() {
   document.getElementById('uploadOverlay').classList.remove('active');
-  document.getElementById('fileInput').value = ''; 
-  document.getElementById('fileList').innerHTML = ''; 
+  document.getElementById('fileInput').value = '';
+  document.getElementById('fileList').innerHTML = '';
 }
 
 function handleFileSelect(event) {
   const files = event.target.files;
   const fileList = document.getElementById('fileList');
-  fileList.innerHTML = ''; 
-  
-  if(files.length > 0) {
-    for(let i = 0; i < files.length; i++) {
-      fileList.innerHTML += `
-        <div class="file-item">
-          <i class="fas fa-file-alt"></i>
-          <span>${files[i].name}</span>
-        </div>
-      `;
-    }
+  fileList.innerHTML = '';
+  for (let i = 0; i < files.length; i++) {
+    fileList.innerHTML += `<div class="file-item"><i class="fas fa-file-alt"></i><span>${files[i].name}</span></div>`;
   }
 }
 
-// ESTA ES LA MAGIA NUEVA: SUBIDA REAL A SUPABASE
 async function submitUpload() {
   const fileInput = document.getElementById('fileInput');
   const files = fileInput.files;
-
-  // 1. Validamos que haya un archivo
-  if (files.length === 0) {
-    alert('Por favor, selecciona al menos un archivo primero.');
-    return;
-  }
-
-  // Tomamos el primer archivo seleccionado
-  const file = files[0]; 
-  // Creamos un nombre único para evitar sobreescrituras
-  const fileName = `semana_${currentUploadWeek}_${Date.now()}_${file.name}`; 
-
-  // Cambiamos el texto del botón para feedback visual
+  if (files.length === 0) { alert('Por favor, selecciona al menos un archivo primero.'); return; }
+  const file = files[0];
+  const fileName = `semana_${currentUploadWeek}_${Date.now()}_${file.name}`;
   const btnSpan = document.querySelector('.upload-submit-btn span');
   const originalText = btnSpan.textContent;
   btnSpan.textContent = 'SUBIENDO A LA NUBE...';
-
   try {
-    // 2. Subimos el archivo al "Storage" (Bucket: entregables)
-    const { data: uploadData, error: uploadError } = await _supabase.storage
-      .from('entregables')
-      .upload(fileName, file);
-
+    const { data: uploadData, error: uploadError } = await _supabase.storage.from('entregables').upload(fileName, file);
     if (uploadError) throw uploadError;
-
-    // 3. Obtenemos el link público para descarga
-    const { data: publicUrlData } = _supabase.storage
-      .from('entregables')
-      .getPublicUrl(fileName);
-
+    const { data: publicUrlData } = _supabase.storage.from('entregables').getPublicUrl(fileName);
     const archivoUrl = publicUrlData.publicUrl;
-
-    // 4. Guardamos el registro en la base de datos (Tabla: tareas)
-    const { error: dbError } = await _supabase
-      .from('tareas')
-      .insert([
-        { 
-          semana: currentUploadWeek, 
-          descripcion: file.name, 
-          archivo_url: archivoUrl 
-        }
-      ]);
-
+    const { error: dbError } = await _supabase.from('tareas').insert([{ semana: currentUploadWeek, descripcion: file.name, archivo_url: archivoUrl }]);
     if (dbError) throw dbError;
-
-    // 5. ¡Éxito real!
-    alert(`¡Éxito! El archivo se guardó permanentemente en la nube de Supabase.`);
+    alert('¡Éxito! El archivo se guardó permanentemente en la nube de Supabase.');
     closeUpload();
-
   } catch (error) {
-    console.error("Error en la subida:", error);
-    alert("Hubo un problema al subir el archivo: " + error.message);
+    console.error('Error en la subida:', error);
+    alert('Hubo un problema al subir el archivo: ' + error.message);
   } finally {
-    // Restauramos el botón
     btnSpan.textContent = originalText;
   }
 }
@@ -1023,38 +1054,12 @@ let mx=0, my=0, cx=0, cy=0;
 document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.cssText=`left:${mx}px;top:${my}px`; });
 function animCursor() { cx+=(mx-cx)*0.12; cy+=(my-cy)*0.12; cursor.style.cssText=`left:${cx}px;top:${cy}px`; requestAnimationFrame(animCursor); }
 animCursor();
-
-/* Añadimos .center-vinyl para que el cursor cambie al pasar sobre él */
 document.addEventListener('mouseover', e => {
-  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header, .upload-dropzone, .upload-close, .center-vinyl, .btn-logout')) cursor.classList.add('big');
+  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn')) cursor.classList.add('big');
   else cursor.classList.remove('big');
 });
 
 renderColumns(1);
-
-// --- LÓGICA DEL REPRODUCTOR DE MÚSICA EN EL VINILO ---
-const bgMusic = document.getElementById('bg-music');
-const vinylToggle = document.getElementById('vinylToggle');
-const waveform = document.querySelector('.np-waveform');
-let isMusicPlaying = false;
-
-// Iniciamos con la animación de las onditas pausada
-waveform.classList.add('paused');
-
-vinylToggle.addEventListener('click', () => {
-  if (isMusicPlaying) {
-    bgMusic.pause();
-    waveform.classList.add('paused');
-    vinylToggle.classList.add('paused'); // Pausa el giro del disco
-    isMusicPlaying = false;
-  } else {
-    bgMusic.volume = 0.3; 
-    bgMusic.play();
-    waveform.classList.remove('paused');
-    vinylToggle.classList.remove('paused'); // Reactiva el giro del disco
-    isMusicPlaying = true;
-  }
-});
 </script>
 </body>
-</html>
+</html>  
