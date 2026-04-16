@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BASE DE  — Matias Urcuhuaranga</title>
+  <title>BASE DE DATOS 2 — Matias Urcuhuaranga</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
@@ -27,10 +27,10 @@
 
       <form class="login-form" onsubmit="handleLogin(event)">
         <div class="login-field">
-          <label class="login-label">USUARIO</label>
+          <label class="login-label">CORREO</label>
           <div class="login-input-wrap">
-            <i class="fas fa-user login-input-icon"></i>
-            <input type="text" class="login-input" placeholder="tu usuario" id="loginUser" autocomplete="off">
+            <i class="fas fa-envelope login-input-icon"></i>
+            <input type="email" class="login-input" placeholder="tu@correo.com" id="loginUser" autocomplete="off" required>
           </div>
         </div>
 
@@ -38,16 +38,16 @@
           <label class="login-label">CONTRASEÑA</label>
           <div class="login-input-wrap">
             <i class="fas fa-lock login-input-icon"></i>
-            <input type="password" class="login-input" placeholder="••••••••" id="loginPass">
+            <input type="password" class="login-input" placeholder="••••••••" id="loginPass" required>
             <button type="button" class="login-eye" onclick="togglePass()">
               <i class="fas fa-eye" id="eyeIcon"></i>
             </button>
           </div>
         </div>
 
-        <div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
+        <div class="login-error" id="loginError">Correo o contraseña incorrectos.</div>
 
-        <button type="submit" class="login-btn">
+        <button type="submit" class="login-btn" id="submitBtn">
           <span>ENTRAR</span>
           <i class="fas fa-arrow-right"></i>
         </button>
@@ -174,7 +174,7 @@
         <div class="card-text-area">
           <h2 class="card-title">INTRODUCCIÓN</h2>
           <p class="card-body">
-            Bases de Datos se centra en el estudio de los sistemas diseñados para almacenar, organizar y recuperar grandes volúmenes de información de manera eficiente y segura. Durante el aprendizaje, explorarás el diseño lógico mediante el modelo entidad-relación, la normalización para evitar redundancias y el dominio del lenguaje SQL para realizar consultas complejas, actualizaciones y administración de permisos. Además, el curso suele cubrir la diferencia entre tecnologías relacionales (SQL) y no relacionales (NoSQL), garantizando la integridad de los datos mediante el cumplimiento de las propiedades ACID y optimizando el rendimiento a través de índices y transacciones, habilidades fundamentales para el desarrollo de cualquier aplicación moderna.
+            Bases de Datos se centra en el estudio de los sistemas diseñados para almacenar, organizar y recuperar grandes volúmenes de información de manera eficiente y segura...
           </p>
           <div class="card-quote">"No one man should have all that power."</div>
         </div>
@@ -196,26 +196,11 @@
         <div class="steps-block">
           <h3 class="steps-title">¿CÓMO ME REGISTRÉ?</h3>
           <ul class="steps-list">
-            <li class="step-item">
-              <span class="step-num">I</span>
-              <span>Entré a <strong>github.com</strong> y hice clic en Sign up</span>
-            </li>
-            <li class="step-item">
-              <span class="step-num">II</span>
-              <span>Ingresé mi correo, usuario y contraseña</span>
-            </li>
-            <li class="step-item">
-              <span class="step-num">III</span>
-              <span>Completé la verificación de seguridad</span>
-            </li>
-            <li class="step-item">
-              <span class="step-num">IV</span>
-              <span>Confirmé mi cuenta desde mi correo electrónico</span>
-            </li>
-            <li class="step-item">
-              <span class="step-num">V</span>
-              <span>Elegí el plan gratuito y ajusté las configuraciones</span>
-            </li>
+            <li class="step-item"><span class="step-num">I</span><span>Entré a <strong>github.com</strong> y hice clic en Sign up</span></li>
+            <li class="step-item"><span class="step-num">II</span><span>Ingresé mi correo, usuario y contraseña</span></li>
+            <li class="step-item"><span class="step-num">III</span><span>Completé la verificación de seguridad</span></li>
+            <li class="step-item"><span class="step-num">IV</span><span>Confirmé mi cuenta desde mi correo electrónico</span></li>
+            <li class="step-item"><span class="step-num">V</span><span>Elegí el plan gratuito y ajusté las configuraciones</span></li>
           </ul>
         </div>
       </div>
@@ -231,7 +216,7 @@
         <div class="profile-text-area">
           <h2 class="card-title">YO</h2>
           <p class="card-body">
-            Soy una persona perseverante, curiosa y con muchas ganas de seguir aprendiendo. Me gusta asumir nuevos retos y no rendirme fácilmente, ya que cada experiencia me ayuda a crecer. Me considero responsable, organizado y con una actitud positiva, lo que me permite adaptarme a distintas situaciones y trabajar bien tanto de manera individual como en equipo.
+            Soy una persona perseverante, curiosa y con muchas ganas de seguir aprendiendo. Me gusta asumir nuevos retos y no rendirme fácilmente, ya que cada experiencia me ayuda a crecer...
           </p>
           <div class="traits-grid">
             <div class="trait">PERSEVERANTE</div>
@@ -260,7 +245,7 @@
     <button class="fab-btn" title="Volver arriba" onclick="scrollToTop()">
       <i class="fas fa-arrow-up"></i>
     </button>
-    <button class="fab-btn fab-btn--gold" title="GitHub" onclick="window.open('https:','_blank')">
+    <button class="fab-btn fab-btn--gold" title="GitHub" onclick="window.open('https://github.com/FrankDiegoMatiasUrcuhuaranga','_blank')">
       <i class="fab fa-github"></i>
     </button>
   </div>
@@ -289,9 +274,20 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
-    // --- LÓGICA DEL LOGIN MODAL ---q
+    // ----------------------------------------------------
+    // 1. INICIALIZAR SUPABASE
+    // ----------------------------------------------------
+    const supabaseUrl = 'https://fdlxvfjeuehsmdxxofgj.supabase.co';
+    // IMPORTANTE: ¡Asegúrate de pegar tu Publishable Key completa aquí!
+    const supabaseKey = 'sb_publishable_kEsIxIpMNs4sdEHHSg7dzQ_07M86...PEGA_EL_RESTO_AQUI...'; 
+    const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // ----------------------------------------------------
+    // 2. LÓGICA DEL LOGIN MODAL
+    // ----------------------------------------------------
     function openLogin(e) {
       e.preventDefault();
       document.getElementById('loginOverlay').classList.add('active');
@@ -318,33 +314,47 @@
       }
     }
 
-    function handleLogin(e) {
+    // NUEVO LOGIN CON SUPABASE AUTH
+    async function handleLogin(e) {
       e.preventDefault();
-      const user = document.getElementById('loginUser').value.trim();
+      const email = document.getElementById('loginUser').value.trim();
       const pass = document.getElementById('loginPass').value;
       const err  = document.getElementById('loginError');
+      const btnSpan = document.querySelector('#submitBtn span');
+      
+      // Feedback visual mientras carga
+      btnSpan.textContent = 'CARGANDO...';
 
-      // Credenciales de ejemplo
-      if (user === 'matias' && pass === '1234') {
+      // Petición a Supabase
+      const { data, error } = await _supabase.auth.signInWithPassword({
+        email: email,
+        password: pass,
+      });
+
+      // Restaurar botón
+      btnSpan.textContent = 'ENTRAR';
+
+      if (error) {
+        err.textContent = 'Correo o contraseña incorrectos.';
+        err.classList.add('visible');
+      } else {
         err.classList.remove('visible');
         closeLogin();
     
-        // NUEVO: Guardamos la sesión en el navegador
+        // Mantenemos esta variable para que tus botones de "+ AGREGAR" en las otras páginas sigan funcionando
         localStorage.setItem('isLoggedIn', 'true');
     
-        alert('¡Bienvenido, ' + user + '!');
-      } else {
-        err.classList.add('visible');
+        alert('¡Acceso concedido! Bienvenido, ' + data.user.email);
       }
     }
 
-    // Cerrar modal al hacer clic afuera
     document.getElementById('loginOverlay').addEventListener('click', function(e) {
       if (e.target === this) closeLogin();
     });
 
-    // --- EFECTOS DE LA PÁGINA ---
-    // FLOATING LYRICS
+    // ----------------------------------------------------
+    // 3. EFECTOS DE LA PÁGINA (Lyrics, Parallax, Partículas)
+    // ----------------------------------------------------
     const lyrics = [
       "RUNAWAY", "I WONDER", "POWER", "STRONGER",
       "GHOST TOWN", "FLASHING LIGHTS", "ALL FALLS DOWN",
@@ -364,12 +374,10 @@
       container.appendChild(el);
     });
 
-    // SCROLL TO TOP
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // CARD REVEAL ON SCROLL
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) e.target.classList.add('visible');
@@ -377,7 +385,6 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.card').forEach(c => observer.observe(c));
 
-    // RUNAWAY CROSS PARALLAX
     document.addEventListener('mousemove', (e) => {
       const cross = document.querySelector('.runaway-cross');
       if (!cross) return;
@@ -386,58 +393,19 @@
       cross.style.transform = `translate(${x}px, ${y}px)`;
     });
 
-    // --- EFECTO PARTICLES.JS (ACTUALIZADO PARA MÁS BRILLO) ---
     particlesJS("particles-js", {
       "particles": {
-        "number": {
-          "value": 70, // Ligeramente más partículas
-          "density": {
-            "enable": true,
-            "value_area": 800
-          }
-        },
-        "color": {
-          "value": "#e8d49a" // CAMBIO: Usamos el dorado pálido, brilla más contra el negro
-        },
-        "shape": {
-          "type": "circle"
-        },
-        "opacity": {
-          "value": 0.8, // CAMBIO: Opacidad mucho más alta (antes 0.4)
-          "random": false
-        },
-        "size": {
-          "value": 4, // CAMBIO: Partículas ligeramente más grandes (antes 3)
-          "random": true
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 150,
-          "color": "#e8d49a", // CAMBIO: Color dorado pálido para las líneas
-          "opacity": 0.4, // CAMBIO: Líneas mucho más visibles (antes 0.2)
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 1.5,
-          "direction": "none",
-          "random": true,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false
-        }
+        "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#e8d49a" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.8, "random": false },
+        "size": { "value": 4, "random": true },
+        "line_linked": { "enable": true, "distance": 150, "color": "#e8d49a", "opacity": 0.4, "width": 1 },
+        "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
       },
       "interactivity": {
         "detect_on": "canvas",
-        "events": {
-          "onhover": {
-            "enable": false
-          },
-          "onclick": {
-            "enable": false
-          },
-          "resize": true
-        }
+        "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true }
       },
       "retina_detect": true
     });
