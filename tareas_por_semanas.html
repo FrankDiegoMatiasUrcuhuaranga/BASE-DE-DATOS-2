@@ -115,7 +115,7 @@ body {
 .nav-pill:hover::before { transform: scaleX(1); }
 .nav-pill:hover { color: var(--black); }
 .nav-pill span, .nav-pill i { position: relative; z-index: 1; }
-.nav-pill--accent { border-color: var(--gold); color: var(--gold); }
+.nav-pill--accent, .nav-pill--back { border-color: var(--gold); color: var(--gold); }
 .pill-sub { font-size: 0.65rem; opacity: 0.6; letter-spacing: 0.2em; }
 
 .now-playing {
@@ -475,7 +475,7 @@ footer {
 }
 .btn-add-task-gold-detailed:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 15px rgba(201,168,76,0.5); }
 
-/* LISTA DE TAREAS (PDFs) */
+/* ── LISTA DE TAREAS (PDFs) Y BOTÓN ELIMINAR ── */
 .tracklist { list-style: none; counter-reset: t-counter; margin-top: 1rem; border-top: 1px solid rgba(201,168,76,0.2); }
 .tracklist-header {
     font-family: var(--font-disp); font-size: 0.8rem; color: var(--charcoal);
@@ -483,6 +483,7 @@ footer {
     padding: 1.5rem 1rem 0.5rem; display: flex; justify-content: space-between;
 }
 
+/* Fila de cada documento */
 .track-item-player { 
   display: flex; align-items: center; padding: 1rem 1rem; 
   border-bottom: 1px solid rgba(201,168,76,0.1); 
@@ -492,8 +493,7 @@ footer {
 }
 
 .track-item-player::after {
-    content:'';
-    position: absolute; inset:0;
+    content:''; position: absolute; inset:0;
     background: radial-gradient(circle at center, rgba(201,168,76,0.15) 0%, transparent 70%);
     opacity: 0; transition: opacity 0.3s;
 }
@@ -508,17 +508,29 @@ footer {
 }
 .track-item-player:hover::before { color: var(--black); opacity: 1; }
 
-.track-item-player i { opacity: 0.8; font-size: 1.1rem; color: var(--white); transition: .2s; margin-left: auto;}
-.track-item-player i.fa-file-pdf { color: var(--white); }
-.track-item-player:hover i { color: var(--black); transform: scale(1.2);}
-
-.track-item-player span::before {
-    content: '\f04b';
-    font-family: 'Font Awesome 6 Free'; font-weight: 900;
-    font-size: 0.7rem; color: var(--charcoal);
-    margin-right: 12px; opacity: 0; transition: .2s;
+/* Contenedor del enlace del PDF */
+.track-item-player-link {
+    flex: 1; display: flex; align-items: center; color: inherit; text-decoration: none; position: relative; z-index: 5;
 }
-.track-item-player:hover span::before { opacity: 1; color: var(--black); }
+
+.track-item-player-link i { opacity: 0.8; font-size: 1.1rem; color: var(--white); transition: .2s; margin-left: auto;}
+.track-item-player-link i.fa-file-pdf { color: var(--white); }
+.track-item-player:hover .track-item-player-link i { color: var(--black); transform: scale(1.2);}
+
+.track-item-player-link span::before {
+    content: '\f04b'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+    font-size: 0.7rem; color: var(--charcoal); margin-right: 12px; opacity: 0; transition: .2s;
+}
+.track-item-player:hover .track-item-player-link span::before { opacity: 1; color: var(--black); }
+
+/* BOTÓN DE ELIMINAR ARCHIVO */
+.btn-delete-track {
+    background: transparent; border: none; color: #e74c3c;
+    font-size: 1.2rem; cursor: pointer; margin-left: 15px;
+    opacity: 0.5; transition: all 0.3s ease; position: relative; z-index: 10;
+}
+.track-item-player:hover .btn-delete-track { opacity: 0.8; }
+.btn-delete-track:hover { opacity: 1 !important; color: #c0392b; transform: scale(1.2); }
 
 .close-player { position: absolute; top: 2rem; right: 2rem; background: none; border: none; color: var(--gold); font-size: 2.5rem; cursor: pointer; transition: transform .3s; z-index: 10001; }
 .close-player:hover { transform: rotate(90deg); color: var(--white); }
@@ -552,9 +564,9 @@ footer {
   .player-info { text-align: center; }
   .title-flex { justify-content: center; }
   .tracklist-header { display: none; }
-  .track-item-player { justify-content: center; text-align: center;}
-  .track-item-player i { margin-left: 10px; }
-  .track-item-player span::before { display: none; }
+  .track-item-player-link { justify-content: center; text-align: center;}
+  .track-item-player-link i { margin-left: 10px; }
+  .track-item-player-link span::before { display: none; }
   .metadata-line { justify-content: center; margin-bottom: 1rem; }
   .btn-add-task-gold-detailed { width: 100%; }
   .album-player-overlay.active .vinyl-slide-container.extracted { transform: translateX(30%); }
@@ -843,7 +855,7 @@ vinylToggle.addEventListener('click', () => {
 });
 
 // ══════════════════════════════════════════
-// DATA DE TAREAS
+// DATA DE TAREAS - LADO A (SEMANAS 1-8)
 // ══════════════════════════════════════════
 const tareasData = [
   { semana: 1, imagen: 'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg', album: 'THE COLLEGE DROPOUT', year: '2004', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/BASE-DE-DATOS-2/tree/main/CODIGOS', tareas: [ { id: 1, descripcion: 'TAREA 1:INFORME', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/BASE-DE-DATOS-2/blob/main/INFORME.pdf', archivo: 'INFORME.pdf' }, { id: 2, descripcion: 'TAREA 2: EJERCICIO 1', githubUrl: '', archivo: 'TRABAJO1.pdf' } ] },
@@ -948,13 +960,13 @@ async function openAlbumPlayer(semanaNum) {
     vinylWeekDetailed.textContent = semanaData.semana;
     artworkFunda.src = semanaData.imagen; 
 
-    // Activar el modal (El fondo translúcido deja ver las partículas)
+    // Activar el modal
     modal.classList.add('active');
     
     // Iniciar el giro continuo
     vinylDiskDetailed.classList.add('spinning');
 
-    // Retraso minúsculo para permitir que el CSS aplique el slide-out suavemente
+    // Retraso minúsculo para aplicar el slide-out suavemente
     setTimeout(() => {
         vinylSlider.classList.add('extracted');
     }, 50);
@@ -1009,15 +1021,52 @@ async function loadTracksFromSupabase(num) {
         const tareasLocales = semanaData ? semanaData.tareas : [];
         const todasLasTareas = [...tareasLocales, ...(data || [])];
 
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
         if(todasLasTareas.length === 0) {
              tracklistEl.innerHTML = '<p style="color:var(--white); opacity:0.6;">No hay trabajos subidos aún.</p>';
         } else {
              tracklistEl.innerHTML = todasLasTareas.map(t => `
-                <a href="${t.archivo_url || t.githubUrl}" target="_blank" title="Abrir PDF en nueva pestaña" class="track-item-player">
-                    <span style="flex:1">${t.descripcion}</span>
-                    <i class="fas fa-file-pdf" style="opacity:0.8; font-size:1.2rem;"></i>
-                </a>
+                <li class="track-item-player">
+                    <a href="${t.archivo_url || t.githubUrl}" target="_blank" title="Abrir PDF en nueva pestaña" class="track-item-player-link">
+                        <span style="flex:1">${t.descripcion}</span>
+                        <i class="fas fa-file-pdf"></i>
+                    </a>
+                    ${isLoggedIn && t.id ? `<button class="btn-delete-track" title="Eliminar archivo" onclick="deleteTrack(event, '${t.id}')"><i class="fas fa-trash-alt"></i></button>` : ''}
+                </li>
             `).join('');
+        }
+    }
+}
+
+async function deleteTrack(event, taskId) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    if (!taskId || taskId === 'undefined') {
+        alert('No se pueden eliminar los archivos base del curso.');
+        return;
+    }
+
+    if(confirm('¿Estás seguro de que deseas eliminar este trabajo? Esta acción no se puede deshacer.')) {
+        const btn = event.currentTarget;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; 
+        btn.disabled = true;
+
+        try {
+            const { error } = await _supabase
+                .from('tareas')
+                .delete()
+                .eq('id', taskId);
+
+            if (error) throw error;
+            
+            // Recargar la lista automáticamente tras borrar
+            loadTracksFromSupabase(currentWeekForPlayer);
+        } catch(e) {
+            alert("Error al eliminar: " + e.message);
+            btn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            btn.disabled = false;
         }
     }
 }
@@ -1072,7 +1121,7 @@ document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.st
 function animCursor() { cx+=(mx-cx)*0.12; cy+=(my-cy)*0.12; cursor.style.cssText=`left:${cx}px;top:${cy}px`; requestAnimationFrame(animCursor); }
 animCursor();
 document.addEventListener('mouseover', e => {
-  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn,.track-item-player')) cursor.classList.add('big');
+  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn,.track-item-player,.btn-delete-track')) cursor.classList.add('big');
   else cursor.classList.remove('big');
 });
 

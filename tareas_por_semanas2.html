@@ -422,12 +422,12 @@ footer {
 .modal-needle {
   position: absolute; 
   top: -10%; 
-  right: 5%; /* MOVIDA A LA IZQUIERDA (Antes era negativo) */
+  right: 5%; /* MOVIDA A LA IZQUIERDA */
   width: 6px; height: 180px; 
   transform-origin: top center;
   transform: rotate(-35deg); /* Reposo */
   z-index: 5; opacity: 0;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s; /* Delay aumentado para coordinar con la salida lenta */
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s; /* Delay aumentado */
 }
 .vinyl-slide-container.extracted .modal-needle {
   transform: rotate(22deg); /* Baja sobre los surcos del vinilo */
@@ -435,7 +435,6 @@ footer {
 }
 .modal-needle-arm { width: 4px; height: 145px; background: linear-gradient(to bottom, #888, #444); margin: 0 auto; border-radius: 2px;}
 .modal-needle-head { width: 14px; height: 28px; background: var(--black); border: 2px solid var(--gold); margin: 0 auto; border-radius: 3px; position:relative;}
-/* Cabezal detallado */
 .modal-needle-head::after {
     content:'';
     position: absolute; bottom: 3px; left: 3px;
@@ -475,7 +474,7 @@ footer {
 }
 .btn-add-task-gold-detailed:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 15px rgba(201,168,76,0.5); }
 
-/* LISTA DE TAREAS (PDFs) */
+/* ── LISTA DE TAREAS (PDFs) Y BOTÓN ELIMINAR ── */
 .tracklist { list-style: none; counter-reset: t-counter; margin-top: 1rem; border-top: 1px solid rgba(201,168,76,0.2); }
 .tracklist-header {
     font-family: var(--font-disp); font-size: 0.8rem; color: var(--charcoal);
@@ -483,6 +482,7 @@ footer {
     padding: 1.5rem 1rem 0.5rem; display: flex; justify-content: space-between;
 }
 
+/* Fila de cada documento */
 .track-item-player { 
   display: flex; align-items: center; padding: 1rem 1rem; 
   border-bottom: 1px solid rgba(201,168,76,0.1); 
@@ -492,8 +492,7 @@ footer {
 }
 
 .track-item-player::after {
-    content:'';
-    position: absolute; inset:0;
+    content:''; position: absolute; inset:0;
     background: radial-gradient(circle at center, rgba(201,168,76,0.15) 0%, transparent 70%);
     opacity: 0; transition: opacity 0.3s;
 }
@@ -508,17 +507,30 @@ footer {
 }
 .track-item-player:hover::before { color: var(--black); opacity: 1; }
 
-.track-item-player i { opacity: 0.8; font-size: 1.1rem; color: var(--white); transition: .2s; margin-left: auto;}
-.track-item-player i.fa-file-pdf { color: var(--white); }
-.track-item-player:hover i { color: var(--black); transform: scale(1.2);}
-
-.track-item-player span::before {
-    content: '\f04b';
-    font-family: 'Font Awesome 6 Free'; font-weight: 900;
-    font-size: 0.7rem; color: var(--charcoal);
-    margin-right: 12px; opacity: 0; transition: .2s;
+/* Contenedor del enlace del PDF */
+.track-item-player-link {
+    flex: 1; display: flex; align-items: center; color: inherit; text-decoration: none; position: relative; z-index: 5;
 }
-.track-item-player:hover span::before { opacity: 1; color: var(--black); }
+
+.track-item-player-link i { opacity: 0.8; font-size: 1.1rem; color: var(--white); transition: .2s; margin-left: auto;}
+.track-item-player-link i.fa-file-pdf { color: var(--white); }
+.track-item-player:hover .track-item-player-link i { color: var(--black); transform: scale(1.2);}
+
+.track-item-player-link span::before {
+    content: '\f04b'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+    font-size: 0.7rem; color: var(--charcoal); margin-right: 12px; opacity: 0; transition: .2s;
+}
+.track-item-player:hover .track-item-player-link span::before { opacity: 1; color: var(--black); }
+
+/* BOTÓN DE ELIMINAR ARCHIVO */
+.btn-delete-track {
+    background: transparent; border: none; color: #e74c3c;
+    font-size: 1.2rem; cursor: pointer; margin-left: 15px;
+    opacity: 0.5; transition: all 0.3s ease; position: relative; z-index: 10;
+}
+.track-item-player:hover .btn-delete-track { opacity: 0.8; }
+.btn-delete-track:hover { opacity: 1 !important; color: #c0392b; transform: scale(1.2); }
+
 
 .close-player { position: absolute; top: 2rem; right: 2rem; background: none; border: none; color: var(--gold); font-size: 2.5rem; cursor: pointer; transition: transform .3s; z-index: 10001; }
 .close-player:hover { transform: rotate(90deg); color: var(--white); }
@@ -552,9 +564,9 @@ footer {
   .player-info { text-align: center; }
   .title-flex { justify-content: center; }
   .tracklist-header { display: none; }
-  .track-item-player { justify-content: center; text-align: center;}
-  .track-item-player i { margin-left: 10px; }
-  .track-item-player span::before { display: none; }
+  .track-item-player-link { justify-content: center; text-align: center;}
+  .track-item-player-link i { margin-left: 10px; }
+  .track-item-player-link span::before { display: none; }
   .metadata-line { justify-content: center; margin-bottom: 1rem; }
   .btn-add-task-gold-detailed { width: 100%; }
   .album-player-overlay.active .vinyl-slide-container.extracted { transform: translateX(30%); }
@@ -799,9 +811,7 @@ const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 // ══════════════════════════════════════════
 // LISTA DE MÚSICAS
 // ══════════════════════════════════════════
-const playlist = [
-  { title: 'ZZ — LADO B', src: 'ZZ.mp3' },
-];
+const playlist = [ { title: 'ZZ — LADO B', src: 'ZZ.mp3' } ];
 let currentTrackIndex = 0; let isMusicPlaying = false;
 const bgMusic = document.getElementById('bg-music');
 const vinylToggle = document.getElementById('vinylToggle');
@@ -848,73 +858,14 @@ vinylToggle.addEventListener('click', () => {
 // DATA DE TAREAS
 // ══════════════════════════════════════════
 const tareasData = [
-  {
-    semana: 9, imagen: 'https://i.pinimg.com/736x/6e/91/8c/6e918c5205a3de445f40cc4b2433fd0c.jpg',
-    album: 'ye', year: '2018',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%209',
-    tareas: [
-      { id: 18, descripcion: 'PRIMERA VERSIÓN LOGIN', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%209', archivo: 'LOGIN.pdf' },
-      { id: 19, descripcion: '4 LIBRERÍAS DE CSS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/LIBRERIAS.pdf', archivo: 'LIBRERIAS.pdf' },
-      { id: 20, descripcion: 'TRABAJO DE DISEÑO', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/DISEÑO.pdf', archivo: 'DISEÑO.pdf' },
-    ]
-  },
-  {
-    semana: 10, imagen: 'https://i.pinimg.com/736x/71/53/40/715340255dc5adbe5cf77d5a410df545.jpg',
-    album: 'DONDA', year: '2021',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2010',
-    tareas: [
-      { id: 21, descripcion: 'MEJORA DEL LOGIN', githubUrl: 'https://www.figma.com/make/UyVHHvxAdkPrlQ8i02zVLo/', archivo: 'FIGMADIRIGIDO.pdf' },
-      { id: 72, descripcion: 'APLICACIÓN EN JSP', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2010/JSP', archivo: 'JSP.pdf' },
-    ]
-  },
-  {
-    semana: 11, imagen: 'https://i.pinimg.com/1200x/8c/a0/97/8ca097bb0706315dc417abed67dcc5a7.jpg',
-    album: 'VULTURES 1', year: '2024',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2011/Modelos',
-    tareas: [
-      { id: 60, descripcion: 'MODELOS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2011/Modelos', archivo: 'MODELOS.pdf' },
-    ]
-  },
-  {
-    semana: 12, imagen: 'https://i.pinimg.com/1200x/17/ef/67/17ef67ebd51be4390a8b13866bb38787.jpg',
-    album: 'JESUS IS KING', year: '2019',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2012/Controladores',
-    tareas: [
-      { id: 67, descripcion: 'CONTROLADORES', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2012/Controladores', archivo: 'CONTROLADOR.pdf' },
-    ]
-  },
-  {
-    semana: 13, imagen: 'https://i.pinimg.com/1200x/1d/fa/69/1dfa69ffff32c38e36be568e6ed707a3.jpg',
-    album: 'WATCH THE THRONE II', year: '2022',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2013/BASE%20DE%20DATOS',
-    tareas: [
-      { id: 22, descripcion: 'BASE DE DATOS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2013/BASE%20DE%20DATOS', archivo: 'BASED.pdf' },
-    ]
-  },
-  {
-    semana: 14, imagen: 'https://i.pinimg.com/1200x/46/fc/e7/46fce716dd432d2f12016e6833b4d020.jpg',
-    album: 'DONDA 2', year: '2022',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2014/REPORTES',
-    tareas: [
-      { id: 23, descripcion: 'REPORTES', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2014/REPORTES', archivo: 'REPORTES.pdf' },
-    ]
-  },
-  {
-    semana: 15, imagen: 'https://i.pinimg.com/1200x/a6/67/7f/a6677ffead637bc4680c1a948bf06922.jpg',
-    album: 'GRADUATION', year: '2007',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2015/HACKATON',
-    tareas: [
-      { id: 24, descripcion: 'ENTREGA PROYECTO', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2015/HACKATON', archivo: 'FINAL.pdf' },
-    ]
-  },
-  {
-    semana: 16, imagen: 'https://i.pinimg.com/736x/ec/03/c8/ec03c89985e9f7f6968d43fb47796c73.jpg',
-    album: 'MBDTF', year: '2010',
-    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2016/FINAL',
-    tareas: [
-      { id: 25, descripcion: 'PROYECTO FINAL', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2016/FINAL', archivo: 'FINAL.pdf' },
-    ]
-  }
+  { semana: 9, imagen: 'https://i.pinimg.com/736x/6e/91/8c/6e918c5205a3de445f40cc4b2433fd0c.jpg', album: 'ye', year: '2018', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%209', tareas: [ { id: 18, descripcion: 'PRIMERA VERSIÓN LOGIN', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%209', archivo: 'LOGIN.pdf' }, { id: 19, descripcion: '4 LIBRERÍAS DE CSS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/LIBRERIAS.pdf', archivo: 'LIBRERIAS.pdf' }, { id: 20, descripcion: 'TRABAJO DE DISEÑO', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/blob/main/DISEÑO.pdf', archivo: 'DISEÑO.pdf' }, ] },
+  { semana: 10, imagen: 'https://i.pinimg.com/736x/71/53/40/715340255dc5adbe5cf77d5a410df545.jpg', album: 'DONDA', year: '2021', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2010', tareas: [ { id: 21, descripcion: 'MEJORA DEL LOGIN', githubUrl: 'https://www.figma.com/make/UyVHHvxAdkPrlQ8i02zVLo/', archivo: 'FIGMADIRIGIDO.pdf' }, { id: 72, descripcion: 'APLICACIÓN EN JSP', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2010/JSP', archivo: 'JSP.pdf' }, ] },
+  { semana: 11, imagen: 'https://i.pinimg.com/1200x/8c/a0/97/8ca097bb0706315dc417abed67dcc5a7.jpg', album: 'VULTURES 1', year: '2024', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2011/Modelos', tareas: [ { id: 60, descripcion: 'MODELOS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2011/Modelos', archivo: 'MODELOS.pdf' }, ] },
+  { semana: 12, imagen: 'https://i.pinimg.com/1200x/17/ef/67/17ef67ebd51be4390a8b13866bb38787.jpg', album: 'JESUS IS KING', year: '2019', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2012/Controladores', tareas: [ { id: 67, descripcion: 'CONTROLADORES', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2012/Controladores', archivo: 'CONTROLADOR.pdf' }, ] },
+  { semana: 13, imagen: 'https://i.pinimg.com/1200x/1d/fa/69/1dfa69ffff32c38e36be568e6ed707a3.jpg', album: 'WATCH THE THRONE II', year: '2022', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2013/BASE%20DE%20DATOS', tareas: [ { id: 22, descripcion: 'BASE DE DATOS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2013/BASE%20DE%20DATOS', archivo: 'BASED.pdf' }, ] },
+  { semana: 14, imagen: 'https://i.pinimg.com/1200x/46/fc/e7/46fce716dd432d2f12016e6833b4d020.jpg', album: 'DONDA 2', year: '2022', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2014/REPORTES', tareas: [ { id: 23, descripcion: 'REPORTES', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2014/REPORTES', archivo: 'REPORTES.pdf' }, ] },
+  { semana: 15, imagen: 'https://i.pinimg.com/1200x/a6/67/7f/a6677ffead637bc4680c1a948bf06922.jpg', album: 'GRADUATION', year: '2007', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2015/HACKATON', tareas: [ { id: 24, descripcion: 'ENTREGA PROYECTO', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2015/HACKATON', archivo: 'FINAL.pdf' }, ] },
+  { semana: 16, imagen: 'https://i.pinimg.com/736x/ec/03/c8/ec03c89985e9f7f6968d43fb47796c73.jpg', album: 'MBDTF', year: '2010', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2016/FINAL', tareas: [ { id: 25, descripcion: 'PROYECTO FINAL', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%2016/FINAL', archivo: 'FINAL.pdf' }, ] }
 ];
 
 let offset = 0; let isSpinning = false; let spinInterval = null; let currentUploadWeek = null;
@@ -1009,13 +960,13 @@ async function openAlbumPlayer(semanaNum) {
     vinylWeekDetailed.textContent = semanaData.semana;
     artworkFunda.src = semanaData.imagen; 
 
-    // Activar el modal (El fondo translúcido deja ver las partículas)
+    // Activar el modal
     modal.classList.add('active');
     
     // Iniciar el giro continuo
     vinylDiskDetailed.classList.add('spinning');
 
-    // Retraso minúsculo para permitir que el CSS aplique el slide-out suavemente
+    // Retraso minúsculo para aplicar el slide-out suavemente
     setTimeout(() => {
         vinylSlider.classList.add('extracted');
     }, 50);
@@ -1047,7 +998,6 @@ function closeAlbumPlayer() {
 function checkLoginForModalUpload() {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (isLoggedIn === 'true') {
-        // Abre la ventana de selección de archivos si está logueado
         document.getElementById('fileInputPlayerDetailed').click();
     } else {
         alert('Acceso denegado. Serás redirigido para iniciar sesión primero.');
@@ -1071,15 +1021,52 @@ async function loadTracksFromSupabase(num) {
         const tareasLocales = semanaData ? semanaData.tareas : [];
         const todasLasTareas = [...tareasLocales, ...(data || [])];
 
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
         if(todasLasTareas.length === 0) {
              tracklistEl.innerHTML = '<p style="color:var(--white); opacity:0.6;">No hay trabajos subidos aún.</p>';
         } else {
              tracklistEl.innerHTML = todasLasTareas.map(t => `
-                <a href="${t.archivo_url || t.githubUrl}" target="_blank" title="Abrir PDF en nueva pestaña" class="track-item-player">
-                    <span style="flex:1">${t.descripcion}</span>
-                    <i class="fas fa-file-pdf" style="opacity:0.8; font-size:1.2rem;"></i>
-                </a>
+                <li class="track-item-player">
+                    <a href="${t.archivo_url || t.githubUrl}" target="_blank" title="Abrir PDF en nueva pestaña" class="track-item-player-link">
+                        <span style="flex:1">${t.descripcion}</span>
+                        <i class="fas fa-file-pdf"></i>
+                    </a>
+                    ${isLoggedIn && t.id ? `<button class="btn-delete-track" title="Eliminar archivo" onclick="deleteTrack(event, '${t.id}')"><i class="fas fa-trash-alt"></i></button>` : ''}
+                </li>
             `).join('');
+        }
+    }
+}
+
+async function deleteTrack(event, taskId) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    if (!taskId || taskId === 'undefined') {
+        alert('No se pueden eliminar los archivos base del curso.');
+        return;
+    }
+
+    if(confirm('¿Estás seguro de que deseas eliminar este trabajo? Esta acción no se puede deshacer.')) {
+        const btn = event.currentTarget;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Icono de carga
+        btn.disabled = true;
+
+        try {
+            const { error } = await _supabase
+                .from('tareas')
+                .delete()
+                .eq('id', taskId);
+
+            if (error) throw error;
+            
+            // Recargar la lista automáticamente tras borrar
+            loadTracksFromSupabase(currentWeekForPlayer);
+        } catch(e) {
+            alert("Error al eliminar: " + e.message);
+            btn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            btn.disabled = false;
         }
     }
 }
@@ -1134,7 +1121,7 @@ document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.st
 function animCursor() { cx+=(mx-cx)*0.12; cy+=(my-cy)*0.12; cursor.style.cssText=`left:${cx}px;top:${cy}px`; requestAnimationFrame(animCursor); }
 animCursor();
 document.addEventListener('mouseover', e => {
-  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn,.track-item-player')) cursor.classList.add('big');
+  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn,.track-item-player,.btn-delete-track')) cursor.classList.add('big');
   else cursor.classList.remove('big');
 });
 
