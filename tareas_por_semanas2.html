@@ -31,10 +31,11 @@
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
+/* --- CORRECCIÓN DEL MOUSE: Z-INDEX AUMENTADO --- */
 .cursor {
   position: fixed; width: 36px; height: 36px;
   border: 1.5px solid var(--gold); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
+  pointer-events: none; z-index: 100000;
   transform: translate(-50%, -50%);
   transition: width .3s, height .3s, border-color .3s;
 }
@@ -42,7 +43,7 @@
 .cursor-dot {
   position: fixed; width: 5px; height: 5px;
   background: var(--gold); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
+  pointer-events: none; z-index: 100000;
   transform: translate(-50%, -50%);
 }
 
@@ -254,10 +255,10 @@ main {
 .track-title { font-family: var(--font-disp); font-size: clamp(1.2rem, 3vh, 1.6rem); line-height: 1; letter-spacing: 0.04em; color: var(--white); }
 .track-title em { font-family: var(--font-ser); font-style: italic; color: var(--gold); }
 
-.track-tasks { flex: 1; display: flex; flex-direction: column; gap: 0.5vh; }
+.track-tasks { flex: 1; display: flex; flex-direction: column; gap: 0.5vh; justify-content: center; }
 .tasks-header {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 0.6vh 0;
+  padding: 0.8vh 0;
   border-top: 1px solid rgba(201,168,76,0.15); border-bottom: 1px solid rgba(201,168,76,0.15);
   cursor: pointer; user-select: none; transition: background .2s;
   flex-wrap: wrap; gap: 0.4rem;
@@ -265,44 +266,13 @@ main {
 .tasks-header:hover { background: rgba(201,168,76,0.04); }
 .tasks-count, .tasks-toggle { font-size: 0.7rem; letter-spacing: 0.1em; white-space: nowrap; }
 .tasks-count { color: var(--cream); }
-.tasks-toggle { color: var(--gold); }
+.tasks-toggle { color: var(--gold); font-weight: bold; }
 
-.btn-add-task {
-  background: transparent; border: 1px solid var(--gold-dim); color: var(--gold);
-  font-family: var(--font-disp); font-size: 0.75rem; letter-spacing: 0.1em;
-  padding: 0.15rem 0.6rem; margin: 0 5px; cursor: pointer;
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-  z-index: 10; flex-shrink: 0;
-}
-.btn-add-task:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 10px rgba(201,168,76,0.4); }
-
-.tasks-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; padding-bottom: 0.5rem; }
-.tasks-list.hidden { display: none; }
-.task-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.6rem 0.8rem; background: rgba(255,255,255,0.02); border-left: 2px solid transparent; transition: border-color .2s, background .2s; }
-.task-item:hover { background: rgba(201,168,76,0.05); border-left-color: var(--gold); }
-.task-item.done { opacity: 0.4; }
-.task-item.done .task-name { text-decoration: line-through; }
-.task-check { position: relative; flex-shrink: 0; }
-.task-check input { opacity: 0; position: absolute; }
-.checkmark { display: block; width: 16px; height: 16px; border: 1px solid var(--gold-dim); position: relative; transition: background .2s, border-color .2s; }
-.task-check input:checked ~ .checkmark { background: var(--gold); border-color: var(--gold); }
-.task-check input:checked ~ .checkmark::after { content: ''; position: absolute; top: 2px; left: 5px; width: 4px; height: 8px; border: 2px solid var(--black); border-top: none; border-left: none; transform: rotate(45deg); }
-.task-name { flex: 1; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--cream); line-height: 1.4; }
-.task-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
-.task-btn { width: 28px; height: 28px; border: 1px solid rgba(201,168,76,0.2); background: transparent; color: var(--gold-dim); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; text-decoration: none; transition: background .2s, color .2s, border-color .2s; }
-.task-btn:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
-.task-btn--gh:hover { background: var(--white); color: var(--black); border-color: var(--white); }
-.progress-wrap { display: flex; align-items: center; gap: 0.5rem; margin-top: auto; }
-.progress-track { flex: 1; height: 3px; background: rgba(201,168,76,0.1); }
-.progress-fill { height: 100%; background: var(--gold); transition: width .5s cubic-bezier(.25,.46,.45,.94); }
-.progress-pct { font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; min-width: 2.5rem; text-align: right; }
 .github-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold-dim); text-decoration: none; border-top: 1px solid rgba(201,168,76,0.1); padding-top: 0.5vh; margin-top: auto; transition: color .2s; }
 .github-link:hover { color: var(--gold); }
 
-/* CAROUSEL CONTROLS */
 .carousel-controls { flex-shrink: 0; display: flex; justify-content: center; align-items: center; gap: 2rem; padding: 1vh 0; position: relative; z-index: 10; }
 
-/* Botones de música */
 .music-btn {
   display: flex; align-items: center; gap: 0.6rem;
   padding: 0.8vh 2rem; border: 1px solid var(--gold);
@@ -316,6 +286,7 @@ main {
 .music-btn:hover { color: var(--black); }
 .music-btn span { position: relative; z-index: 1; }
 .music-btn:active { transform: scale(0.96); }
+
 .music-btn.flash { animation: btnFlash 0.3s ease; }
 @keyframes btnFlash { 0%{box-shadow:0 0 0 rgba(201,168,76,0)} 50%{box-shadow:0 0 20px rgba(201,168,76,0.8)} 100%{box-shadow:0 0 0 rgba(201,168,76,0)} }
 
@@ -347,52 +318,13 @@ main {
 }
 .btn-logout:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 15px rgba(201,168,76,0.5); }
 
-/* ── MODAL UPLOAD ── */
-.upload-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-  z-index: 9000; display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  backdrop-filter: blur(5px);
-}
+/* ── MODAL UPLOAD ORIGINAL (Mantenido por seguridad) ── */
+.upload-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(5px); }
 .upload-overlay.active { opacity: 1; pointer-events: auto; }
-.upload-modal {
-  background: var(--ink); border: 1px solid var(--gold);
-  width: 90%; max-width: 650px; padding: 3rem 2rem;
-  position: relative; text-align: center;
-  box-shadow: 0 0 40px rgba(201,168,76,0.15);
-}
-.upload-close {
-  position: absolute; top: 1rem; right: 1rem;
-  background: transparent; border: none;
-  color: var(--gold-dim); font-size: 1.8rem; transition: color 0.3s;
-}
+.upload-modal { background: var(--ink); border: 1px solid var(--gold); width: 90%; max-width: 650px; padding: 3rem 2rem; position: relative; text-align: center; box-shadow: 0 0 40px rgba(201,168,76,0.15); }
+.upload-close { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--gold-dim); font-size: 1.8rem; transition: color 0.3s; }
 .upload-close:hover { color: var(--gold); }
-.upload-title { font-family: var(--font-disp); font-size: 3rem; color: var(--gold); margin-bottom: 0.2rem; line-height: 1; }
-.upload-subtitle { font-size: 0.9rem; letter-spacing: 0.2em; color: var(--cream); margin-bottom: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.2); padding-bottom: 1rem; }
-.upload-dropzone {
-  border: 2px dashed var(--gold-dim); padding: 4rem 1rem; margin: 1.5rem 0;
-  background: rgba(255,255,255,0.01); transition: all 0.3s ease; cursor: pointer;
-}
-.upload-dropzone:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
-.upload-icon { font-size: 3.5rem; color: var(--gold-dim); margin-bottom: 1rem; }
-.upload-dropzone p { font-size: 1rem; color: var(--cream); line-height: 1.5; }
-.upload-dropzone span { color: var(--gold); text-decoration: underline; }
-.file-list { text-align: left; margin-bottom: 1.5rem; max-height: 150px; overflow-y: auto; }
-.file-item {
-  display: flex; align-items: center; gap: 0.8rem;
-  font-size: 0.85rem; color: var(--white);
-  padding: 0.8rem; background: rgba(255,255,255,0.05);
-  margin-bottom: 0.4rem; border-left: 2px solid var(--gold);
-}
-.file-item i { color: var(--gold); font-size: 1.2rem; }
-.upload-submit-btn {
-  background: var(--gold); color: var(--black); border: none; padding: 1rem 2.5rem;
-  font-family: var(--font-disp); font-size: 1.4rem; letter-spacing: 0.1em;
-  transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
-}
-.upload-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(201,168,76,0.3); }
 
-/* ── FOOTER CORREGIDO ── */
 footer {
   flex-shrink: 0; border-top: 1px solid rgba(201,168,76,0.2);
   background: var(--ink); margin-top: 0; position: relative; z-index: 10;
@@ -405,134 +337,284 @@ footer {
 .footer-logo { display: flex; align-items: baseline; gap: 0.5rem; }
 .footer-big { font-family: var(--font-disp); font-size: clamp(2rem, 4vh, 3.5rem); color: var(--gold); line-height: 1; }
 .footer-slash { font-family: var(--font-disp); font-size: 2rem; color: var(--gold-dim); }
-
-/* CENTRO DEL FOOTER: perfectamente centrado */
-.footer-center {
-  text-align: center;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  width: 100%;
-}
-.footer-quote {
-  font-family: var(--font-ser); font-style: italic;
-  font-size: clamp(0.9rem, 1.8vh, 1.2rem); color: var(--cream); line-height: 1.4;
-  text-align: center; width: 100%;
-}
-.footer-credit {
-  font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold);
-  margin-top: 0.4rem; text-align: center; width: 100%;
-}
-
+.footer-center { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+.footer-quote { font-family: var(--font-ser); font-style: italic; font-size: clamp(0.9rem, 1.8vh, 1.2rem); color: var(--cream); line-height: 1.4; text-align: center; width: 100%; }
+.footer-credit { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold); margin-top: 0.4rem; text-align: center; width: 100%; }
 .footer-right { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 2rem; }
 .rpm-badge { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
-.rpm-circle {
-  width: clamp(45px, 6vh, 60px); height: clamp(45px, 6vh, 60px);
-  border-radius: 50%; border: 2px solid var(--gold-dim);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-disp); font-size: 0.8rem; color: var(--gold);
-  animation: rpmSpin 4s linear infinite;
-  background: repeating-radial-gradient(circle at center, #111 0px, #111 5px, #0f0f0f 6px, #0f0f0f 10px);
-}
+.rpm-circle { width: clamp(45px, 6vh, 60px); height: clamp(45px, 6vh, 60px); border-radius: 50%; border: 2px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; font-family: var(--font-disp); font-size: 0.8rem; color: var(--gold); animation: rpmSpin 4s linear infinite; background: repeating-radial-gradient(circle at center, #111 0px, #111 5px, #0f0f0f 6px, #0f0f0f 10px); }
 @keyframes rpmSpin { to { transform: rotate(360deg); } }
 .rpm-label { font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold-dim); }
 .footer-bar { background: var(--gold); color: var(--black); text-align: center; padding: 0.4rem; font-size: 0.7rem; letter-spacing: 0.3em; font-family: var(--font-disp); }
 
 ::selection { background: var(--gold); color: var(--black); }
 
+/* ── MODAL REPRODUCTOR DE ÁLBUM (ESTILO NEGRO/DORADO + VINILO ANIMADO + AJUSTES TONMEARM) ── */
+/* Fondo translúcido PURO MANTENIDO (0.85) para ver las partículas de atrás */
+.album-player-overlay {
+  position: fixed; inset: 0; 
+  background: rgba(7, 7, 7, 0.85); /* EXCLUSIVAMENTE COLOR Y ALFA, SIN GRADIENTE QUE LO TAPE */
+  z-index: 10000;
+  display: none; padding: 5vw; overflow-y: auto; 
+  backdrop-filter: blur(8px); /* DESENFOQUE PARA QUE LAS PARTÍCULAS BRILLEN DETRÁS */
+  opacity: 0; transition: opacity 0.4s ease;
+}
+.album-player-overlay.active { display: flex; opacity: 1; }
+
+.player-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 6rem; width: 100%; max-width: 1200px; margin: auto; position: relative; z-index: 2; }
+.player-left { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; position: relative; }
+
+/* CONTENEDOR DEL VINILO Y LA FUNDA */
+.player-modal-inner-artwork {
+  width: 100%; max-width: 350px; aspect-ratio: 1/1;
+  position: relative; margin-bottom: 2rem;
+}
+
+/* FUNDA DEL DISCO */
+.player-modal-cover-funda {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 4px; object-fit: cover;
+  box-shadow: 15px 0 40px rgba(0,0,0,0.8);
+  z-index: 3;
+}
+
+/* CONTENEDOR DESLIZABLE DEL VINILO (ANIMACIÓN MÁS LENTA: 1.5s) */
+.vinyl-slide-container {
+  position: absolute; top: 2.5%; left: 0;
+  width: 95%; height: 95%;
+  z-index: 2;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateX(0); /* Escondido */
+}
+
+/* ANIMACIÓN DE SACAR EL DISCO */
+.album-player-overlay.active .vinyl-slide-container.extracted {
+  transform: translateX(55%); /* Se asoma a la derecha */
+}
+
+/* EL DISCO EN SÍ (Efecto Jaspeado Dorado/Negro) */
+.player-vinyl-disk-detailed {
+  width: 100%; height: 100%; border-radius: 50%;
+  background:
+    repeating-radial-gradient(var(--black), var(--black) 2px, var(--ink) 3px, var(--ink) 4px),
+    conic-gradient(from 45deg at center, var(--gold-dim) 0deg, transparent 40deg, var(--gold-dim) 180deg, transparent 220deg);
+  background-blend-mode: lighten;
+  border: 1px solid #333;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.player-vinyl-disk-detailed.spinning { animation: vinyl-play 4s linear infinite; }
+@keyframes vinyl-play { to { transform: rotate(360deg); } }
+
+/* ETIQUETA CENTRAL (Dorada) */
+.player-vinyl-disk-detailed .player-vinyl-label-detailed {
+  width: 35%; height: 35%; border-radius: 50%;
+  background: var(--gold);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 3px solid var(--black); box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+.player-vinyl-label-detailed .vinyl-label-text {
+  color: var(--black) !important; font-family: var(--font-disp); font-weight: bold; text-shadow: none;
+}
+
+/* AGUJA (TONEARM) DEL MODAL - AJUSTADA A LA IZQUIERDA Y DELAY MÁS LENTO */
+.modal-needle {
+  position: absolute; 
+  top: -10%; 
+  right: 5%; /* MOVIDA A LA IZQUIERDA (Antes era negativo) */
+  width: 6px; height: 180px; 
+  transform-origin: top center;
+  transform: rotate(-35deg); /* Reposo */
+  z-index: 5; opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s; /* Delay aumentado para coordinar con la salida lenta */
+}
+.vinyl-slide-container.extracted .modal-needle {
+  transform: rotate(22deg); /* Baja sobre los surcos del vinilo */
+  opacity: 1;
+}
+.modal-needle-arm { width: 4px; height: 145px; background: linear-gradient(to bottom, #888, #444); margin: 0 auto; border-radius: 2px;}
+.modal-needle-head { width: 14px; height: 28px; background: var(--black); border: 2px solid var(--gold); margin: 0 auto; border-radius: 3px; position:relative;}
+/* Cabezal detallado */
+.modal-needle-head::after {
+    content:'';
+    position: absolute; bottom: 3px; left: 3px;
+    width: 8px; height: 8px;
+    background: var(--gold); border-radius: 1px;
+}
+
+/* INFO Y TEXTOS */
+.player-info { width: 100%; text-align: left; }
+.title-flex { display: flex; align-items: center; gap: 15px; }
+.player-info h2 { font-family: var(--font-disp); font-size: clamp(2.5rem, 6vh, 4rem); color: var(--gold); line-height: 1; margin-top: 1rem; }
+
+/* MINI ECUALIZADOR (ELEMENTO MUSICAL CREATIVO) */
+.mini-eq { display: flex; gap: 4px; height: 30px; align-items: flex-end; margin-top: 1rem; }
+.mini-eq span { width: 6px; background: var(--gold); border-radius: 2px; animation: eq-bounce 1s ease-in-out infinite alternate; }
+.mini-eq span:nth-child(1) { animation-delay: 0.1s; height: 40%; }
+.mini-eq span:nth-child(2) { animation-delay: 0.3s; height: 80%; }
+.mini-eq span:nth-child(3) { animation-delay: 0.0s; height: 60%; }
+.mini-eq span:nth-child(4) { animation-delay: 0.4s; height: 100%; }
+@keyframes eq-bounce { 0% { height: 20%; } 100% { height: 100%; } }
+
+.player-info p { font-family: var(--font-mono); color: var(--cream); letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 0.5rem; text-transform: uppercase; opacity: 0.8; }
+
+/* METADATOS MUSICALES DETALLADOS */
+.metadata-line {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--gold-pale);
+    letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.6;
+    margin-bottom: 2rem; display: flex; align-items: center; gap: 8px;
+}
+.metadata-line i { font-size: 0.8rem; color: var(--gold-dim); }
+
+/* BOTÓN DORADO UPLOAD */
+.btn-add-task-gold-detailed {
+  background: transparent; color: var(--gold); border: 1px solid var(--gold);
+  font-family: var(--font-disp); font-size: 1.2rem; padding: 10px 24px;
+  cursor: pointer; transition: all 0.3s ease; z-index: 10; letter-spacing: 0.1em;
+}
+.btn-add-task-gold-detailed:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 15px rgba(201,168,76,0.5); }
+
+/* LISTA DE TAREAS (PDFs) */
+.tracklist { list-style: none; counter-reset: t-counter; margin-top: 1rem; border-top: 1px solid rgba(201,168,76,0.2); }
+.tracklist-header {
+    font-family: var(--font-disp); font-size: 0.8rem; color: var(--charcoal);
+    letter-spacing: 0.4em; text-transform: uppercase;
+    padding: 1.5rem 1rem 0.5rem; display: flex; justify-content: space-between;
+}
+
+.track-item-player { 
+  display: flex; align-items: center; padding: 1rem 1rem; 
+  border-bottom: 1px solid rgba(201,168,76,0.1); 
+  color: var(--white); text-decoration: none; transition: .2s; font-size: 1.1rem; 
+  background: rgba(255,255,255,0.01);
+  position: relative; overflow: hidden;
+}
+
+.track-item-player::after {
+    content:'';
+    position: absolute; inset:0;
+    background: radial-gradient(circle at center, rgba(201,168,76,0.15) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.3s;
+}
+
+.track-item-player:hover { color: var(--black); background: var(--gold); transform: scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 5px; border-bottom-color: transparent;}
+.track-item-player:hover::after { opacity: 1; }
+
+.track-item-player::before { 
+    counter-increment: t-counter; content: counter(t-counter, decimal-leading-zero); 
+    margin-right: 2rem; opacity: 0.5; font-family: var(--font-mono); color: var(--gold); transition: .2s;
+    font-size: 1.2rem; display: inline-flex; align-items: center; width: 40px; justify-content: center;
+}
+.track-item-player:hover::before { color: var(--black); opacity: 1; }
+
+.track-item-player i { opacity: 0.8; font-size: 1.1rem; color: var(--white); transition: .2s; margin-left: auto;}
+.track-item-player i.fa-file-pdf { color: var(--white); }
+.track-item-player:hover i { color: var(--black); transform: scale(1.2);}
+
+.track-item-player span::before {
+    content: '\f04b';
+    font-family: 'Font Awesome 6 Free'; font-weight: 900;
+    font-size: 0.7rem; color: var(--charcoal);
+    margin-right: 12px; opacity: 0; transition: .2s;
+}
+.track-item-player:hover span::before { opacity: 1; color: var(--black); }
+
+.close-player { position: absolute; top: 2rem; right: 2rem; background: none; border: none; color: var(--gold); font-size: 2.5rem; cursor: pointer; transition: transform .3s; z-index: 10001; }
+.close-player:hover { transform: rotate(90deg); color: var(--white); }
+
 @media (max-width: 900px) {
-  /* Body scrolleable */
   body { overflow: auto; height: auto; }
-
-  /* Escena en columna vertical */
-  .carousel-scene {
-    flex-direction: column;
-    padding: 0 0.8rem;
-    overflow: visible;
-  }
-
-  /* Columnas sin padding lateral */
-  .col-wrapper--left,
-  .col-wrapper--right {
-    padding: 0;
-    overflow: visible;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Zona central arriba del todo */
-  .center-zone {
-    width: 100%;
-    margin-bottom: 2rem;
-    order: -1; /* Sube al top */
-  }
+  .carousel-scene { flex-direction: column; padding: 0 0.8rem; overflow: visible; }
+  .col-wrapper--left, .col-wrapper--right { padding: 0; overflow: visible; margin-bottom: 1.5rem; }
+  .center-zone { width: 100%; margin-bottom: 2rem; order: -1; }
   .center-main-title { font-size: 2.5rem; }
-  .center-vinyl {
-    width: 110px;
-    height: 110px;
-  }
-
-  /* Cards más compactas */
-  .track-card {
-    grid-template-columns: 36px 60px 1fr;
-    min-height: 12vh;
-  }
+  .center-vinyl { width: 110px; height: 110px; }
+  .track-card { grid-template-columns: 36px 60px 1fr; min-height: 12vh; }
   .track-num { font-size: 1.4rem; }
   .track-title { font-size: 1.1rem; }
   .track-body { padding: 0.8rem; }
-
-  /* Controles del carrusel */
-  .carousel-controls {
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    padding: 0.8rem;
-    justify-content: center;
-  }
+  .carousel-controls { flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem; justify-content: center; }
   .music-btn { padding: 0.6rem 1rem; font-size: 0.9rem; }
   .carousel-btn-pulse { padding: 0.6rem 1.5rem; font-size: 1rem; }
-
-  /* Footer */
-  .footer-inner {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 1rem;
-    padding: 1rem;
-  }
+  .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 1rem; padding: 1rem; }
   .footer-logo { justify-content: center; }
   .footer-right { justify-content: center; flex-direction: column; gap: 0.8rem; }
-  .footer-quote, .footer-credit { text-align: center; }
   .footer-bar { font-size: 0.55rem; }
-
-  /* Nav pills más pequeñas */
   .center-nav { gap: 0.6rem; }
   .nav-pill { padding: 0.6rem 1rem; font-size: 0.75rem; }
-
-  /* Now playing */
   .now-playing { padding: 0.5rem 1rem; font-size: 0.7rem; }
   .np-track { font-size: 0.65rem; }
-
-  /* Cursor custom se oculta en táctil */
   .cursor, .cursor-dot { display: none; }
   * { cursor: auto !important; }
+  .player-content { grid-template-columns: 1fr; gap: 2rem; }
+  .player-left { text-align: center; align-items: center; }
+  .player-info { text-align: center; }
+  .title-flex { justify-content: center; }
+  .tracklist-header { display: none; }
+  .track-item-player { justify-content: center; text-align: center;}
+  .track-item-player i { margin-left: 10px; }
+  .track-item-player span::before { display: none; }
+  .metadata-line { justify-content: center; margin-bottom: 1rem; }
+  .btn-add-task-gold-detailed { width: 100%; }
+  .album-player-overlay.active .vinyl-slide-container.extracted { transform: translateX(30%); }
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-<!-- CANVAS PARTÍCULAS -->
 <canvas id="particles-canvas"></canvas>
 
 <div class="upload-overlay" id="uploadOverlay">
-  <div class="upload-modal">
-    <button class="upload-close" onclick="closeUpload()"><i class="fas fa-times"></i></button>
-    <h2 class="upload-title">SUBIR ARCHIVO</h2>
-    <p class="upload-subtitle" id="uploadSubtitle">SEMANA X</p>
-    <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
-      <i class="fas fa-cloud-upload-alt upload-icon"></i>
-      <p>Seleccione y arrastre aquí los archivos o<br><span>haga click para seleccionar</span></p>
-      <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
+</div>
+
+<div class="album-player-overlay" id="albumPlayer">
+    <button class="close-player" onclick="closeAlbumPlayer()"><i class="fas fa-times"></i></button>
+    
+    <div class="player-content">
+        <div class="player-left">
+            <div class="player-modal-inner-artwork">
+                <img src="" id="playerModalArtworkFunda" alt="Cover Funda" class="player-modal-cover-funda">
+                
+                <div class="vinyl-slide-container" id="vinylSlider">
+                    <div class="player-vinyl-disk-detailed spinning" id="playerVinylDiskDetailed">
+                        <div class="player-vinyl-label-detailed">
+                            <span class="vinyl-label-text">SEMANA</span>
+                            <span class="vinyl-label-text" style="font-size:2rem; line-height: 1;" id="playerVinylWeekDetailed">X</span>
+                        </div>
+                    </div>
+                    <div class="modal-needle">
+                        <div class="modal-needle-arm"></div>
+                        <div class="modal-needle-head"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="player-info">
+                <div class="title-flex">
+                   <h2 id="playerSemanaTitle">SEMANA X</h2>
+                   <div class="mini-eq"><span></span><span></span><span></span><span></span></div>
+                </div>
+                <p id="playerAlbumName">ALBUM NAME</p>
+                <div class="metadata-line">
+                   <i class="fas fa-compact-disc"></i> ACADEMIC PLAYLIST / BD2 / LADO B
+                </div>
+                <div class="player-actions">
+                    <button class="btn-add-task-gold-detailed" onclick="checkLoginForModalUpload()">+ SUBIR TRABAJO PDF</button>
+                    <input type="file" id="fileInputPlayerDetailed" accept=".pdf,.doc,.docx" style="display:none" onchange="submitUploadFromPlayerDetailed(event)">
+                </div>
+            </div>
+        </div>
+        <div class="player-right">
+            <div class="tracklist-header">
+                <span>PISTAS / ENTREGABLES</span>
+                <span>FORMATO</span>
+            </div>
+            <ul class="tracklist" id="playerTracklist">
+                </ul>
+        </div>
     </div>
-    <div class="file-list" id="fileList"></div>
-    <button class="upload-submit-btn" onclick="submitUpload()"><span>CONFIRMAR SUBIDA</span></button>
-  </div>
 </div>
 
 <div class="cursor" id="cursor"></div>
@@ -599,15 +681,12 @@ footer {
   </div>
 
   <div class="carousel-controls">
-    <!-- BOTÓN MÚSICA ANTERIOR -->
     <button class="music-btn" id="btnPrev" onclick="musicPrev()">
       <span>⏮ ANTERIOR</span>
     </button>
-    <!-- BOTÓN GIRAR CARRUSEL (sin cambios) -->
     <button class="carousel-btn-pulse" id="btnSpin" onclick="toggleCarousel()">
       <span id="btnSpinText">▶ GIRAR CARRUSEL</span>
     </button>
-    <!-- BOTÓN MÚSICA SIGUIENTE -->
     <button class="music-btn" id="btnNext" onclick="musicNext()">
       <span>SIGUIENTE ⏭</span>
     </button>
@@ -649,101 +728,65 @@ footer {
   const ctx = canvas.getContext('2d');
   let W, H, particles, mouse = {x: -9999, y: -9999};
 
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
 
   function createParticles() {
     const count = Math.floor((W * H) / 18000);
     particles = [];
     for (let i = 0; i < count; i++) {
       particles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r: Math.random() * 2 + 1,
-        alpha: Math.random() * 0.6 + 0.3,
-        pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: Math.random() * 0.02 + 0.005
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 2 + 1, alpha: Math.random() * 0.6 + 0.3,
+        pulse: Math.random() * Math.PI * 2, pulseSpeed: Math.random() * 0.02 + 0.005
       });
     }
   }
 
   function drawParticles() {
     ctx.clearRect(0, 0, W, H);
-    const maxDist = 140;
-    const mouseRadius = 180;
+    const maxDist = 140; const mouseRadius = 180;
 
     for (let p of particles) {
-      p.pulse += p.pulseSpeed;
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0) p.x = W;
-      if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H;
-      if (p.y > H) p.y = 0;
+      p.pulse += p.pulseSpeed; p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
     }
 
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
+        const dx = particles[i].x - particles[j].x; const dy = particles[i].y - particles[j].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < maxDist) {
           const opacity = (1 - dist / maxDist) * 0.35;
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(201, 168, 76, ${opacity})`;
-          ctx.lineWidth = 0.6;
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
+          ctx.beginPath(); ctx.strokeStyle = `rgba(201, 168, 76, ${opacity})`; ctx.lineWidth = 0.6;
+          ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
         }
       }
     }
 
     for (let p of particles) {
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const dx = p.x - mouse.x; const dy = p.y - mouse.y; const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < mouseRadius) {
         const opacity = (1 - dist / mouseRadius) * 0.6;
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(240, 192, 96, ${opacity})`;
-        ctx.lineWidth = 0.8;
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
+        ctx.beginPath(); ctx.strokeStyle = `rgba(240, 192, 96, ${opacity})`; ctx.lineWidth = 0.8;
+        ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
       }
     }
 
     for (let p of particles) {
-      const glow = Math.sin(p.pulse) * 0.3 + 0.7;
-      const r = p.r * glow;
-      const alpha = p.alpha * glow;
+      const glow = Math.sin(p.pulse) * 0.3 + 0.7; const r = p.r * glow; const alpha = p.alpha * glow;
       const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3);
-      grad.addColorStop(0, `rgba(232, 212, 154, ${alpha})`);
-      grad.addColorStop(0.5, `rgba(201, 168, 76, ${alpha * 0.5})`);
-      grad.addColorStop(1, `rgba(201, 168, 76, 0)`);
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, r * 3, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(240, 212, 160, ${alpha})`;
-      ctx.fill();
+      grad.addColorStop(0, `rgba(232, 212, 154, ${alpha})`); grad.addColorStop(0.5, `rgba(201, 168, 76, ${alpha * 0.5})`); grad.addColorStop(1, `rgba(201, 168, 76, 0)`);
+      ctx.beginPath(); ctx.arc(p.x, p.y, r * 3, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fillStyle = `rgba(240, 212, 160, ${alpha})`; ctx.fill();
     }
-
     requestAnimationFrame(drawParticles);
   }
 
   window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
   window.addEventListener('resize', () => { resize(); createParticles(); });
-  resize();
-  createParticles();
-  drawParticles();
+  resize(); createParticles(); drawParticles();
 })();
 
 // ══════════════════════════════════════════
@@ -758,12 +801,8 @@ const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 // ══════════════════════════════════════════
 const playlist = [
   { title: 'ZZ — LADO B', src: 'ZZ.mp3' },
-  // Agrega más canciones aquí:
-  // { title: 'STRONGER', src: 'stronger.mp3' },
 ];
-let currentTrackIndex = 0;
-let isMusicPlaying = false;
-
+let currentTrackIndex = 0; let isMusicPlaying = false;
 const bgMusic = document.getElementById('bg-music');
 const vinylToggle = document.getElementById('vinylToggle');
 const waveform = document.getElementById('npWaveform');
@@ -774,47 +813,33 @@ function loadTrack(index) {
   if (playlist.length === 0) return;
   currentTrackIndex = (index + playlist.length) % playlist.length;
   const track = playlist[currentTrackIndex];
-  bgMusic.src = track.src;
-  npMusicTitle.textContent = track.title;
-  npMusicInfo.style.display = 'flex';
+  bgMusic.src = track.src; npMusicTitle.textContent = track.title; npMusicInfo.style.display = 'flex';
   if (isMusicPlaying) bgMusic.play().catch(() => {});
 }
 
 function musicPrev() {
-  const btn = document.getElementById('btnPrev');
-  btn.classList.add('flash');
-  setTimeout(() => btn.classList.remove('flash'), 300);
+  const btn = document.getElementById('btnPrev'); btn.classList.add('flash'); setTimeout(() => btn.classList.remove('flash'), 300);
   loadTrack(currentTrackIndex - 1);
   if (isMusicPlaying) bgMusic.play().catch(() => {});
 }
 
 function musicNext() {
-  const btn = document.getElementById('btnNext');
-  btn.classList.add('flash');
-  setTimeout(() => btn.classList.remove('flash'), 300);
+  const btn = document.getElementById('btnNext'); btn.classList.add('flash'); setTimeout(() => btn.classList.remove('flash'), 300);
   loadTrack(currentTrackIndex + 1);
   if (isMusicPlaying) bgMusic.play().catch(() => {});
 }
 
-bgMusic.addEventListener('ended', () => {
-  if (playlist.length > 1) musicNext();
-});
-
+bgMusic.addEventListener('ended', () => { if (playlist.length > 1) musicNext(); });
 waveform.classList.add('paused');
 
 vinylToggle.addEventListener('click', () => {
   if (isMusicPlaying) {
-    bgMusic.pause();
-    waveform.classList.add('paused');
-    vinylToggle.classList.add('paused');
-    isMusicPlaying = false;
+    bgMusic.pause(); waveform.classList.add('paused'); vinylToggle.classList.add('paused'); isMusicPlaying = false;
   } else {
     if (!bgMusic.src || bgMusic.src === window.location.href) loadTrack(0);
     bgMusic.volume = 0.3;
     bgMusic.play().then(() => {
-      waveform.classList.remove('paused');
-      vinylToggle.classList.remove('paused');
-      isMusicPlaying = true;
+      waveform.classList.remove('paused'); vinylToggle.classList.remove('paused'); isMusicPlaying = true;
     }).catch(err => console.log('Audio error:', err));
   }
 });
@@ -892,14 +917,13 @@ const tareasData = [
   }
 ];
 
-let offset = 0;
-let isSpinning = false;
-let spinInterval = null;
-let currentUploadWeek = null;
+let offset = 0; let isSpinning = false; let spinInterval = null; let currentUploadWeek = null;
+
+// NUEVAS VARIABLES PARA EL MODAL DE ÁLBUM
+let currentWeekForPlayer = null;
 
 function getPage(off) {
-  const total = tareasData.length;
-  const left = [], right = [];
+  const total = tareasData.length; const left = [], right = [];
   for (let i = 0; i < 4; i++) left.push(tareasData[(off + i) % total]);
   for (let i = 4; i < 8; i++) right.push(tareasData[(off + i) % total]);
   return { left, right };
@@ -917,28 +941,9 @@ function buildCardHTML(s) {
       <div class="track-album-tag">${s.album}</div>
       <h2 class="track-title">SEMANA <em>${s.semana}</em></h2>
       <div class="track-tasks">
-        <div class="tasks-header" onclick="toggleTasks(${s.semana})">
+        <div class="tasks-header" onclick="openAlbumPlayer(${s.semana})">
           <span class="tasks-count">${s.tareas.length} TAREA${s.tareas.length>1?'S':''}</span>
-          <button class="btn-add-task" onclick="checkLoginAndAdd(event, ${s.semana})">+ AGREGAR</button>
-          <span class="tasks-toggle" id="toggle-${s.semana}">+ VER</span>
-        </div>
-        <ul class="tasks-list hidden" id="list-${s.semana}">
-          ${s.tareas.map(t=>`
-            <li class="task-item" id="item-${t.id}">
-              <label class="task-check">
-                <input type="checkbox" onchange="checkTask(this,${s.semana})">
-                <span class="checkmark"></span>
-              </label>
-              <span class="task-name">${t.descripcion}</span>
-              <div class="task-actions">
-                <a href="https://raw.githubusercontent.com/FrankDiegoMatiasUrcuhuaranga/TALLER/main/${t.archivo}" target="_blank" class="task-btn task-btn--dl"><i class="fas fa-download"></i></a>
-                <a href="${t.githubUrl}" target="_blank" class="task-btn task-btn--gh"><i class="fab fa-github"></i></a>
-              </div>
-            </li>`).join('')}
-        </ul>
-        <div class="progress-wrap">
-          <div class="progress-track"><div class="progress-fill" id="prog-${s.semana}" style="width:0%"></div></div>
-          <span class="progress-pct" id="pct-${s.semana}">0%</span>
+          <span class="tasks-toggle" id="toggle-${s.semana}">+ VER PANTALLA</span>
         </div>
       </div>
       <a href="${s.githubSemanaUrl}" target="_blank" class="github-link"><i class="fab fa-github"></i> GITHUB</a>
@@ -947,132 +952,172 @@ function buildCardHTML(s) {
 
 function renderColumns(dir) {
   const { left, right } = getPage(offset);
-  const colL = document.getElementById('colLeft');
-  const colR = document.getElementById('colRight');
+  const colL = document.getElementById('colLeft'); const colR = document.getElementById('colRight');
   [...colL.children, ...colR.children].forEach(c => { c.classList.add(dir === 1 ? 'carousel-exit' : 'carousel-enter'); });
   setTimeout(() => {
-    colL.innerHTML = '';
-    colR.innerHTML = '';
+    colL.innerHTML = ''; colR.innerHTML = '';
     left.forEach((s, i) => {
-      const card = document.createElement('div');
-      card.className = 'track-card from-left';
-      card.innerHTML = buildCardHTML(s);
+      const card = document.createElement('div'); card.className = 'track-card from-left'; card.innerHTML = buildCardHTML(s);
       card.addEventListener('mouseenter', () => { document.getElementById('npTrack').textContent = `SEMANA ${s.semana} — ${s.album}`; activateNeedle(); });
-      colL.appendChild(card);
-      setTimeout(() => card.classList.add('visible'), i * 60);
+      colL.appendChild(card); setTimeout(() => card.classList.add('visible'), i * 60);
     });
     right.forEach((s, i) => {
-      const card = document.createElement('div');
-      card.className = 'track-card from-right';
-      card.innerHTML = buildCardHTML(s);
+      const card = document.createElement('div'); card.className = 'track-card from-right'; card.innerHTML = buildCardHTML(s);
       card.addEventListener('mouseenter', () => { document.getElementById('npTrack').textContent = `SEMANA ${s.semana} — ${s.album}`; activateNeedle(); });
-      colR.appendChild(card);
-      setTimeout(() => card.classList.add('visible'), i * 60);
+      colR.appendChild(card); setTimeout(() => card.classList.add('visible'), i * 60);
     });
     updateDots();
   }, 200);
 }
 
 function updateDots() {
-  const dotsEl = document.getElementById('carouselDots');
-  dotsEl.innerHTML = '';
+  const dotsEl = document.getElementById('carouselDots'); dotsEl.innerHTML = '';
   for (let i = 0; i < tareasData.length; i++) {
-    const d = document.createElement('div');
-    d.className = 'c-dot' + (i === offset ? ' active' : '');
-    dotsEl.appendChild(d);
+    const d = document.createElement('div'); d.className = 'c-dot' + (i === offset ? ' active' : ''); dotsEl.appendChild(d);
   }
 }
 
 function toggleCarousel() {
-  const btn = document.getElementById('btnSpin');
-  const txt = document.getElementById('btnSpinText');
+  const btn = document.getElementById('btnSpin'); const txt = document.getElementById('btnSpinText');
   if (isSpinning) {
-    isSpinning = false; clearInterval(spinInterval);
-    btn.classList.remove('spinning'); txt.textContent = '▶ GIRAR CARRUSEL';
+    isSpinning = false; clearInterval(spinInterval); btn.classList.remove('spinning'); txt.textContent = '▶ GIRAR CARRUSEL';
   } else {
     isSpinning = true; btn.classList.add('spinning'); txt.textContent = '⏹ DETENER';
     spinInterval = setInterval(() => { offset = (offset + 1) % tareasData.length; renderColumns(1); }, 1800);
   }
 }
 
-function toggleTasks(semana) {
-  const list = document.getElementById(`list-${semana}`);
-  const toggle = document.getElementById(`toggle-${semana}`);
-  if (!list) return;
-  list.classList.toggle('hidden');
-  toggle.textContent = list.classList.contains('hidden') ? '+ VER' : '− CERRAR';
+function cerrarSesion() { localStorage.removeItem('isLoggedIn'); window.location.href = 'index.html'; }
+
+// ══════════════════════════════════════════
+// NUEVA LÓGICA: MODAL TIPO APPLE MUSIC / TYLER
+// ══════════════════════════════════════════
+async function openAlbumPlayer(semanaNum) {
+    const modal = document.getElementById('albumPlayer');
+    const vinylSlider = document.getElementById('vinylSlider');
+    const vinylDiskDetailed = document.getElementById('playerVinylDiskDetailed');
+    const artworkFunda = document.getElementById('playerModalArtworkFunda');
+    const vinylWeekDetailed = document.getElementById('playerVinylWeekDetailed');
+    currentWeekForPlayer = semanaNum;
+
+    const semanaData = tareasData.find(s => s.semana === semanaNum);
+    if(!semanaData) return;
+
+    // Pintar info base (Portada a la izquierda y Textos)
+    document.getElementById('playerSemanaTitle').textContent = `SEMANA ${semanaData.semana}`;
+    document.getElementById('playerAlbumName').textContent = semanaData.album;
+    vinylWeekDetailed.textContent = semanaData.semana;
+    artworkFunda.src = semanaData.imagen; 
+
+    // Activar el modal (El fondo translúcido deja ver las partículas)
+    modal.classList.add('active');
+    
+    // Iniciar el giro continuo
+    vinylDiskDetailed.classList.add('spinning');
+
+    // Retraso minúsculo para permitir que el CSS aplique el slide-out suavemente
+    setTimeout(() => {
+        vinylSlider.classList.add('extracted');
+    }, 50);
+    
+    // Consultar a Supabase
+    loadTracksFromSupabase(semanaNum);
 }
 
-function checkTask(cb, semana) {
-  cb.closest('.task-item').classList.toggle('done', cb.checked);
-  const list = document.getElementById(`list-${semana}`);
-  if (!list) return;
-  const all = list.querySelectorAll('input[type=checkbox]');
-  const done = list.querySelectorAll('input[type=checkbox]:checked');
-  const pct = Math.round((done.length / all.length) * 100);
-  const prog = document.getElementById(`prog-${semana}`);
-  const pctEl = document.getElementById(`pct-${semana}`);
-  if (prog) prog.style.width = pct + '%';
-  if (pctEl) pctEl.textContent = pct + '%';
+function closeAlbumPlayer() {
+    const modal = document.getElementById('albumPlayer');
+    const vinylSlider = document.getElementById('vinylSlider');
+    const vinylDiskDetailed = document.getElementById('playerVinylDiskDetailed');
+    
+    // 1. Esconder el vinilo y levantar la aguja
+    vinylSlider.classList.remove('extracted');
+    
+    // 2. Cerrar el modal
+    modal.classList.remove('active');
+
+    // 3. Detener el giro tras un breve retraso
+    setTimeout(() => {
+         vinylDiskDetailed.classList.remove('spinning');
+    }, 400);
 }
 
-function checkLoginAndAdd(event, semana) {
-  event.stopPropagation();
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  if (isLoggedIn === 'true') {
-    currentUploadWeek = semana;
-    document.getElementById('uploadSubtitle').textContent = 'SEMANA ' + semana;
-    document.getElementById('uploadOverlay').classList.add('active');
-  } else {
-    alert('Acceso denegado. Serás redirigido para iniciar sesión primero.');
-    window.location.href = 'index.html';
-  }
+// ══════════════════════════════════════════
+// LÓGICA DE LOGIN PARA EL BOTÓN
+// ══════════════════════════════════════════
+function checkLoginForModalUpload() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+        // Abre la ventana de selección de archivos si está logueado
+        document.getElementById('fileInputPlayerDetailed').click();
+    } else {
+        alert('Acceso denegado. Serás redirigido para iniciar sesión primero.');
+        window.location.href = 'index.html';
+    }
 }
 
-function cerrarSesion() {
-  localStorage.removeItem('isLoggedIn');
-  window.location.href = 'index.html';
+async function loadTracksFromSupabase(num) {
+    const tracklistEl = document.getElementById('playerTracklist');
+    tracklistEl.innerHTML = '<p style="color:var(--gold); opacity:0.6; font-family:var(--font-mono)">Sincronizando con la nube...</p>';
+    
+    const { data, error } = await _supabase
+        .from('tareas')
+        .select('*')
+        .eq('semana', num);
+
+    if (error) {
+        tracklistEl.innerHTML = '<p style="color:var(--white);">Error al conectar con la base de datos.</p>';
+    } else {
+        const semanaData = tareasData.find(s => s.semana === num);
+        const tareasLocales = semanaData ? semanaData.tareas : [];
+        const todasLasTareas = [...tareasLocales, ...(data || [])];
+
+        if(todasLasTareas.length === 0) {
+             tracklistEl.innerHTML = '<p style="color:var(--white); opacity:0.6;">No hay trabajos subidos aún.</p>';
+        } else {
+             tracklistEl.innerHTML = todasLasTareas.map(t => `
+                <a href="${t.archivo_url || t.githubUrl}" target="_blank" title="Abrir PDF en nueva pestaña" class="track-item-player">
+                    <span style="flex:1">${t.descripcion}</span>
+                    <i class="fas fa-file-pdf" style="opacity:0.8; font-size:1.2rem;"></i>
+                </a>
+            `).join('');
+        }
+    }
 }
 
-function closeUpload() {
-  document.getElementById('uploadOverlay').classList.remove('active');
-  document.getElementById('fileInput').value = '';
-  document.getElementById('fileList').innerHTML = '';
-}
+async function submitUploadFromPlayerDetailed(event) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-function handleFileSelect(event) {
-  const files = event.target.files;
-  const fileList = document.getElementById('fileList');
-  fileList.innerHTML = '';
-  for (let i = 0; i < files.length; i++) {
-    fileList.innerHTML += `<div class="file-item"><i class="fas fa-file-alt"></i><span>${files[i].name}</span></div>`;
-  }
-}
+    const btn = document.querySelector('.player-actions .btn-add-task-gold-detailed');
+    const originalText = btn.textContent;
+    btn.textContent = "SUBIENDO A LA NUBE...";
+    btn.disabled = true;
 
-async function submitUpload() {
-  const fileInput = document.getElementById('fileInput');
-  const files = fileInput.files;
-  if (files.length === 0) { alert('Por favor, selecciona al menos un archivo primero.'); return; }
-  const file = files[0];
-  const fileName = `semana_${currentUploadWeek}_${Date.now()}_${file.name}`;
-  const btnSpan = document.querySelector('.upload-submit-btn span');
-  const originalText = btnSpan.textContent;
-  btnSpan.textContent = 'SUBIENDO A LA NUBE...';
-  try {
-    const { data: uploadData, error: uploadError } = await _supabase.storage.from('entregables').upload(fileName, file);
-    if (uploadError) throw uploadError;
-    const { data: publicUrlData } = _supabase.storage.from('entregables').getPublicUrl(fileName);
-    const archivoUrl = publicUrlData.publicUrl;
-    const { error: dbError } = await _supabase.from('tareas').insert([{ semana: currentUploadWeek, descripcion: file.name, archivo_url: archivoUrl }]);
-    if (dbError) throw dbError;
-    alert('¡Éxito! El archivo se guardó permanentemente en la nube de Supabase.');
-    closeUpload();
-  } catch (error) {
-    console.error('Error en la subida:', error);
-    alert('Hubo un problema al subir el archivo: ' + error.message);
-  } finally {
-    btnSpan.textContent = originalText;
-  }
+    const fileName = `sem${currentWeekForPlayer}_${Date.now()}_${file.name}`;
+
+    try {
+        const { data: upData, error: upErr } = await _supabase.storage.from('entregables').upload(fileName, file);
+        if (upErr) throw upErr;
+
+        const { data: urlData } = _supabase.storage.from('entregables').getPublicUrl(fileName);
+        
+        const { error: dbErr } = await _supabase.from('tareas').insert([{
+            semana: currentWeekForPlayer,
+            descripcion: file.name,
+            archivo_url: urlData.publicUrl
+        }]);
+
+        if (dbErr) throw dbErr;
+
+        alert("¡Archivo subido exitosamente a Supabase!");
+        loadTracksFromSupabase(currentWeekForPlayer); 
+
+    } catch (e) {
+        alert("Hubo un error en la subida: " + e.message);
+    } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }
 }
 
 let needleTimeout;
@@ -1083,14 +1128,13 @@ function activateNeedle() {
   needleTimeout = setTimeout(() => needle.classList.remove('active'), 2000);
 }
 
-const cursor = document.getElementById('cursor');
-const dot = document.getElementById('cursorDot');
+const cursor = document.getElementById('cursor'); const dot = document.getElementById('cursorDot');
 let mx=0, my=0, cx=0, cy=0;
 document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.cssText=`left:${mx}px;top:${my}px`; });
 function animCursor() { cx+=(mx-cx)*0.12; cy+=(my-cy)*0.12; cursor.style.cssText=`left:${cx}px;top:${cy}px`; requestAnimationFrame(animCursor); }
 animCursor();
 document.addEventListener('mouseover', e => {
-  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn')) cursor.classList.add('big');
+  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn,.track-item-player')) cursor.classList.add('big');
   else cursor.classList.remove('big');
 });
 
