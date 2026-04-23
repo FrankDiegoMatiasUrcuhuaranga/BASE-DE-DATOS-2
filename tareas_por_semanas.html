@@ -858,14 +858,85 @@ vinylToggle.addEventListener('click', () => {
 // DATA DE TAREAS - LADO A (SEMANAS 1-8)
 // ══════════════════════════════════════════
 const tareasData = [
-  { semana: 1, imagen: 'https://i.pinimg.com/1200x/a2/8a/6a/a28a6a7b9de9789b1f01866a1e6efa06.jpg', album: 'THE COLLEGE DROPOUT', year: '2004', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/BASE-DE-DATOS-2/tree/main/CODIGOS', tareas: [  ] },
-  { semana: 2, imagen: 'https://i.pinimg.com/1200x/d6/07/c9/d607c9b61e02347f2d0969a889ed3580.jpg', album: 'LATE REGISTRATION', year: '2005', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%202', tareas: [ ] },
-  { semana: 3, imagen: 'https://i.pinimg.com/736x/1a/45/1e/1a451e159838a95dec02d66f35975e6e.jpg', album: 'GRADUATION', year: '2007', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203', tareas: [ { id: 6, descripcion: 'TAREA 4: EJERCICIO 1', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203/EJERCICIO%201', archivo: 'TRABAJO3.pdf' }, { id: 7, descripcion: 'TAREA 4: EJERCICIO 2', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203/EJERCICIO%202', archivo: 'TRABAJO3.pdf' } ] },
-  { semana: 4, imagen: 'https://i.pinimg.com/736x/a2/61/3e/a2613e9caf059b0ad507c1cede626f01.jpg', album: '808s & HEARTBREAK', year: '2008', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204', tareas: [ { id: 8, descripcion: 'TAREA 5: EJERCICIO 1', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204/EJERCICIO%201', archivo: 'TRABAJO4.pdf' }, { id: 9, descripcion: 'TAREA 5: EJERCICIO 2', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204/EJERCICIO%202', archivo: 'TRABAJO5.pdf' } ] },
-  { semana: 5, imagen: 'https://i.pinimg.com/1200x/32/86/6d/32866d01701a71d7a9a378ca709f287e.jpg', album: 'MY BEAUTIFUL DARK TWISTED FANTASY', year: '2010', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%205', tareas: [ { id: 10, descripcion: 'PRUEBA DE FUNCIONAMIENTO DEL LOGIN', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%205', archivo: 'PRUEBA DE FUNCIONANMIENTO DEL LOGIN .pdf' } ] },
-  { semana: 6, imagen: 'https://i.pinimg.com/1200x/9a/00/9f/9a009fbfe7ac9eb9adf32dda702f0375.jpg', album: 'WATCH THE THRONE', year: '2011', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206', tareas: [ { id: 11, descripcion: 'FRONT END DE LA PÁGINA', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206/FRONT%20END', archivo: 'TRABAJO6.pdf' }, { id: 12, descripcion: 'BASE DE DATOS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206/BASE%20DE%20DATOS', archivo: 'TRABAJO7.pdf' } ] },
-  { semana: 7, imagen: 'https://i.pinimg.com/1200x/e2/b9/7e/e2b97eaa263fdff413cb9c4336b078ce.jpg', album: 'YEEZUS', year: '2013', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%207/Registro/src', tareas: [ { id: 13, descripcion: 'TRABAJO FINAL', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%207/Registro/src', archivo: 'SEMANA 7 FINAL.pdf' } ] },
-  { semana: 8, imagen: 'https://i.pinimg.com/1200x/d0/bf/fd/d0bffd2724251b9c49a63f761c47e6c7.jpg', album: 'THE LIFE OF PABLO', year: '2016', githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%208/MEJORA/Registro', tareas: [ { id: 14, descripcion: 'TRABAJO FINAL MEJORADO', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%208/MEJORA/Registro', archivo: 'SEMANA 8.pdf' } ] }
+  { 
+    semana: 1, 
+    imagen: 'https://i.pinimg.com/736x/b5/ad/72/b5ad7208d13e12d40ecd4aaceb76e47b.jpg', 
+    album: 'ye', 
+    year: '2018', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/BASE-DE-DATOS-2/tree/main/CODIGOS', 
+    tareas: [ ] 
+  },
+  { 
+    semana: 2, 
+    imagen: 'https://i.pinimg.com/1200x/c9/64/10/c964109e1aae94fd7d4969b75b089cc1.jpg', 
+    album: 'DONDA', 
+    year: '2021', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%202', 
+    tareas: [ ] 
+  },
+  { 
+    semana: 3, 
+    imagen: 'https://i.pinimg.com/736x/d6/dc/78/d6dc7841ba898a7d9d98d3a6e91ea4f4.jpg', 
+    album: 'VULTURES 1', 
+    year: '2024', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203', 
+    tareas: [ 
+      { id: 6, descripcion: 'TAREA 4: EJERCICIO 1', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203/EJERCICIO%201', archivo: 'TRABAJO3.pdf' }, 
+      { id: 7, descripcion: 'TAREA 4: EJERCICIO 2', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%203/EJERCICIO%202', archivo: 'TRABAJO3.pdf' } 
+    ] 
+  },
+  { 
+    semana: 4, 
+    imagen: 'https://i.pinimg.com/736x/86/e6/02/86e602bc63d41d58305e3aac0a8af3e4.jpg', 
+    album: 'JESUS IS KING', 
+    year: '2019', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204', 
+    tareas: [ 
+      { id: 8, descripcion: 'TAREA 5: EJERCICIO 1', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204/EJERCICIO%201', archivo: 'TRABAJO4.pdf' }, 
+      { id: 9, descripcion: 'TAREA 5: EJERCICIO 2', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%204/EJERCICIO%202', archivo: 'TRABAJO5.pdf' } 
+    ] 
+  },
+  { 
+    semana: 5, 
+    imagen: 'https://i.pinimg.com/736x/5a/3c/7e/5a3c7e26aca9c457a77f1bd1c8337bd6.jpg', 
+    album: 'WATCH THE THRONE II', 
+    year: '2022', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%205', 
+    tareas: [ 
+      { id: 10, descripcion: 'PRUEBA DE FUNCIONAMIENTO DEL LOGIN', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%205', archivo: 'PRUEBA DE FUNCIONANMIENTO DEL LOGIN .pdf' } 
+    ] 
+  },
+  { 
+    semana: 6, 
+    imagen: 'https://i.pinimg.com/736x/71/03/6c/71036c467148f73e5b050ba4ecf82fb9.jpg', 
+    album: 'DONDA 2', 
+    year: '2022', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206', 
+    tareas: [ 
+      { id: 11, descripcion: 'FRONT END DE LA PÁGINA', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206/FRONT%20END', archivo: 'TRABAJO6.pdf' }, 
+      { id: 12, descripcion: 'BASE DE DATOS', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%206/BASE%20DE%20DATOS', archivo: 'TRABAJO7.pdf' } 
+    ] 
+  },
+  { 
+    semana: 7, 
+    imagen: 'https://i.pinimg.com/736x/bd/1c/e8/bd1ce8a696b9c01cb1bbdf3725e9ed00.jpg', 
+    album: 'GRADUATION (Alt)', 
+    year: '2007', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%207/Registro/src', 
+    tareas: [ 
+      { id: 13, descripcion: 'TRABAJO FINAL', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%207/Registro/src', archivo: 'SEMANA 7 FINAL.pdf' } 
+    ] 
+  },
+  { 
+    semana: 8, 
+    imagen: 'https://i.pinimg.com/736x/45/14/0b/45140b02a10187934c99a5904ac10aa5.jpg', 
+    album: 'MBDTF', 
+    year: '2010', 
+    githubSemanaUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%208/MEJORA/Registro', 
+    tareas: [ 
+      { id: 14, descripcion: 'TRABAJO FINAL MEJORADO', githubUrl: 'https://github.com/FrankDiegoMatiasUrcuhuaranga/TALLER/tree/main/CODIGOS/SEMANA%208/MEJORA/Registro', archivo: 'SEMANA 8.pdf' } 
+    ] 
+  }
 ];
 
 let offset = 0; let isSpinning = false; let spinInterval = null; let currentUploadWeek = null;
