@@ -349,14 +349,13 @@ footer {
 
 ::selection { background: var(--gold); color: var(--black); }
 
-/* ── MODAL REPRODUCTOR DE ÁLBUM (ESTILO NEGRO/DORADO + VINILO ANIMADO + AJUSTES TONMEARM) ── */
-/* Fondo translúcido PURO MANTENIDO (0.85) para ver las partículas de atrás */
+/* ── MODAL REPRODUCTOR DE ÁLBUM ── */
 .album-player-overlay {
   position: fixed; inset: 0; 
-  background: rgba(7, 7, 7, 0.85); /* EXCLUSIVAMENTE COLOR Y ALFA, SIN GRADIENTE QUE LO TAPE */
+  background: rgba(7, 7, 7, 0.85); 
   z-index: 10000;
   display: none; padding: 5vw; overflow-y: auto; 
-  backdrop-filter: blur(8px); /* DESENFOQUE PARA QUE LAS PARTÍCULAS BRILLEN DETRÁS */
+  backdrop-filter: blur(8px); 
   opacity: 0; transition: opacity 0.4s ease;
 }
 .album-player-overlay.active { display: flex; opacity: 1; }
@@ -365,90 +364,37 @@ footer {
 .player-left { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; position: relative; }
 
 /* CONTENEDOR DEL VINILO Y LA FUNDA */
-.player-modal-inner-artwork {
-  width: 100%; max-width: 350px; aspect-ratio: 1/1;
-  position: relative; margin-bottom: 2rem;
-}
+.player-modal-inner-artwork { width: 100%; max-width: 350px; aspect-ratio: 1/1; position: relative; margin-bottom: 2rem; }
+.player-modal-cover-funda { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 4px; object-fit: cover; box-shadow: 15px 0 40px rgba(0,0,0,0.8); z-index: 3; }
 
-/* FUNDA DEL DISCO */
-.player-modal-cover-funda {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  border-radius: 4px; object-fit: cover;
-  box-shadow: 15px 0 40px rgba(0,0,0,0.8);
-  z-index: 3;
-}
+/* CONTENEDOR DESLIZABLE DEL VINILO */
+.vinyl-slide-container { position: absolute; top: 2.5%; left: 0; width: 95%; height: 95%; z-index: 2; transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); transform: translateX(0); }
+.album-player-overlay.active .vinyl-slide-container.extracted { transform: translateX(55%); }
 
-/* CONTENEDOR DESLIZABLE DEL VINILO (ANIMACIÓN MÁS LENTA: 1.5s) */
-.vinyl-slide-container {
-  position: absolute; top: 2.5%; left: 0;
-  width: 95%; height: 95%;
-  z-index: 2;
-  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-  transform: translateX(0); /* Escondido */
-}
-
-/* ANIMACIÓN DE SACAR EL DISCO */
-.album-player-overlay.active .vinyl-slide-container.extracted {
-  transform: translateX(55%); /* Se asoma a la derecha */
-}
-
-/* EL DISCO EN SÍ (Efecto Jaspeado Dorado/Negro) */
+/* EL DISCO EN SÍ */
 .player-vinyl-disk-detailed {
   width: 100%; height: 100%; border-radius: 50%;
-  background:
-    repeating-radial-gradient(var(--black), var(--black) 2px, var(--ink) 3px, var(--ink) 4px),
-    conic-gradient(from 45deg at center, var(--gold-dim) 0deg, transparent 40deg, var(--gold-dim) 180deg, transparent 220deg);
-  background-blend-mode: lighten;
-  border: 1px solid #333;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
+  background: repeating-radial-gradient(var(--black), var(--black) 2px, var(--ink) 3px, var(--ink) 4px), conic-gradient(from 45deg at center, var(--gold-dim) 0deg, transparent 40deg, var(--gold-dim) 180deg, transparent 220deg);
+  background-blend-mode: lighten; border: 1px solid #333; box-shadow: inset 0 0 15px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
 }
 .player-vinyl-disk-detailed.spinning { animation: vinyl-play 4s linear infinite; }
 @keyframes vinyl-play { to { transform: rotate(360deg); } }
 
-/* ETIQUETA CENTRAL (Dorada) */
-.player-vinyl-disk-detailed .player-vinyl-label-detailed {
-  width: 35%; height: 35%; border-radius: 50%;
-  background: var(--gold);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  border: 3px solid var(--black); box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-}
-.player-vinyl-label-detailed .vinyl-label-text {
-  color: var(--black) !important; font-family: var(--font-disp); font-weight: bold; text-shadow: none;
-}
+/* ETIQUETA CENTRAL */
+.player-vinyl-disk-detailed .player-vinyl-label-detailed { width: 35%; height: 35%; border-radius: 50%; background: var(--gold); display: flex; flex-direction: column; align-items: center; justify-content: center; border: 3px solid var(--black); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+.player-vinyl-label-detailed .vinyl-label-text { color: var(--black) !important; font-family: var(--font-disp); font-weight: bold; text-shadow: none; }
 
-/* AGUJA (TONEARM) DEL MODAL - AJUSTADA A LA IZQUIERDA Y DELAY MÁS LENTO */
-.modal-needle {
-  position: absolute; 
-  top: -10%; 
-  right: 5%; /* MOVIDA A LA IZQUIERDA (Antes era negativo) */
-  width: 6px; height: 180px; 
-  transform-origin: top center;
-  transform: rotate(-35deg); /* Reposo */
-  z-index: 5; opacity: 0;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s; /* Delay aumentado para coordinar con la salida lenta */
-}
-.vinyl-slide-container.extracted .modal-needle {
-  transform: rotate(22deg); /* Baja sobre los surcos del vinilo */
-  opacity: 1;
-}
+/* AGUJA (TONEARM) */
+.modal-needle { position: absolute; top: -10%; right: 5%; width: 6px; height: 180px; transform-origin: top center; transform: rotate(-35deg); z-index: 5; opacity: 0; transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s; }
+.vinyl-slide-container.extracted .modal-needle { transform: rotate(22deg); opacity: 1; }
 .modal-needle-arm { width: 4px; height: 145px; background: linear-gradient(to bottom, #888, #444); margin: 0 auto; border-radius: 2px;}
 .modal-needle-head { width: 14px; height: 28px; background: var(--black); border: 2px solid var(--gold); margin: 0 auto; border-radius: 3px; position:relative;}
-/* Cabezal detallado */
-.modal-needle-head::after {
-    content:'';
-    position: absolute; bottom: 3px; left: 3px;
-    width: 8px; height: 8px;
-    background: var(--gold); border-radius: 1px;
-}
+.modal-needle-head::after { content:''; position: absolute; bottom: 3px; left: 3px; width: 8px; height: 8px; background: var(--gold); border-radius: 1px; }
 
 /* INFO Y TEXTOS */
 .player-info { width: 100%; text-align: left; }
 .title-flex { display: flex; align-items: center; gap: 15px; }
 .player-info h2 { font-family: var(--font-disp); font-size: clamp(2.5rem, 6vh, 4rem); color: var(--gold); line-height: 1; margin-top: 1rem; }
-
-/* MINI ECUALIZADOR (ELEMENTO MUSICAL CREATIVO) */
 .mini-eq { display: flex; gap: 4px; height: 30px; align-items: flex-end; margin-top: 1rem; }
 .mini-eq span { width: 6px; background: var(--gold); border-radius: 2px; animation: eq-bounce 1s ease-in-out infinite alternate; }
 .mini-eq span:nth-child(1) { animation-delay: 0.1s; height: 40%; }
@@ -456,84 +402,58 @@ footer {
 .mini-eq span:nth-child(3) { animation-delay: 0.0s; height: 60%; }
 .mini-eq span:nth-child(4) { animation-delay: 0.4s; height: 100%; }
 @keyframes eq-bounce { 0% { height: 20%; } 100% { height: 100%; } }
-
 .player-info p { font-family: var(--font-mono); color: var(--cream); letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 0.5rem; text-transform: uppercase; opacity: 0.8; }
-
-/* METADATOS MUSICALES DETALLADOS */
-.metadata-line {
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--gold-pale);
-    letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.6;
-    margin-bottom: 2rem; display: flex; align-items: center; gap: 8px;
-}
+.metadata-line { font-family: var(--font-mono); font-size: 0.7rem; color: var(--gold-pale); letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.6; margin-bottom: 2rem; display: flex; align-items: center; gap: 8px; }
 .metadata-line i { font-size: 0.8rem; color: var(--gold-dim); }
 
 /* BOTÓN DORADO UPLOAD */
-.btn-add-task-gold-detailed {
-  background: transparent; color: var(--gold); border: 1px solid var(--gold);
-  font-family: var(--font-disp); font-size: 1.2rem; padding: 10px 24px;
-  cursor: pointer; transition: all 0.3s ease; z-index: 10; letter-spacing: 0.1em;
-}
+.btn-add-task-gold-detailed { background: transparent; color: var(--gold); border: 1px solid var(--gold); font-family: var(--font-disp); font-size: 1.2rem; padding: 10px 24px; cursor: pointer; transition: all 0.3s ease; z-index: 10; letter-spacing: 0.1em; }
 .btn-add-task-gold-detailed:hover { background: var(--gold); color: var(--black); box-shadow: 0 0 15px rgba(201,168,76,0.5); }
 
-/* ── LISTA DE TAREAS (PDFs) Y BOTÓN ELIMINAR ── */
+/* ── LISTA DE TAREAS ── */
 .tracklist { list-style: none; counter-reset: t-counter; margin-top: 1rem; border-top: 1px solid rgba(201,168,76,0.2); }
-.tracklist-header {
-    font-family: var(--font-disp); font-size: 0.8rem; color: var(--charcoal);
-    letter-spacing: 0.4em; text-transform: uppercase;
-    padding: 1.5rem 1rem 0.5rem; display: flex; justify-content: space-between;
-}
-
-/* Fila de cada documento */
-.track-item-player { 
-  display: flex; align-items: center; padding: 1rem 1rem; 
-  border-bottom: 1px solid rgba(201,168,76,0.1); 
-  color: var(--white); text-decoration: none; transition: .2s; font-size: 1.1rem; 
-  background: rgba(255,255,255,0.01);
-  position: relative; overflow: hidden;
-}
-
-.track-item-player::after {
-    content:''; position: absolute; inset:0;
-    background: radial-gradient(circle at center, rgba(201,168,76,0.15) 0%, transparent 70%);
-    opacity: 0; transition: opacity 0.3s;
-}
-
+.tracklist-header { font-family: var(--font-disp); font-size: 0.8rem; color: var(--charcoal); letter-spacing: 0.4em; text-transform: uppercase; padding: 1.5rem 1rem 0.5rem; display: flex; justify-content: space-between; }
+.track-item-player { display: flex; align-items: center; padding: 1rem 1rem; border-bottom: 1px solid rgba(201,168,76,0.1); color: var(--white); text-decoration: none; transition: .2s; font-size: 1.1rem; background: rgba(255,255,255,0.01); position: relative; overflow: hidden; }
+.track-item-player::after { content:''; position: absolute; inset:0; background: radial-gradient(circle at center, rgba(201,168,76,0.15) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s; }
 .track-item-player:hover { color: var(--black); background: var(--gold); transform: scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 5px; border-bottom-color: transparent;}
 .track-item-player:hover::after { opacity: 1; }
-
-.track-item-player::before { 
-    counter-increment: t-counter; content: counter(t-counter, decimal-leading-zero); 
-    margin-right: 2rem; opacity: 0.5; font-family: var(--font-mono); color: var(--gold); transition: .2s;
-    font-size: 1.2rem; display: inline-flex; align-items: center; width: 40px; justify-content: center;
-}
+.track-item-player::before { counter-increment: t-counter; content: counter(t-counter, decimal-leading-zero); margin-right: 2rem; opacity: 0.5; font-family: var(--font-mono); color: var(--gold); transition: .2s; font-size: 1.2rem; display: inline-flex; align-items: center; width: 40px; justify-content: center; }
 .track-item-player:hover::before { color: var(--black); opacity: 1; }
-
-/* Contenedor del enlace del PDF */
-.track-item-player-link {
-    flex: 1; display: flex; align-items: center; color: inherit; text-decoration: none; position: relative; z-index: 5;
-}
-
+.track-item-player-link { flex: 1; display: flex; align-items: center; color: inherit; text-decoration: none; position: relative; z-index: 5; }
 .track-item-player-link i { opacity: 0.8; font-size: 1.1rem; color: var(--white); transition: .2s; margin-left: auto;}
 .track-item-player-link i.fa-file-pdf { color: var(--white); }
 .track-item-player:hover .track-item-player-link i { color: var(--black); transform: scale(1.2);}
-
-.track-item-player-link span::before {
-    content: '\f04b'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-    font-size: 0.7rem; color: var(--charcoal); margin-right: 12px; opacity: 0; transition: .2s;
-}
+.track-item-player-link span::before { content: '\f04b'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 0.7rem; color: var(--charcoal); margin-right: 12px; opacity: 0; transition: .2s; }
 .track-item-player:hover .track-item-player-link span::before { opacity: 1; color: var(--black); }
-
-/* BOTÓN DE ELIMINAR ARCHIVO */
-.btn-delete-track {
-    background: transparent; border: none; color: #e74c3c;
-    font-size: 1.2rem; cursor: pointer; margin-left: 15px;
-    opacity: 0.5; transition: all 0.3s ease; position: relative; z-index: 10;
-}
+.btn-delete-track { background: transparent; border: none; color: #e74c3c; font-size: 1.2rem; cursor: pointer; margin-left: 15px; opacity: 0.5; transition: all 0.3s ease; position: relative; z-index: 10; }
 .track-item-player:hover .btn-delete-track { opacity: 0.8; }
 .btn-delete-track:hover { opacity: 1 !important; color: #c0392b; transform: scale(1.2); }
-
 .close-player { position: absolute; top: 2rem; right: 2rem; background: none; border: none; color: var(--gold); font-size: 2.5rem; cursor: pointer; transition: transform .3s; z-index: 10001; }
 .close-player:hover { transform: rotate(90deg); color: var(--white); }
+
+/* ── MODAL VISOR DE PDF E INTEGRACIÓN ── */
+.pdf-viewer-overlay {
+  position: fixed; inset: 0;
+  background: rgba(7, 7, 7, 0.9);
+  z-index: 10005; 
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+.pdf-viewer-overlay.active { opacity: 1; pointer-events: auto; }
+.pdf-viewer-content {
+  width: 90%; max-width: 1000px; height: 85vh;
+  background: var(--ink); border: 1px solid var(--gold);
+  box-shadow: 0 0 40px rgba(201,168,76,0.2);
+  border-radius: 4px; overflow: hidden; position: relative;
+}
+.pdf-viewer-content iframe { width: 100%; height: 100%; background: var(--white); border: none; }
+.close-pdf {
+  position: absolute; top: 1.5rem; right: 2rem;
+  background: none; border: none; color: var(--gold);
+  font-size: 2.5rem; cursor: pointer; transition: transform .3s; z-index: 10006;
+}
+.close-pdf:hover { transform: rotate(90deg); color: var(--white); }
 
 @media (max-width: 900px) {
   body { overflow: auto; height: auto; }
@@ -570,6 +490,10 @@ footer {
   .metadata-line { justify-content: center; margin-bottom: 1rem; }
   .btn-add-task-gold-detailed { width: 100%; }
   .album-player-overlay.active .vinyl-slide-container.extracted { transform: translateX(30%); }
+  
+  /* Ajustes responsivos para el PDF Viewer */
+  .pdf-viewer-content { width: 95%; height: 90vh; }
+  .close-pdf { top: 0.5rem; right: 1rem; font-size: 2rem; }
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -578,8 +502,7 @@ footer {
 
 <canvas id="particles-canvas"></canvas>
 
-<div class="upload-overlay" id="uploadOverlay">
-</div>
+<div class="upload-overlay" id="uploadOverlay"></div>
 
 <div class="album-player-overlay" id="albumPlayer">
     <button class="close-player" onclick="closeAlbumPlayer()"><i class="fas fa-times"></i></button>
@@ -626,6 +549,13 @@ footer {
             <ul class="tracklist" id="playerTracklist">
                 </ul>
         </div>
+    </div>
+</div>
+
+<div class="pdf-viewer-overlay" id="pdfViewerModal">
+    <button class="close-pdf" onclick="closePdfViewer()"><i class="fas fa-times"></i></button>
+    <div class="pdf-viewer-content">
+        <iframe id="pdfIframe" src="" frameborder="0"></iframe>
     </div>
 </div>
 
@@ -1064,6 +994,24 @@ function closeAlbumPlayer() {
 }
 
 // ══════════════════════════════════════════
+// LÓGICA DEL VISOR DE PDF INTEGRADO
+// ══════════════════════════════════════════
+function openPdfViewer(url) {
+    const modal = document.getElementById('pdfViewerModal');
+    const iframe = document.getElementById('pdfIframe');
+    iframe.src = url;
+    modal.classList.add('active');
+}
+
+function closePdfViewer() {
+    const modal = document.getElementById('pdfViewerModal');
+    const iframe = document.getElementById('pdfIframe');
+    modal.classList.remove('active');
+    setTimeout(() => { iframe.src = ''; }, 300); // Limpia el iframe tras cerrar
+}
+
+
+// ══════════════════════════════════════════
 // LÓGICA DE LOGIN PARA EL BOTÓN
 // ══════════════════════════════════════════
 function checkLoginForModalUpload() {
@@ -1097,15 +1045,21 @@ async function loadTracksFromSupabase(num) {
         if(todasLasTareas.length === 0) {
              tracklistEl.innerHTML = '<p style="color:var(--white); opacity:0.6;">No hay trabajos subidos aún.</p>';
         } else {
-             tracklistEl.innerHTML = todasLasTareas.map(t => `
+             // Detección automática: Si es PDF/Supabase abre modal, si es GitHub abre nueva pestaña
+             tracklistEl.innerHTML = todasLasTareas.map(t => {
+                const url = t.archivo_url || t.githubUrl;
+                const isGithub = url.includes('github.com');
+                const linkAttributes = isGithub ? `href="${url}" target="_blank"` : `href="#" onclick="openPdfViewer('${url}'); return false;"`;
+
+                return `
                 <li class="track-item-player">
-                    <a href="${t.archivo_url || t.githubUrl}" target="_blank" title="Abrir PDF en nueva pestaña" class="track-item-player-link">
+                    <a ${linkAttributes} title="Abrir archivo" class="track-item-player-link">
                         <span style="flex:1">${t.descripcion}</span>
                         <i class="fas fa-file-pdf"></i>
                     </a>
                     ${isLoggedIn && t.id ? `<button class="btn-delete-track" title="Eliminar archivo" onclick="deleteTrack(event, '${t.id}')"><i class="fas fa-trash-alt"></i></button>` : ''}
                 </li>
-            `).join('');
+            `}).join('');
         }
     }
 }
@@ -1192,7 +1146,8 @@ document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.st
 function animCursor() { cx+=(mx-cx)*0.12; cy+=(my-cy)*0.12; cursor.style.cssText=`left:${cx}px;top:${cy}px`; requestAnimationFrame(animCursor); }
 animCursor();
 document.addEventListener('mouseover', e => {
-  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn,.track-item-player,.btn-delete-track')) cursor.classList.add('big');
+  // Se agregó .close-pdf a la lista para que el cursor se expanda también ahí
+  if (e.target.closest('a,button,label,.track-cover-wrap,.tasks-header,.upload-dropzone,.upload-close,.center-vinyl,.btn-logout,.music-btn,.track-item-player,.btn-delete-track,.close-pdf')) cursor.classList.add('big');
   else cursor.classList.remove('big');
 });
 
