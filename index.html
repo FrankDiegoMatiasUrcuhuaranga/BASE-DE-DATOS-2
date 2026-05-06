@@ -23,10 +23,8 @@
       max-width: 120px;
       height: auto;
       margin-bottom: 8px;
-      /* Se eliminó el border y el padding para quitar el recuadro */
       border: none; 
       padding: 0;
-    
     }
     .upla-logo-text {
       font-family: 'Space Mono', monospace;
@@ -53,10 +51,10 @@
     .hero-info-side {
       flex: 1;
       display: flex;
-      flex-direction: row; /* CAMBIO: Ahora los elementos se alinean en fila */
-      align-items: flex-start; /* Alineados arriba */
-      justify-content: flex-end; /* Empujados a la derecha */
-      gap: 30px; /* Espacio entre el texto y la foto */
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-end;
+      gap: 30px;
     }
 
     .hero-text-wrapper {
@@ -72,7 +70,7 @@
       border: 3px solid var(--gold, #e8d49a);
       position: relative;
       overflow: hidden;
-      flex-shrink: 0; /* Evita que la foto se aplaste */
+      flex-shrink: 0;
     }
     .profile-photo-hero {
       width: 100%;
@@ -109,6 +107,138 @@
     }
     .github-block-combined {
       flex: 1;
+    }
+
+    /* --- GEMINI CHATBOT WIDGET --- */
+    .gemini-chat-widget {
+      position: fixed;
+      bottom: 20px;
+      right: 90px; /* Movido un poco a la izquierda para no tapar el botón de GitHub/Subir */
+      z-index: 1000;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .chat-toggle-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gold, #e8d49a);
+      color: #111;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(232, 212, 154, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .chat-toggle-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .chat-container {
+      display: none;
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 350px;
+      height: 450px;
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid var(--gold, #e8d49a);
+      border-radius: 10px;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .chat-container.active {
+      display: flex;
+    }
+
+    .chat-header {
+      background: var(--gold, #e8d49a);
+      color: #111;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .close-chat {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #111;
+      cursor: pointer;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .message {
+      padding: 10px 15px;
+      border-radius: 8px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+
+    .bot-message {
+      background: rgba(232, 212, 154, 0.1);
+      color: #fff;
+      align-self: flex-start;
+      border-left: 3px solid var(--gold, #e8d49a);
+    }
+
+    .user-message {
+      background: var(--gold, #e8d49a);
+      color: #111;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .chat-input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid rgba(232, 212, 154, 0.2);
+      background: #111;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      padding: 8px;
+      outline: none;
+    }
+
+    .chat-input-area input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .send-btn {
+      background: none;
+      border: none;
+      color: var(--gold, #e8d49a);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .send-btn:hover {
+      color: #fff;
     }
   </style>
 </head>
@@ -271,6 +401,35 @@
     <button class="fab-btn fab-btn--gold" onclick="window.open('https://github.com/FrankDiegoMatiasUrcuhuaranga','_blank')"><i class="fab fa-github"></i></button>
   </div>
 
+  <!-- Widget del Chatbot Gemini -->
+  <div class="gemini-chat-widget">
+    <button class="chat-toggle-btn" onclick="toggleChat()">
+      <i class="fas fa-robot"></i>
+    </button>
+    
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-header">
+        <div class="chat-title">
+          <i class="fas fa-sparkles"></i> ASISTENTE IA
+        </div>
+        <button class="close-chat" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+      </div>
+      
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot-message">
+          ¡Hola! Soy Gemini, el asistente virtual de Frank. ¿En qué te puedo ayudar sobre Bases de Datos o sobre este portafolio?
+        </div>
+      </div>
+      
+      <div class="chat-input-area">
+        <input type="text" id="userInput" placeholder="Escribe tu mensaje..." onkeypress="handleEnter(event)">
+        <button class="send-btn" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-left">
@@ -319,8 +478,6 @@
     const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
     document.querySelectorAll('.card').forEach(c => observer.observe(c));
 
-    // El evento 'mousemove' del elemento + cruz fue eliminado
-
     particlesJS("particles-js", {
       "particles": {
         "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
@@ -333,6 +490,110 @@
       },
       "retina_detect": true
     });
+
+    // --- LOGICA DEL CHATBOT GEMINI ---
+    const GEMINI_API_KEY = 'AIzaSyA4KRX1yzPU2p7xD5b1goUMvWqNCqlmZT4'; // REEMPLAZA ESTO CON TU CLAVE REAL
+
+    function toggleChat() {
+      const chatContainer = document.getElementById('chatContainer');
+      chatContainer.classList.toggle('active');
+    }
+
+    function handleEnter(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    async function sendMessage() {
+      const inputEl = document.getElementById('userInput');
+      const messageText = inputEl.value.trim();
+      if (!messageText) return;
+
+      addMessageToUI(messageText, 'user-message');
+      inputEl.value = '';
+
+      const loadingId = addMessageToUI('⚙️ Analizando servidor de Google...', 'bot-message');
+
+      try {
+        // PASO 1: ¡Hacerle caso al error! Consultar qué modelos tienes habilitados en tu API Key
+        const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}`);
+        const listData = await listResponse.json();
+
+        // Si la llave en sí está mal, esto lo atrapará
+        if (listData.error) {
+          throw new Error(`Error con la API Key: ${listData.error.message}`);
+        }
+
+        let modeloConfirmado = 'gemini-1.5-flash'; // Respaldo
+
+        if (listData.models) {
+            // Filtramos solo los modelos de texto (que soporten 'generateContent')
+            const modelosValidos = listData.models.filter(m => 
+                m.supportedGenerationMethods.includes('generateContent') && 
+                m.name.includes('gemini')
+            );
+            
+            // Imprimimos en tu consola (F12) la lista real para que la veas
+            console.log("🛠️ Modelos válidos encontrados por el sistema:", modelosValidos.map(m => m.name));
+
+            if (modelosValidos.length > 0) {
+                // Extraemos el nombre exacto que Google quiere (ej. "gemini-1.5-flash-latest")
+                const modeloIdeal = modelosValidos.find(m => m.name.includes('1.5-flash')) || modelosValidos[0];
+                modeloConfirmado = modeloIdeal.name.replace('models/', '');
+            }
+        }
+
+        // Te aviso en el chat qué modelo logró atrapar el código
+        document.getElementById(loadingId).innerHTML = `<i>Conectando con: ${modeloConfirmado}...</i>`;
+
+        // PASO 2: Enviar el mensaje con la estructura simple y el modelo dinámico
+        const promptOculto = `Eres Gemini, el asistente virtual del portafolio universitario de Base de Datos II de Frank. Responde en primera persona, sé breve y amigable.\n\nPregunta: ${messageText}`;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modeloConfirmado}:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptOculto }] }]
+          })
+        });
+
+        const data = await response.json();
+        document.getElementById(loadingId).remove();
+
+        if (data.error) {
+          addMessageToUI(`⚠️ Error de generación: ${data.error.message}`, 'bot-message');
+        } else if (data.candidates && data.candidates.length > 0) {
+          addMessageToUI(data.candidates[0].content.parts[0].text, 'bot-message');
+        } else {
+          addMessageToUI('Respuesta vacía.', 'bot-message');
+        }
+
+      } catch (error) {
+        console.error("Error crítico:", error);
+        document.getElementById(loadingId).remove();
+        addMessageToUI(`⚠️ Fallo: ${error.message}`, 'bot-message');
+      }
+    
+    
+    
+
+    }
+
+    function addMessageToUI(text, className) {
+      const chatMessages = document.getElementById('chatMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${className}`;
+      
+      messageDiv.innerHTML = text.replace(/\n/g, '<br>'); 
+      
+      const id = 'msg-' + Date.now();
+      messageDiv.id = id;
+      
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return id;
+    }
   </script>
 </body>
 </html>
