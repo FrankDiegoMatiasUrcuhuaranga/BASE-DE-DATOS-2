@@ -492,7 +492,7 @@
     });
 
     // --- LOGICA DEL CHATBOT GEMINI ---
-    const GEMINI_API_KEY = 'AIzaSyA4KRX1yzPU2p7xD5b1goUMvWqNCqlmZT4'; // REEMPLAZA ESTO CON TU CLAVE REAL
+    const GEMINI_API_KEY = 'AIzaSyC1hafg3ihDYOSHQPVy-yJ5HZtMzMpghYI'; // REEMPLAZA ESTO CON TU CLAVE REAL
 
     function toggleChat() {
       const chatContainer = document.getElementById('chatContainer');
@@ -505,78 +505,64 @@
       }
     }
 
-    async function sendMessage() {
-      const inputEl = document.getElementById('userInput');
-      const messageText = inputEl.value.trim();
-      if (!messageText) return;
+   async function sendMessage() {
+  const inputEl = document.getElementById('userInput');
+  const messageText = inputEl.value.trim();
+  if (!messageText) return;
 
-      addMessageToUI(messageText, 'user-message');
-      inputEl.value = '';
+  addMessageToUI(messageText, 'user-message');
+  inputEl.value = '';
 
-      const loadingId = addMessageToUI('⚙️ Analizando servidor de Google...', 'bot-message');
+  const loadingId = addMessageToUI('⚙️ Pensando...', 'bot-message');
 
-      try {
-        // PASO 1: ¡Hacerle caso al error! Consultar qué modelos tienes habilitados en tu API Key
-        const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_API_KEY}`);
-        const listData = await listResponse.json();
+  // Lista de modelos a intentar en orden
+  const modelos = [
+    'gemini-1.5-flash',
+    'gemini-1.5-flash-latest',
+    'gemini-1.5-pro',
+    'gemini-2.0-flash',
+    'gemini-2.0-flash-lite'
+  ];
 
-        // Si la llave en sí está mal, esto lo atrapará
-        if (listData.error) {
-          throw new Error(`Error con la API Key: ${listData.error.message}`);
-        }
+  const prompt = `Eres el asistente virtual del portafolio de Base de Datos II de Frank. Responde en español, breve y amigable.\n\nPregunta: ${messageText}`;
 
-        let modeloConfirmado = 'gemini-1.5-flash'; // Respaldo
-
-        if (listData.models) {
-            // Filtramos solo los modelos de texto (que soporten 'generateContent')
-            const modelosValidos = listData.models.filter(m => 
-                m.supportedGenerationMethods.includes('generateContent') && 
-                m.name.includes('gemini')
-            );
-            
-            // Imprimimos en tu consola (F12) la lista real para que la veas
-            console.log("🛠️ Modelos válidos encontrados por el sistema:", modelosValidos.map(m => m.name));
-
-            if (modelosValidos.length > 0) {
-                // Extraemos el nombre exacto que Google quiere (ej. "gemini-1.5-flash-latest")
-                const modeloIdeal = modelosValidos.find(m => m.name.includes('1.5-flash')) || modelosValidos[0];
-                modeloConfirmado = modeloIdeal.name.replace('models/', '');
-            }
-        }
-
-        // Te aviso en el chat qué modelo logró atrapar el código
-        document.getElementById(loadingId).innerHTML = `<i>Conectando con: ${modeloConfirmado}...</i>`;
-
-        // PASO 2: Enviar el mensaje con la estructura simple y el modelo dinámico
-        const promptOculto = `Eres Gemini, el asistente virtual del portafolio universitario de Base de Datos II de Frank. Responde en primera persona, sé breve y amigable.\n\nPregunta: ${messageText}`;
-
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modeloConfirmado}:generateContent?key=${GEMINI_API_KEY}`, {
+  for (const modelo of modelos) {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${GEMINI_API_KEY}`,
+        {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: promptOculto }] }]
+            contents: [{ parts: [{ text: prompt }] }]
           })
-        });
-
-        const data = await response.json();
-        document.getElementById(loadingId).remove();
-
-        if (data.error) {
-          addMessageToUI(`⚠️ Error de generación: ${data.error.message}`, 'bot-message');
-        } else if (data.candidates && data.candidates.length > 0) {
-          addMessageToUI(data.candidates[0].content.parts[0].text, 'bot-message');
-        } else {
-          addMessageToUI('Respuesta vacía.', 'bot-message');
         }
+      );
 
-      } catch (error) {
-        console.error("Error crítico:", error);
-        document.getElementById(loadingId).remove();
-        addMessageToUI(`⚠️ Fallo: ${error.message}`, 'bot-message');
+      const data = await response.json();
+
+      // Si hay error de demanda, intenta con el siguiente modelo
+      if (data.error) {
+        console.warn(`Modelo ${modelo} falló:`, data.error.message);
+        continue;
       }
-    
-    
-    
+
+      if (data.candidates && data.candidates[0]) {
+        document.getElementById(loadingId).remove();
+        addMessageToUI(data.candidates[0].content.parts[0].text, 'bot-message');
+        return; // Éxito, salimos
+      }
+
+    } catch (e) {
+      console.warn(`Error con ${modelo}:`, e.message);
+      continue;
+    }
+  }
+
+  // Si todos fallaron
+  document.getElementById(loadingId).remove();
+  addMessageToUI('⚠️ El servicio está ocupado en este momento. Intenta en unos segundos.', 'bot-message');
+
 
     }
 
